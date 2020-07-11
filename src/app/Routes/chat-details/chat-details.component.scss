@@ -1,0 +1,171 @@
+@import "../../../assets/variables";
+
+.content
+{
+  .chat-box
+  {
+    background-color: $listBgColor;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border-radius: 7px;
+    box-shadow: $shadow;
+    .upper-box
+    {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid $semiGray;
+      padding: 0.6rem 0rem;
+      margin-bottom: 0.6rem;
+      .box-left
+      {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .user-img
+        {
+          img
+          {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            box-shadow: $shadow;
+            margin-right: 0.5rem;
+          }
+        }
+        .user-name-online
+        {
+          .u-name
+          {
+            display: flex;
+            align-items: center;
+            .u-n
+            {
+              color: #fff;
+              margin-right: 0.5rem;
+            }
+          }
+          .u-status
+          {
+            .user-status
+            {
+              color: $mainColor !important;
+            }
+          }
+        }
+      }
+      .box-right
+      {
+        .user-info
+        {
+          color: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
+          &:hover
+          {
+            cursor: pointer;
+            border: 3px solid rgba($mainColor,0.1);
+          }
+        }
+      }
+    }
+    .middle-box
+    {
+      height: 60vh;
+      overflow-y: auto;
+      background-color: $navBgColor;
+      border-radius: 7px;
+      padding: 1rem;
+    }
+    .lower-box
+    {
+      margin-top: 0.7rem;
+      .chat-sender
+      {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        .upload-file
+        {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
+          background-color: rgba($mainColor,0.1);
+          .u-icon
+          {
+            color: #fff !important;
+          }
+          &:hover
+          {
+            cursor: pointer;
+          }
+        }
+        .chat-input
+        {
+          position: relative;
+          width: 90%;
+          .chat-form-control
+          {
+            width: 100%;
+            background-color: rgba($mainColor,0.1);
+            border: none;
+            padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+            color: $semiGray;
+            border-radius: 20px;
+            outline: none;
+          }
+          .send-icon
+          {
+            background-color: transparent;
+            border: none;
+            position: absolute;
+            top: 18%;
+            right: 2%;
+            color: #fff;
+            outline: none;
+            transform: scale(1);
+            transition: 0.2s;
+            &:active
+            {
+              transform: scale(0.6);
+            }
+          }
+        }
+        .voice-recorder
+        {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 40px;
+          width: 40px;
+          border-radius: 50%;
+          background-color: rgba($mainColor,0.1);
+          &:hover
+          {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .content
+  {
+    .chat-box
+    {
+
+    }
+  }
+}

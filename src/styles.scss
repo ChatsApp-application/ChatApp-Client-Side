@@ -1,1 +1,106 @@
-/* You can add global styles to this file, and also import other style files */
+@import "assets/variables";
+@import url('https://fonts.googleapis.com/css2?family=Acme&display=swap');
+body
+{
+  font-family: 'Acme', sans-serif;
+  background-color: $bgColor;
+  min-height: 100vh;
+}
+
+.uk-offcanvas-bar
+{
+  background-color: $bgColor;
+  padding: 1rem;
+}
+
+.active
+{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: darkgreen;
+}
+
+.user-friend
+{
+  text-align: left;
+  .current-details
+  {
+    .name-of-user
+    {
+      color: $semiGray;
+    }
+    .date-of-message
+    {
+      color: $semiGray;
+    }
+  }
+  .current-message
+  {
+    background-color: $listBgColor;
+    padding: 0.8rem 0.8rem 0.5rem 0.8rem;
+    border-top-right-radius: 9px;
+    border-bottom-left-radius: 9px;
+    border-bottom-right-radius: 9px;
+    display: inline-block;
+    width: auto;
+    margin: 0.5rem 0rem;
+    .message-text
+    {
+      color: #fff;
+    }
+    .current-time
+    {
+      color: $semiGray;
+      text-align: right;
+      .check-icon
+      {
+        display: none;
+      }
+    }
+  }
+}
+.current-user
+{
+  text-align: right;
+  .current-details
+  {
+    .name-of-user
+    {
+      color: $semiGray;
+    }
+    .date-of-message
+    {
+      color: $semiGray;
+    }
+  }
+  .current-message
+  {
+    margin: 0.5rem 0rem;
+    background-color: rgba($mainColor,0.7);
+    padding: 0.8rem 0.8rem 0.5rem 0.8rem;
+    border-top-left-radius: 9px;
+    border-bottom-left-radius: 9px;
+    border-bottom-right-radius: 9px;
+    display: inline-block;
+    width: auto;
+    .message-text
+    {
+      color: #fff;
+    }
+    .current-time
+    {
+      color: rgba(#fff,0.7);
+      text-align: right;
+      .check-icon
+      {
+        color: $semiGray;
+        margin: 0.3rem;
+      }
+    }
+  }
+}
+

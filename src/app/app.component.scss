@@ -1,0 +1,219 @@
+@import "../assets/variables";
+
+.chats-nav
+{
+  background-color: $navBgColor;
+  padding: 0.2rem;
+  box-shadow: $shadow;
+  overflow: hidden;
+  .chats-content
+  {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .nav-left
+    {
+      display: flex;
+      align-items: center;
+      .canvas-div
+      {
+        display: none;
+      }
+      .online-part
+      {
+        .user-name
+        {
+          color: #fff;
+        }
+        .status
+        {
+          color: #fff;
+        }
+      }
+      .user-img-div
+      {
+        z-index: 50;
+        .user-img
+        {
+          height: 50px;
+          width: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+        }
+        &:hover
+        {
+          cursor: pointer;
+        }
+      }
+    }
+    .nav-middle
+    {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .nav-right
+    {
+
+    }
+  }
+
+}
+
+
+
+.chat-nav-link
+{
+  padding: 1.2rem 0.7rem;
+  transition: 0.2s;
+  position: relative;
+  .link-name
+  {
+    color: #fff;
+    transition: 0.2s;
+  }
+  .nav-icon
+  {
+    color: #fff;
+    margin: 0rem 0.5rem;
+    transition: 0.2s;
+  }
+  .notification-number
+  {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    top: 20%;
+    right: 10%;
+    font-size: 14px;
+  }
+  &:hover
+  {
+    background-color: $listBgColor;
+    border-radius: 7px;
+    .link-name
+    {
+      color: $mainColor;
+    }
+    .nav-icon
+    {
+      color: $mainColor;
+    }
+
+  }
+}
+
+.open-canvas
+{
+  transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background-color: $listBgColor;
+  color: #fff;
+  margin: 0rem 0.5rem;
+  &:hover
+  {
+    cursor: pointer;
+    background-color: rgba($listBgColor, 0.5);
+  }
+}
+
+// side bar
+.sidebar-content
+{
+  .sidebar-top
+  {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .sidebar-user-details
+  {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    .user-left
+    {
+      .user-img
+      {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+      }
+    }
+    .user-right
+    {
+
+    }
+  }
+  .sidebar-links
+  {
+    a
+    {
+      display: block;
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .chats-nav
+  {
+    .chats-content
+    {
+      .nav-left
+      {
+        .canvas-div
+        {
+          display: block;
+        }
+        .user-img-div
+        {
+          display: none;
+        }
+        .online-part
+        {
+          //display: none;
+          font-size: 14px !important;
+        }
+      }
+      .nav-middle
+      {
+        display: none;
+      }
+      .nav-right
+      {
+
+      }
+    }
+
+  }
+
+  .open-canvas
+  {
+    width: 40px;
+    height: 40px;
+  }
+
+  .chat-nav-link
+  {
+    padding: 0.7rem;
+    font-size: 14px;
+  }
+  .container-fluid
+  {
+    padding: 0rem;
+  }
+}

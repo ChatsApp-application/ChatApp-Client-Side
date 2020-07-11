@@ -1,0 +1,179 @@
+@import "../../../assets/variables";
+
+.content
+{
+
+  .chat-list
+  {
+    background-color: $listBgColor;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border-radius: 7px;
+    box-shadow: $shadow;
+
+    .chat-search
+    {
+      .search-form
+      {
+        position: relative;
+        .chatsapp-form-control
+        {
+          width: 100%;
+          border: none;
+          color: $semiGray;
+          background-color: transparent;
+          padding: 0.7rem 2rem 0.7rem 0.7rem;
+          border-bottom: 2px solid $semiGray;
+          transition: 0.2s;
+          &:focus
+          {
+            border-color: $mainColor;
+          }
+        }
+        .search-icon
+        {
+          color: $semiGray;
+          position: absolute;
+          top: 20%;
+          right: 2%;
+        }
+      }
+
+    }
+    .chat-contacts
+    {
+      margin-top: 1rem;
+      height: 70vh;
+      overflow: auto;
+      .friends
+      {
+        display: flex;
+        align-items: center;
+        padding: 0.7rem;
+        border-radius: 7px;
+        .friends-imgs
+        {
+          margin-right: 0.5rem;
+          .img
+          {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: $shadow;
+          }
+        }
+        .friends-chat
+        {
+          width: 90%;
+          .friend-name
+          {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .f-name
+            {
+              color: #fff;
+              font-weight: 600;
+            }
+            .f-time
+            {
+              color: $semiGray;
+            }
+          }
+          .friend-message
+          {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            .m-caption
+            {
+              .mark-icon
+              {
+                color: $mainColor;
+                margin-right: 0.5rem;
+              }
+              .m-text
+              {
+                color: $semiGray;
+              }
+            }
+            .new-message
+            {
+              .message-alert
+              {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 20px;
+                width: 20px;
+                background-color: $mainColor;
+                border-radius: 50%;
+                color: #fff;
+              }
+            }
+          }
+        }
+        &:hover
+        {
+          background-color: rgba(black,0.1);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 667px) {
+  .content
+  {
+    .chat-list
+    {
+      .chat-contacts
+      {
+        .friends
+        {
+          .friends-imgs
+          {
+            .img
+            {
+              width: 40px;
+              height: 40px;
+            }
+          }
+          .friends-chat
+          {
+            .friend-name
+            {
+              .f-name
+              {
+                font-size: 12px;
+              }
+              .f-time
+              {
+                font-size: 12px;
+              }
+            }
+            .friend-message
+            {
+              .m-caption
+              {
+                .mark-icon
+                {
+                  font-size: 12px;
+                }
+                .m-text
+                {
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
