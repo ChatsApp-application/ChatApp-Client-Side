@@ -165,7 +165,35 @@
   {
     .chat-box
     {
+      .lower-box
+      {
+        .chat-sender
+        {
+          .chat-input
+          {
+            width: 80%;
+          }
+        }
+      }
+    }
+  }
+}
 
+@media only screen and (max-width: 520px) {
+  .content
+  {
+    .chat-box
+    {
+      .lower-box
+      {
+        .chat-sender
+        {
+          .chat-input
+          {
+            width: 70%;
+          }
+        }
+      }
     }
   }
 }

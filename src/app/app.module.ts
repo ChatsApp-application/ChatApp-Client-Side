@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { MychatsComponent } from './Routes/mychats/mychats.component';
 import { ChatDetailsComponent } from './Routes/chat-details/chat-details.component';
 import {FormsModule} from '@angular/forms';
+import { UserFriendsComponent } from './Routes/user-friends/user-friends.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MychatsComponent,
-    ChatDetailsComponent
+    ChatDetailsComponent,
+    UserFriendsComponent
   ],
     imports: [
         BrowserModule,

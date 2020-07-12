@@ -104,3 +104,17 @@ body
   }
 }
 
+.link-active
+{
+  background-color: $listBgColor;
+  border-radius: 7px;
+  text-decoration: none;
+  .link-name
+  {
+    color: $mainColor !important;
+  }
+  .nav-icon
+  {
+    color: $mainColor !important;
+  }
+}

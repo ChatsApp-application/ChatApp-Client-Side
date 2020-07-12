@@ -1,0 +1,418 @@
+@import "../../../assets/variables";
+
+.content
+{
+  .user-box
+  {
+    background-color: $listBgColor;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border-radius: 7px;
+    box-shadow: $shadow;
+    .box-header
+    {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+      .friend-text
+      {
+        color: #fff;
+        font-weight: bolder;
+        margin: 0px;
+      }
+      .search-friend
+      {
+        position: relative;
+        .friend-form-control
+        {
+          border: none;
+          padding: 0.4rem 2rem 0.4rem 1rem;
+          border-radius: 15px;
+          background-color: $navBgColor;
+          color: $semiGray;
+          outline: none;
+          transition: 0.2s;
+        }
+        .search-icon
+        {
+          position: absolute;
+          top: 25%;
+          right: 5%;
+          color: $semiGray;
+        }
+      }
+    }
+
+    .friend-details
+    {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      padding: 0.7rem;
+      border: 1px solid rgba($semiGray,0.1);
+      border-radius: 7px;
+      transition: 0.1s;
+      .friend-left
+      {
+        display: flex;
+        align-items: center;
+        .friend-img
+        {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 70px;
+          height: 70px;
+          box-shadow: $shadow;
+          border-radius: 7px;
+          margin-right: 0.5rem;
+        }
+        .friend-caption
+        {
+          .caption-text
+          {
+            color: rgba(#fff,0.8);
+          }
+          .matual-friends
+          {
+            display: block;
+            color: $semiGray;
+          }
+        }
+      }
+      .friend-right
+      {
+        .visit-profile
+        {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: rgba($semiGray,0.1);
+          margin-bottom: 0.5rem;
+          transition: 0.1s;
+          .visit
+          {
+            color: $semiGray;
+          }
+          &:hover
+          {
+            cursor: pointer;
+            background-color: rgba($semiGray,0.3);
+          }
+        }
+        .un-friend
+        {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: rgba($semiGray,0.1);
+          transition: 0.1s;
+          .remove-icon
+          {
+            color: $semiGray;
+          }
+          &:hover
+          {
+            cursor: pointer;
+            background-color: rgba($semiGray,0.3);
+          }
+        }
+      }
+      &:hover
+      {
+        background-color: rgba(black,0.1);
+      }
+    }
+  }
+}
+
+
+@media only screen and (max-width: 500px) {
+  .content
+  {
+    .user-box
+    {
+      .box-header
+      {
+        .friend-text
+        {
+          font-size: 17px !important;
+        }
+      }
+
+      .friend-details
+      {
+        //justify-content: center;
+        .friend-left
+        {
+          .friend-img
+          {
+            width: 60px;
+            height: 60px;
+          }
+          .friend-caption
+          {
+            .caption-text
+            {
+              font-size: 14px !important;
+            }
+            .matual-friends
+            {
+              font-size: 13px !important;
+            }
+          }
+        }
+        .friend-right
+        {
+          display: flex;
+          align-items: center;
+          .visit-profile
+          {
+            margin: 0.5rem;
+          }
+        }
+      }
+
+    }
+  }
+  #modal-sections
+  {
+    .friend-details
+    {
+      //justify-content: center;
+      .friend-left
+      {
+        .friend-img
+        {
+          width: 60px;
+          height: 60px;
+        }
+        .friend-caption
+        {
+          .caption-text
+          {
+            font-size: 14px !important;
+          }
+          .matual-friends
+          {
+            font-size: 13px !important;
+          }
+        }
+      }
+      .friend-right
+      {
+        display: flex;
+        align-items: center;
+        .visit-profile
+        {
+          margin: 0.5rem;
+        }
+      }
+    }
+  }
+  .friend-col
+  {
+    padding: 0;
+  }
+}
+
+
+@media only screen and (max-width: 365px) {
+  .content
+  {
+    .user-box
+    {
+      .friend-details
+      {
+        justify-content: center;
+        .friend-left
+        {
+          .friend-img
+          {
+
+          }
+          .friend-caption
+          {
+            .caption-text
+            {
+
+            }
+            .matual-friends
+            {
+
+            }
+          }
+        }
+        .friend-right
+        {
+
+          .visit-profile
+          {
+          }
+        }
+      }
+    }
+  }
+  .friend-col
+  {
+    padding: 0;
+  }
+  #modal-sections
+  {
+    .friend-details
+    {
+      justify-content: center !important;
+      .friend-left
+      {
+        .friend-img
+        {
+
+        }
+        .friend-caption
+        {
+          .caption-text
+          {
+
+          }
+          .matual-friends
+          {
+
+          }
+        }
+      }
+      .friend-right
+      {
+
+        .visit-profile
+        {
+        }
+      }
+    }
+  }
+}
+
+// modal for mutual friends
+
+#modal-sections
+{
+  .uk-modal-dialog
+  {
+    background-color: $listBgColor !important;
+    .uk-modal-header
+    {
+      background-color: $listBgColor !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem;
+      .uk-modal-title
+      {
+        font-size: 17px;
+        font-weight: bold;
+      }
+    }
+    .uk-modal-body
+    {
+      padding: 1rem;
+      .friend-details
+      {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding: 0.7rem;
+        border: 1px solid rgba($semiGray,0.1);
+        border-radius: 7px;
+        transition: 0.1s;
+        .friend-left
+        {
+          display: flex;
+          align-items: center;
+          .friend-img
+          {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            box-shadow: $shadow;
+            border-radius: 7px;
+            margin-right: 0.5rem;
+          }
+          .friend-caption
+          {
+            .caption-text
+            {
+              color: rgba(#fff,0.8);
+            }
+            .matual-friends
+            {
+              display: block;
+              color: $semiGray;
+            }
+          }
+        }
+        .friend-right
+        {
+          .visit-profile
+          {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba($semiGray,0.1);
+            margin-bottom: 0.5rem;
+            transition: 0.1s;
+            .visit
+            {
+              color: $semiGray;
+            }
+            &:hover
+            {
+              cursor: pointer;
+              background-color: rgba($semiGray,0.3);
+            }
+          }
+          .un-friend
+          {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: rgba($semiGray,0.1);
+            transition: 0.1s;
+            .remove-icon
+            {
+              color: $semiGray;
+            }
+            &:hover
+            {
+              cursor: pointer;
+              background-color: rgba($semiGray,0.3);
+            }
+          }
+        }
+        &:hover
+        {
+          background-color: rgba(black,0.1);
+        }
+      }
+    }
+    .uk-modal-footer
+    {
+      background-color: $listBgColor !important;
+    }
+  }
+}
