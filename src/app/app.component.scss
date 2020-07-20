@@ -5,12 +5,14 @@
   background-color: $navBgColor;
   padding: 0.2rem;
   box-shadow: $shadow;
-  overflow: hidden;
+  position: relative;
+  //overflow: hidden;
   .chats-content
   {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     .nav-left
     {
       display: flex;
@@ -23,6 +25,8 @@
       {
         .user-name
         {
+          display: flex;
+          align-items: center;
           color: #fff;
         }
         .status
@@ -60,6 +64,203 @@
     }
   }
 
+  .logout-list
+  {
+    position: absolute;
+    top: 110%;
+    right: 1%;
+    width: 100px;
+    background-color: rgba($navBgColor,0.7);
+    z-index: 99999999;
+    border-radius: 7px;
+    box-shadow: $shadow;
+    .list-div
+    {
+      display: block;
+      padding: 0.5rem;
+      color: #fff;
+      text-align: center;
+      transition: 0.2s;
+      text-decoration: none;
+      &:hover
+      {
+        cursor: pointer;
+        background-color: rgba($navBgColor,0.9);
+        border-radius: 7px;
+      }
+    }
+  }
+
+  .friend-request-list
+  {
+    position: absolute;
+    top: 110%;
+    right: 1%;
+    width: 360px;
+    height: 75vh;
+    background-color: rgba($mainColorDisabled,1);
+    z-index: 6666;
+    border-radius: 7px;
+    box-shadow: $shadow;
+    overflow-y: auto;
+    .request-header
+    {
+      padding: 1rem 1rem 0rem 1rem;
+      border-bottom: 1px solid #fff;
+      background-color: rgba($mainColorDisabled,1);
+      h4
+      {
+        color: rgba(#fff,0.9);
+      }
+    }
+    .friend-div
+    {
+      padding: 0.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: rgba(black,0.1);
+      transition: 0.1s;
+        border-bottom:1px solid rgba(#fff,0.5);
+      .request-left
+      {
+        display: flex;
+        align-items: center;
+        img
+        {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 50px;
+          width: 50px;
+          border-radius: 50%;
+          margin-right: 0.5rem;
+        }
+        .body-left
+        {
+          .request-name
+          {
+            display: flex;
+            align-items: center;
+            color: #fff;
+          }
+          .request-country
+          {
+            color: #fff;
+          }
+          .request-time
+          {
+            color: rgba(#fff,0.5);
+            font-size: 14px;
+          }
+        }
+        .body-right
+        {
+
+        }
+      }
+      .request-right
+      {
+      }
+      &:hover
+      {
+        background-color: rgba(black,0.3);
+        .user-acitve
+        {
+          background-color: lightgreen;
+        }
+      }
+    }
+  }
+  .notification-list
+  {
+    position: absolute;
+    top: 110%;
+    right: 1%;
+    width: 360px;
+    height: 75vh;
+    background-color: rgba($mainColorDisabled,1);
+    z-index: 6666;
+    border-radius: 7px;
+    box-shadow: $shadow;
+    overflow-y: auto;
+    .request-header
+    {
+      padding: 1rem 1rem 0rem 1rem;
+      border-bottom: 1px solid #fff;
+      background-color: rgba($mainColorDisabled,1);
+      h4
+      {
+        color: rgba(#fff,0.9);
+      }
+    }
+    .friend-div
+    {
+      padding: 0.5rem;
+      display: flex;
+      //align-items: center;
+      justify-content: space-between;
+      background-color: rgba(black,0.1);
+      transition: 0.1s;
+      border-bottom:1px solid rgba(#fff,0.5);
+      .request-left
+      {
+        display: flex;
+        align-items: center;
+        img
+        {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 50px;
+          width: 50px;
+          border-radius: 50%;
+          margin-right: 0.5rem;
+        }
+        .body-left
+        {
+          .request-name
+          {
+            display: flex;
+            align-items: center;
+            color: #fff;
+          }
+          .request-country
+          {
+            color: #fff;
+          }
+          .request-time
+          {
+            color: rgba(#fff,0.5);
+            font-size: 14px;
+          }
+        }
+        .body-right
+        {
+
+        }
+      }
+      .request-right
+      {
+        .close-icon
+        {
+          color: rgba(#fff,0.6);
+          &:hover
+          {
+            cursor: pointer;
+          }
+        }
+      }
+      &:hover
+      {
+        background-color: rgba(black,0.3);
+        .user-acitve
+        {
+          background-color: lightgreen;
+        }
+      }
+    }
+  }
 }
 
 
@@ -107,6 +308,7 @@
     }
 
   }
+
 }
 
 .open-canvas
@@ -156,7 +358,14 @@
     }
     .user-right
     {
+      .user-name
+      {
 
+      }
+      .user-bio
+      {
+        font-size: 14px;
+      }
     }
   }
   .sidebar-links
@@ -215,5 +424,106 @@
   .container-fluid
   {
     padding: 0rem;
+  }
+}
+
+
+@media only screen and (max-width: 400px) {
+  .friend-request-list
+  {
+    width: 95% !important;
+  }
+  .notification-list
+  {
+    width: 95% !important;
+  }
+}
+
+@media only screen and (max-width: 335px) {
+  .chats-nav
+  {
+    .chats-content
+    {
+      .nav-left
+      {
+        .canvas-div
+        {
+
+        }
+        .user-img-div
+        {
+
+        }
+        .online-part
+        {
+        }
+      }
+      .nav-middle
+      {
+
+      }
+      .nav-right
+      {
+        #logout
+        {
+          display: none;
+        }
+        #dots
+        {
+          padding: 0.5rem !important;
+          display: inline;
+        }
+      }
+    }
+
+  }
+
+  .open-canvas
+  {
+
+  }
+
+  .chat-nav-link
+  {
+
+  }
+  .container-fluid
+  {
+  }
+}
+
+#dots
+{
+  display: none;
+}
+
+.accecpt
+{
+  border: none;
+  outline: none;
+  padding: 0.3rem;
+  background-color: rgba(black,0.5);
+  color: #fff;
+  border-radius: 7px;
+  margin-bottom: 0.3rem;
+  display: inline-block;
+  &:hover
+  {
+    background-color: rgba(black,0.2);
+  }
+}
+
+.decline
+{
+  border: none;
+  outline: none;
+  padding: 0.3rem;
+  background-color: #ee395b;
+  color: #fff;
+  border-radius: 7px;
+  display: inline-block;
+  &:hover
+  {
+    background-color: rgba(#ee395b,0.8);
   }
 }

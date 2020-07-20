@@ -23,8 +23,11 @@
     "bootstrap": "^4.5.0",
     "jquery": "^3.5.1",
     "jquey": "0.0.1-security",
+    "particlesjs": "^2.2.3",
     "popper.js": "^1.16.1",
     "rxjs": "~6.5.5",
+    "socket.io-client": "^2.3.0",
+    "sweetalert2": "^9.17.0",
     "tslib": "^2.0.0",
     "uikit": "^3.5.4",
     "zone.js": "~0.10.3"

@@ -1,0 +1,160 @@
+<section class="content" @scaleIn>
+    <div class="register-box uk-box-shadow-small">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="register-header">
+                        <span>Create a new account</span>
+                        <img src="assets/register.svg" style="height: 70px; width: 70px" alt="register-img">
+                    </h4>
+                </div>
+                <div class="col-12 remove-padding">
+                    <div class="register-content">
+                        <form [formGroup]="registerForm" (ngSubmit)="RegisterUser()">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="chatsapp-input">
+                                            <input type="text" formControlName="firstName"
+                                                   class="login-form-control uk-box-shadow-small"
+                                                   placeholder="First name">
+                                            <i class="fa fa-user-circle login-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-user-circle login-icon-danger" aria-hidden="true"
+                                               *ngIf="registerForm.controls.firstName.touched && registerForm.controls.firstName.invalid"></i>
+                                            <div class="flexable-div"></div>
+                                            <div class="flexable-div-danger"
+                                                 *ngIf="registerForm.controls.firstName.touched && registerForm.controls.firstName.invalid"></div>
+                                        </div>
+                                        <small class="uk-text-danger" @scaleIn
+                                               *ngIf="registerForm.controls.firstName.touched && registerForm.controls.firstName.invalid">
+                                            <span> First name is required & mustn't contain any numbers </span> <i
+                                                class="fa fa-exclamation-circle mx-2" aria-hidden="true"></i></small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="chatsapp-input">
+                                            <input type="text" formControlName="lastName"
+                                                   class="login-form-control uk-box-shadow-small"
+                                                   placeholder="Last name">
+                                            <i class="fa fa-user-circle login-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-user-circle login-icon-danger" aria-hidden="true"
+                                               *ngIf="registerForm.controls.lastName.touched && registerForm.controls.lastName.invalid"></i>
+                                            <div class="flexable-div"></div>
+                                            <div class="flexable-div-danger"
+                                                 *ngIf="registerForm.controls.lastName.touched && registerForm.controls.lastName.invalid"></div>
+                                        </div>
+                                        <small class="uk-text-danger" @scaleIn
+                                               *ngIf="registerForm.controls.lastName.touched && registerForm.controls.lastName.invalid">
+                                            <span> Last name is required & mustn't contain any numbers </span> <i
+                                                class="fa fa-exclamation-circle mx-2" aria-hidden="true"></i></small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="chatsapp-input">
+                                            <input type="email" formControlName="email"
+                                                   class="login-form-control uk-box-shadow-small" placeholder="Email">
+                                            <i class="fa fa-envelope login-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-envelope login-icon-danger" aria-hidden="true"
+                                               *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid"></i>
+                                            <div class="flexable-div"></div>
+                                            <div class="flexable-div-danger"
+                                                 *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid"></div>
+                                            <small class="uk-text-danger" @scaleIn
+                                                   *ngIf="registerForm.controls.email.touched && registerForm.controls.email.invalid">
+                                                <span> Email is required </span> <i
+                                                    class="fa fa-exclamation-circle mx-2" aria-hidden="true"></i>
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="chatsapp-input">
+                                            <input type="text" formControlName="country"
+                                                   class="login-form-control uk-box-shadow-small" placeholder="Country">
+                                            <i class="fa fa-globe-africa login-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-globe-africa login-icon-danger" aria-hidden="true"
+                                               *ngIf="registerForm.controls.country.touched && registerForm.controls.country.invalid"></i>
+                                            <div class="flexable-div"></div>
+                                            <div class="flexable-div-danger"
+                                                 *ngIf="registerForm.controls.country.touched && registerForm.controls.country.invalid"></div>
+                                        </div>
+                                        <small class="uk-text-danger" @scaleIn
+                                               *ngIf="registerForm.controls.country.touched && registerForm.controls.country.invalid">
+                                            <span> Country is required </span> <i class="fa fa-exclamation-circle mx-2"
+                                                                                  aria-hidden="true"></i></small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="chatsapp-input">
+                                            <input type="text" formControlName="age"
+                                                   class="login-form-control uk-box-shadow-small" placeholder="Age">
+                                            <i class="fas fa-baby login-icon"></i>
+                                            <i class="fas fa-baby login-icon-danger" aria-hidden="true"
+                                               *ngIf="registerForm.controls.age.touched && registerForm.controls.age.invalid"></i>
+                                            <div class="flexable-div"></div>
+                                            <div class="flexable-div-danger"
+                                                 *ngIf="registerForm.controls.age.touched && registerForm.controls.age.invalid"></div>
+                                        </div>
+                                        <small class="uk-text-danger" @scaleIn
+                                               *ngIf="registerForm.controls.age.touched && registerForm.controls.age.invalid">
+                                            <span> Age is required & only in numbers </span> <i
+                                                class="fa fa-exclamation-circle mx-2" aria-hidden="true"></i></small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="chatsapp-input">
+                                            <input type="text" formControlName="gender"
+                                                   class="login-form-control uk-box-shadow-small" placeholder="Gender">
+                                            <i class="fa fa-venus-mars login-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-venus-mars login-icon-danger" aria-hidden="true"
+                                               *ngIf="registerForm.controls.gender.touched && registerForm.controls.gender.invalid"></i>
+                                            <div class="flexable-div"></div>
+                                            <div class="flexable-div-danger"
+                                                 *ngIf="registerForm.controls.gender.touched && registerForm.controls.gender.invalid"></div>
+                                        </div>
+                                        <small class="uk-text-danger" @scaleIn
+                                               *ngIf="registerForm.controls.gender.touched && registerForm.controls.gender.invalid">
+                                            <span> Gender is required </span> <i class="fa fa-exclamation-circle mx-2"
+                                                                                 aria-hidden="true"></i></small>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <div class="chatsapp-input">
+                                            <input type="password" formControlName="password"
+                                                   class="login-form-control uk-box-shadow-small"
+                                                   placeholder="Password">
+                                            <i class="fa fa-key login-icon" aria-hidden="true"></i>
+                                            <i class="fa fa-key login-icon-danger" aria-hidden="true"
+                                               *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid"></i>
+                                            <div class="flexable-div"></div>
+                                            <div class="flexable-div-danger"
+                                                 *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid"></div>
+                                        </div>
+                                        <small class="uk-text-danger" @scaleIn
+                                               *ngIf="registerForm.controls.password.touched && registerForm.controls.password.invalid">
+                                            <span> Password is required </span> <i class="fa fa-exclamation-circle mx-2"
+                                                                                   aria-hidden="true"></i></small>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button class="login-btn" [disabled]="registerForm.status === 'INVALID' || sendRequest">{{sendRequest? 'Loading..' : 'REGISTER'}}
+                                    <i *ngIf="sendRequest" class="fa fa-spinner mx-2 fa-spin" aria-hidden="true"></i></button>
+                            </div>
+                            <div class="form-group text-center" *ngIf="!auth.isLoggedIn()">
+                                <span class="dont-have-acc">Have account? <a routerLink="/login"
+                                                                             class="sign-up">Sign In</a></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

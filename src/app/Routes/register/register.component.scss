@@ -1,0 +1,47 @@
+@import "../../../assets/variables";
+
+.content
+{
+  .register-box
+  {
+    background-color: $listBgColor;
+    padding: 1rem;
+    margin-top: 1.5rem;
+    border-radius: 7px;
+    box-shadow: $shadow;
+    min-height: 80vh;
+    .register-header
+    {
+      font-weight: bolder;
+      color: rgba(#fff, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .register-content
+    {
+      .dont-have-acc
+      {
+        color: $semiGray;
+      }
+      .sign-up
+      {
+        color: rgba($mainColor,0.6);
+        margin-left: 0.5rem;
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+
+@media only screen and (max-width: 768px) {
+  .remove-padding
+  {
+    padding: 0 !important;
+  }
+  .register-header
+  {
+    font-size: 15px;
+  }
+}

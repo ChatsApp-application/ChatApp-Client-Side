@@ -4,4 +4,155 @@ export interface ChatDetails {
     fullDate?: Date;
     message?: string;
     seen?: boolean;
-};
+}
+
+
+// *************** LOGIN PART ***************** //
+
+export interface Login {
+    email?: string;
+    password?: string;
+}
+
+// *************** REGISTER PART ***************** //
+
+export interface SignUp {
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    gender?: string;
+    email?: string;
+    password?: string;
+}
+
+
+// *************** USER PART ***************** //
+
+
+export interface User {
+    _id?: string;
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    country?: string;
+    gender?: string;
+    bio?: string;
+    online?: string;
+    friendRequests?: FriendRequests[];
+    notifications?: Notifications[];
+    img?: Img;
+}
+
+export interface Notifications {
+    _id?: string;
+    type?: string;
+    from?: string;
+    to?: string;
+    message?: string;
+    data?: string;
+    fromUser?: FromUser;
+}
+
+export interface FromUser {
+    _id?: string;
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    country?: string;
+    gender?: string;
+    email?: string;
+    bio?: string;
+    online?: string;
+    img?: Img;
+}
+
+export interface FriendRequests {
+    _id?: string;
+    type?: string;
+    from?: string;
+    to?: string;
+    message?: string;
+    date?: string;
+    fromUser?: FromUser;
+}
+
+
+// *************** FRIENDS PART ***************** //
+
+export interface Friends {
+    _id?: string;
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    country?: string;
+    gender?: string;
+    bio?: string;
+    online?: string;
+    friends?: [];
+    matualFriends?: MutualFriends[];
+    img?: Img;
+}
+
+export interface MutualFriends {
+    _id?: string;
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    country?: string;
+    gender?: string;
+    bio?: string;
+    online?: string;
+    friends?: [];
+    img?: Img;
+}
+
+export interface Accept {
+    friendRequestId?: string;
+    fromId?: string;
+}
+
+// *************** FIND PEOPLE PART ***************** //
+
+export interface People {
+    _id?: string;
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    country?: string;
+    gender?: string;
+    sent?: boolean;
+    mutualFriends?: MutualFriends[];
+}
+
+// *************** VISITED PROFILE PART ***************** //
+
+export interface VisitedProfile {
+    _id?: string;
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    country?: string;
+    gender?: string;
+    bio?: string;
+    online?: boolean;
+    img?: Img;
+    userFriends?: ProfileFriends[];
+    relation?: string;
+}
+
+export interface ProfileFriends {
+    _id?: string;
+    firstName?: string;
+    lastName?: string;
+    age?: number;
+    country?: string;
+    gender?: string;
+    bio?: string;
+    online?: string;
+    img?: Img;
+}
+
+export interface Img {
+    url?: string;
+    publicId?: string;
+}

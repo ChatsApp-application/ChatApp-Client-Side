@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  apiWithUrl: 'https://chats--app.herokuapp.com'
 };

@@ -1,0 +1,48 @@
+
+<section class="content" @scaleIn>
+    <div class="login-box uk-box-shadow-small">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 remove-padding">
+                    <div class="login-left">
+                        <form [formGroup]="loginForm" (ngSubmit)="loginThisUser()">
+                            <h4 class="login-header">Login into your account</h4>
+                            <div class="form-group">
+                                <div class="chatsapp-input">
+                                    <input type="email" formControlName="userName" class="login-form-control uk-box-shadow-small" placeholder="Username">
+                                    <i class="fa fa-user-circle login-icon" aria-hidden="true"></i>
+                                    <i class="fa fa-user-circle login-icon-danger" aria-hidden="true" *ngIf="loginForm.controls.userName.touched && loginForm.controls.userName.invalid"></i>
+                                    <div class="flexable-div"></div>
+                                    <div class="flexable-div-danger" *ngIf="loginForm.controls.userName.touched && loginForm.controls.userName.invalid"></div>
+                                </div>
+                                <small class="uk-text-danger" @scaleIn *ngIf="loginForm.controls.userName.touched && loginForm.controls.userName.invalid"><span> User name is required </span> <i class="fa fa-exclamation-circle mx-2" aria-hidden="true"></i></small>
+                            </div>
+                            <div class="form-group">
+                                <div class="chatsapp-input">
+                                    <input type="password" formControlName="password" class="login-form-control uk-box-shadow-small" placeholder="Password">
+                                    <i class="fa fa-key login-icon" aria-hidden="true"></i>
+                                    <i class="fa fa-key login-icon-danger" aria-hidden="true" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid"></i>
+                                    <div class="flexable-div"></div>
+                                    <div class="flexable-div-danger" *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid"></div>
+                                </div>
+                                <small class="uk-text-danger" @scaleIn *ngIf="loginForm.controls.password.touched && loginForm.controls.password.invalid"><span> Password is required </span> <i class="fa fa-exclamation-circle mx-2" aria-hidden="true"></i></small>
+                            </div>
+                            <div class="form-group">
+                                <button class="login-btn" [disabled]="loginForm.status === 'INVALID' || sendRequest">{{sendRequest? 'Loading..' : 'LOGIN'}}
+                                    <i *ngIf="sendRequest" class="fa fa-spinner mx-2 fa-spin" aria-hidden="true"></i></button>
+                            </div>
+                            <div class="form-group text-center">
+                                <span class="dont-have-acc">Don't have account? <a routerLink="/register" class="sign-up">Sign Up</a></span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6 show-divider">
+                    <div class="login-right">
+                        <img src="assets/login.svg" class="img-fluid" alt="login-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -115,16 +115,27 @@
           width: 30px;
           height: 30px;
           border-radius: 50%;
-          background-color: rgba($semiGray,0.1);
+          background-color: rgba($mainColor,0.7);
           transition: 0.1s;
           .remove-icon
           {
-            color: $semiGray;
+            color: rgba(#fff,0.8);
           }
           &:hover
           {
             cursor: pointer;
             background-color: rgba($semiGray,0.3);
+          }
+        }
+        .sent-request
+        {
+          span
+          {
+            background-color: rgba($semiGray,0.3);
+            transition: 0.1s;
+            padding: 0.3rem;
+            color: $semiGray;
+            border-radius: 7px;
           }
         }
       }
@@ -141,7 +152,7 @@
       left: 0;
       height: 100%;
       width: 100%;
-      background-color: rgba($bgColor,0.7);
+      background-color: rgba($bgColor,0.2);
       z-index: 900;
       .loading-part
       {
