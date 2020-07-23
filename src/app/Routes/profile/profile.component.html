@@ -42,13 +42,13 @@
             </div>
         </div>
         <!-- slider part -->
-        <div class="alert alert-warning" *ngIf="profileContainer?.userFriends?.length === 0">
-            <i class="fa fa-exclamation-triangle mx-2" aria-hidden="true"></i>
-            <span style="font-size: 14px">{{profileContainer?.relation === 'isOwner' ? 'You dont' : 'This person doesnt'}} have any friends <a *ngIf="profileContainer.relation === 'isOwner'" routerLink="/people" class="text-decoration-none">Find some</a></span>
-        </div>
         <div id="slider-part">
             <hr class="uk-divider-icon">
             <div><span class="text-light font-weight-bold">Friends</span></div>
+            <div class="alert alert-warning" *ngIf="profileContainer?.userFriends?.length === 0">
+                <i class="fa fa-exclamation-triangle mx-2" aria-hidden="true"></i>
+                <span style="font-size: 14px">{{profileContainer?.relation === 'isOwner' ? 'You dont' : 'This person doesnt'}} have any friends <a *ngIf="profileContainer.relation === 'isOwner'" routerLink="/people" class="text-decoration-none">Find some</a></span>
+            </div>
             <swiper [config]="config">
                 <div class="swiper-wrapper p-2">
                     <!--      slide -->
