@@ -4,6 +4,7 @@ import {FreindsDetailsService} from '../../Services/friends/freinds-details.serv
 import {Friends, MutualFriends} from '../../models/model';
 import {Subscription} from 'rxjs';
 import Swal from 'sweetalert2';
+import {SocketService} from '../../Services/socket-io/socket.service';
 
 declare const $: any;
 
@@ -64,7 +65,9 @@ export class UserFriendsComponent implements OnInit, OnDestroy {
         }
     });
 
-    constructor(private friends: FreindsDetailsService) {
+    constructor(private friends: FreindsDetailsService, public socket: SocketService) {
+        this.listenToFriendsChanges();
+        this.listenToUnFriendChanges();
     }
 
     ngOnInit(): void {
@@ -120,6 +123,23 @@ export class UserFriendsComponent implements OnInit, OnDestroy {
             this.filteredFriends = this.friendsContainer.filter((filtered) => `${filtered.firstName.toLowerCase()} ${filtered.lastName.toLowerCase()}`.includes(this.searchedText.toLowerCase()));
             console.log(this.filteredFriends);
         }
+    }
+
+    listenToFriendsChanges(): void {
+        this.socket.listen('informingNotification').subscribe(res => {
+            // check if the opposite user accept the friend request
+            if (res['content'] && this.socket.userContainer._id === res['to'] || this.socket.userContainer._id === res['notification'].fromUser._id) {
+                this.getAllUserFriends();
+            }
+        });
+    }
+
+    listenToUnFriendChanges(): void {
+        this.socket.listen('unFriend').subscribe(res => {
+           if (this.socket.userContainer._id === res['friendId']) {
+               this.getAllUserFriends();
+           }
+        });
     }
 
     alertSuccess(message: string): void {

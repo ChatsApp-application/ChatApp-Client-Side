@@ -68,7 +68,6 @@ export class LoginComponent implements OnInit {
       this.alertSuccess(`${res.message}`);
       setTimeout(() => {
         this.login.saveToken(res.token);
-        localStorage.setItem('chats-user-id', res.userId);
         window.location.href = '/mychats';
       }, 2500);
     }, err => {

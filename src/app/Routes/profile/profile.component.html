@@ -27,42 +27,50 @@
                 <div class="age mx-2"><i class="fas fa-baby mx-2 caption-icon"></i> <span class="caption-details">{{profileContainer?.age}} yrs</span></div>
             </div>
             <div class="friend-req mt-2">
-                <button *ngIf="profileContainer?.relation === 'isFriend'" class="message-btn"><i class="fas fa-comment-dots mr-1"></i> <span>Message</span></button>
-                <button (click)="sendAddFriend(profileContainer._id)" *ngIf="profileContainer.relation === 'isStranger'" class="add-friend-btn mx-2"><i class="fa fa-user-plus mr-1" aria-hidden="true"></i> <span>Add Friend</span></button>
+                <button *ngIf="profileContainer?.relation === 'isFriend'" class="message-btn mx-2"><i class="fas fa-comment-dots mr-1"></i> <span>Message</span></button>
+                <button [disabled]="sendRequest" (click)="sendAddFriend(profileContainer._id)" *ngIf="profileContainer.relation === 'isStranger'" class="add-friend-btn mx-2">
+                    <span *ngIf="!sendRequest"><i class="fa fa-user-plus mr-1" aria-hidden="true"></i> Add Friend</span>
+                    <span *ngIf="sendRequest">Sending<i class="fa fa-spinner fa-spin text-light mx-1" aria-hidden="true"></i></span>
+                </button>
                 <button *ngIf="profileContainer?.relation === 'isFriendSent'" class="message-btn mx-2"><span>Sent Request</span></button>
                 <div uk-lightbox>
                     <a class="view-profile-btn" [href]="profileContainer?.img?.url ? profileContainer?.img?.url : 'assets/user.png'">View Profile Picture</a>
                 </div>
+                <a (click)="passUserData(profileContainer)" href="#edit-profile" uk-toggle *ngIf="profileContainer?.relation === 'isOwner'" class="message-btn mx-2">
+                    <i class="fas fa-user-edit"></i>
+                </a>
             </div>
         </div>
-        <div uk-slider="" id="slider-part">
+        <!-- slider part -->
+        <div class="alert alert-warning" *ngIf="profileContainer?.userFriends?.length === 0">
+            <i class="fa fa-exclamation-triangle mx-2" aria-hidden="true"></i>
+            <span style="font-size: 14px">{{profileContainer?.relation === 'isOwner' ? 'You dont' : 'This person doesnt'}} have any friends <a *ngIf="profileContainer.relation === 'isOwner'" routerLink="/people" class="text-decoration-none">Find some</a></span>
+        </div>
+        <div id="slider-part">
             <hr class="uk-divider-icon">
             <div><span class="text-light font-weight-bold">Friends</span></div>
-            <div class="alert alert-warning" *ngIf="profileContainer?.userFriends?.length === 0">
-                <i class="fa fa-exclamation-triangle mx-2" aria-hidden="true"></i>
-                <span>{{profileContainer?.relation === 'isOwner' ? 'You' : 'This person'}} doesn't have any friend <a routerLink="/people" class="text-decoration-none">Find some</a></span>
-            </div>
-            <div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1">
+            <swiper [config]="config">
+                <div class="swiper-wrapper p-2">
+                    <!--      slide -->
+                    <div class="swiper-slide" *ngFor="let friend of profileContainer?.userFriends;trackBy: socket.trackByFn" [routerLink]="['/profile', friend._id]">
+                        <div>
+                            <img *ngIf="friend?.img?.url" [src]="friend?.img?.url" alt="friend-img">
+                            <img *ngIf="!friend?.img?.url" src="assets/user.png" alt="friend-img">
+                        </div>
+                        <div class="card-caption">
+                            <div class="card-name">{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</div>
+                            <div class="card-data">{{friend.country}}, {{friend.gender}}</div>
+                        </div>
+                    </div>
 
-                <ul class="uk-slider-items uk-child-width-1-3@xs  uk-child-width-1-3@s uk-child-width-1-4@m uk-child-width-1-5@l uk-grid">
-                    <li *ngFor="let friend of profileContainer?.userFriends">
-                        <a class="uk-card uk-card-default text-decoration-none" [routerLink]="['/profile', friend._id]">
-                            <div class="uk-card-media-top">
-                                <img *ngIf="friend?.img?.url" [src]="friend?.img.url" style="display: flex; align-items: center; justify-content: center; height: 100px; width: auto; border-radius: 10px" alt="friend-img">
-                                <img *ngIf="!friend?.img?.url" src="assets/user.png" style="display: flex; align-items: center; justify-content: center; height: 100px; width: auto; border-radius: 10px" alt="friend-img">
-                            </div>
-                            <div class="card-caption">
-                                <div class="card-name">{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</div>
-                                <div class="card-data">{{friend.country}}, {{friend.gender}}</div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-
-                <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slider-item="previous"></a>
-                <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slider-item="next"></a>
-
-            </div>
+                </div>
+                <div class="swiper-scrollbar"></div>
+                <!-- Add Pagination -->
+                <!--    <div class="swiper-pagination"></div>-->
+                <!-- Add Arrows -->
+                <div class="swiper-button-next slide-control"></div>
+                <div class="swiper-button-prev slide-control"></div>
+            </swiper>
         </div>
         <!--Preloader part-->
         <div class="preloader">
@@ -77,3 +85,62 @@
         </div>
     </div>
 </section>
+
+
+<!-- user edit modal -->
+<div id="edit-profile" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <h2 class="uk-modal-title">Edit Profile</h2>
+        <div>
+            <form (ngSubmit)="editProfileData()" #editForm='ngForm'>
+                <div class="form-group">
+                    <div class="chatsapp-input">
+                        <input type="text" [(ngModel)]="userData.firstName" class="login-form-control uk-box-shadow-small" placeholder="First name" name="efn" required>
+                        <i class="fa fa-user-circle login-icon" aria-hidden="true"></i>
+                        <div class="flexable-div"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="chatsapp-input">
+                        <input type="text" [(ngModel)]="userData.lastName" class="login-form-control uk-box-shadow-small" placeholder="Last name" name="eln" required>
+                        <i class="fa fa-user-circle login-icon" aria-hidden="true"></i>
+                        <div class="flexable-div"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="chatsapp-input">
+                        <input type="text" [(ngModel)]="userData.age" class="login-form-control uk-box-shadow-small" placeholder="Age" name="ea" required>
+                        <i class="fas fa-baby login-icon"></i>
+                        <div class="flexable-div"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="chatsapp-input">
+                        <input type="text" [(ngModel)]="userData.gender" class="login-form-control uk-box-shadow-small" placeholder="Gender" name="eg" required>
+                        <i class="fa fa-venus-mars login-icon" aria-hidden="true"></i>
+                        <div class="flexable-div"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="chatsapp-input">
+                        <input type="text" [(ngModel)]="userData.country" class="login-form-control uk-box-shadow-small" placeholder="Country" name="ec" required>
+                        <i class="fa fa-globe-africa login-icon" aria-hidden="true"></i>
+                        <div class="flexable-div"></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="chatsapp-input">
+                        <input type="text" [(ngModel)]="userData.bio" class="login-form-control uk-box-shadow-small" placeholder="Bio" name="eb" required>
+                        <i class="fas fa-envelope-open-text login-icon"></i>
+                        <div class="flexable-div"></div>
+                    </div>
+                </div>
+                <p class="uk-text-right">
+                    <button class="uk-button uk-button-default uk-modal-close mx-2 text-light" type="button">Cancel</button>
+                    <button class="uk-button uk-button-primary text-light" [disabled]="sendRequest || editForm.status === 'INVALID'">{{sendRequest? 'SAVING..' : 'Save'}}
+                        <i *ngIf="sendRequest" class="fa fa-spinner fa-spin mx-2" aria-hidden="true"></i></button>
+                </p>
+            </form>
+        </div>
+    </div>
+</div>

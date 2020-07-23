@@ -1,10 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {animate, group, style, transition, trigger} from '@angular/animations';
 import {ActivatedRoute} from '@angular/router';
 import {ProfileService} from '../../Services/profile/profile.service';
 import {VisitedProfile} from '../../models/model';
 import {FreindsDetailsService} from '../../Services/friends/freinds-details.service';
 import Swal from 'sweetalert2';
+import {SocketService} from '../../Services/socket-io/socket.service';
+import Uikit from 'uikit';
+import {Subscription} from 'rxjs';
+import {SwiperOptions} from 'swiper';
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
@@ -25,10 +29,11 @@ import Swal from 'sweetalert2';
             ])
         ])]
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
     // variables
     userId;
     sendRequest = false;
+    listenToInformingSub: Subscription;
     // array
     profileContainer: VisitedProfile = {};
     // Sweet alert
@@ -43,19 +48,77 @@ export class ProfileComponent implements OnInit {
             toast.addEventListener('mouseleave', Swal.resumeTimer);
         }
     });
-    constructor(private activated: ActivatedRoute, private profile: ProfileService, private friend: FreindsDetailsService) {
+    // interfaces
+    userData: VisitedProfile = {
+        age: null,
+        gender: '',
+        firstName: '',
+        lastName: '',
+        bio: '',
+        country: ''
+    };
+    // swiper
+    config: SwiperOptions = {
+        pagination: { el: '.swiper-pagination', clickable: true },
+        slidesPerView: 5,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+        },
+        spaceBetween: 10,
+        scrollbar: {
+            el: '.swiper-scrollbar',
+            hide: true
+        },
+        breakpoints: {
+            1200: {
+                slidesPerView: 5,
+                slidesPerGroup: 5
+            },
+            992: {
+                slidesPerView: 4,
+                slidesPerGroup: 4
+            },
+            768: {
+                slidesPerView: 3,
+                slidesPerGroup: 3
+            },
+            600: {
+                slidesPerView: 2.5,
+                slidesPerGroup: 2.5
+            },
+            450: {
+                slidesPerView: 2,
+                slidesPerGroup: 2
+            },
+            320: {
+                slidesPerView: 1,
+                slidesPerGroup: 1
+            }
+        }
+    };
+    constructor(private activated: ActivatedRoute, private profile: ProfileService, private friend: FreindsDetailsService, public socket: SocketService) {
         this.activated.params.subscribe(res => {
             this.userId = res.id;
             this.getUserProfile();
         });
+        this.listenToProfileChanges();
+        this.listenToUnFriendChanges();
     }
 
     ngOnInit(): void {
+        this.listenToInformingNotification();
+    }
+
+    ngOnDestroy(): void {
+        this.listenToInformingSub.unsubscribe();
     }
 
     sendAddFriend(id): void {
+        this.sendRequest = true;
         this.friend.sendFriendReq(id).subscribe(res => {
             this.getUserProfile();
+            this.sendRequest = false;
         });
     }
 
@@ -67,6 +130,29 @@ export class ProfileComponent implements OnInit {
             this.friend.hideLoader();
         });
     }
+
+    editProfileData(): void {
+        this.sendRequest = true;
+        console.log(this.userData);
+        this.profile.updateProfile(this.userData).subscribe(res => {
+            this.sendRequest = false;
+            this.getUserProfile();
+            this.closeModal();
+            this.alertSuccess('Profile Updated');
+        }, err => {
+            this.sendRequest = false;
+            this.alertDanger(`${err.error.error}`);
+            console.log(err);
+        });
+    }
+
+    passUserData(data): void {
+        const newEditData = {...data};
+        const {firstName, lastName, age, bio, country, gender } = newEditData;
+        this.userData = {firstName, lastName, age, bio, country, gender};
+        console.log(this.userData);
+    }
+
     profileImageSelected(event): void {
         this.sendRequest = true;
         console.log(event.target.files[0]);
@@ -74,10 +160,15 @@ export class ProfileComponent implements OnInit {
         profilePicture.append('image', event.target.files[0], event.target.files[0].name);
 
         this.profile.updatePP(profilePicture).subscribe(res => {
+            this.socket.getUserAfterLoggedIn();
             this.getUserProfile();
             this.sendRequest = false;
             this.alertSuccess('Profile Picture Updated Successfully');
-        }, err => {this.alertDanger('Something went wrong!'); console.log(err); this.sendRequest = false; });
+        }, err => {
+            this.alertDanger('Something went wrong!');
+            console.log(err);
+            this.sendRequest = false;
+        });
     }
 
     alertSuccess(message: string): void {
@@ -92,5 +183,38 @@ export class ProfileComponent implements OnInit {
             icon: 'error',
             title: message
         });
+    }
+
+    listenToProfileChanges(): void {
+        this.socket.listen('informingNotification').subscribe(res => {
+            if (res['content'] && this.socket.userContainer._id === res['to'] || this.socket.userContainer._id === res['notification'].fromUser._id) {
+                this.getUserProfile();
+            }
+        });
+    }
+
+    listenToUnFriendChanges(): void {
+        this.socket.listen('unFriend').subscribe(res => {
+            if (this.socket.userContainer._id === res['friendId']) {
+                this.getUserProfile();
+            }
+        });
+    }
+
+    listenToInformingNotification(): void {
+       this.listenToInformingSub = this.socket.listen('informingNotificationForBoth').subscribe(res => {
+            console.log(res);
+            if (this.socket.userContainer._id === res['notificationForUser']?.fromUser?._id) {
+                this.socket.getUserAfterLoggedIn();
+            }
+            if (this.socket.userContainer._id === res['notificationForAddTo']?.fromUser?._id) {
+                this.socket.getUserAfterLoggedIn();
+                this.getUserProfile();
+            }
+        });
+    }
+
+    closeModal(): void {
+        Uikit.offcanvas('#edit-profile').hide();
     }
 }

@@ -28,4 +28,13 @@ export class ProfileService {
       }
     });
   }
+
+  // *************  UPDATE PROFILE DATA  ************** //
+  updateProfile(data: object): Observable<any> {
+    return this.http.patch(`${environment.apiWithUrl}/users/editUserProfile`, data, {
+      headers: {
+        Authorization: `Bearer ${this.token}`
+      }
+    });
+  }
 }

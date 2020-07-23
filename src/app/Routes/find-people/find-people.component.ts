@@ -3,6 +3,7 @@ import {animate, group, style, transition, trigger} from '@angular/animations';
 import {MutualFriends, People} from '../../models/model';
 import {Subscription} from 'rxjs';
 import {FreindsDetailsService} from '../../Services/friends/freinds-details.service';
+import {SocketService} from '../../Services/socket-io/socket.service';
 
 @Component({
   selector: 'app-find-people',
@@ -44,23 +45,32 @@ export class FindPeopleComponent implements OnInit, OnDestroy {
   peopleSub: Subscription;
   searchedText;
   toggleArraies = false;
+  listenToInformingSub: Subscription;
+  sendRequest = false;
   // array
   peopleContainer: People[] = [];
   filterdPeople: People[] = [];
   mutualPeople: MutualFriends[] = [];
   // interfaces
-  constructor(private people: FreindsDetailsService) { }
+  constructor(private people: FreindsDetailsService, public socket: SocketService) {
+    this.listenToFriendsChanges();
+    this.listenToUnFriendChanges();
+  }
 
   ngOnInit(): void {
+    this.listenToInformingNotification();
     this.getAllPeople();
   }
 
   ngOnDestroy(): void {
     this.peopleSub.unsubscribe();
+    this.listenToInformingSub.unsubscribe();
   }
 
   sendFriendReq(id): void {
+    this.sendRequest = true;
     this.people.sendFriendReq(id).subscribe(res => {
+      this.sendRequest = false;
       console.log(res);
       this.getAllPeople();
     });
@@ -68,6 +78,36 @@ export class FindPeopleComponent implements OnInit, OnDestroy {
 
   getSelectedPeople(data): void {
     this.mutualPeople = data;
+  }
+
+  listenToFriendsChanges(): void {
+    this.socket.listen('informingNotification').subscribe(res => {
+      // check if the opposite user accept the friend request
+      if (res['content'] && this.socket.userContainer._id === res['to'] || this.socket.userContainer._id === res['notification'].fromUser._id) {
+        this.getAllPeople();
+      }
+    });
+  }
+
+  listenToUnFriendChanges(): void {
+    this.socket.listen('unFriend').subscribe(res => {
+      if (this.socket.userContainer._id === res['friendId']) {
+        this.getAllPeople();
+      }
+    });
+  }
+
+  listenToInformingNotification(): void {
+    this.listenToInformingSub = this.socket.listen('informingNotificationForBoth').subscribe(res => {
+      console.log(res);
+      if (this.socket.userContainer._id === res['notificationForUser']?.fromUser?._id) {
+        this.socket.getUserAfterLoggedIn();
+      }
+      if (this.socket.userContainer._id === res['notificationForAddTo']?.fromUser?._id) {
+        this.socket.getUserAfterLoggedIn();
+        this.getAllPeople();
+      }
+    });
   }
   getAllPeople(): void {
     this.people.showLoader();

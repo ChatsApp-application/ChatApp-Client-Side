@@ -117,6 +117,8 @@
           border-radius: 50%;
           background-color: rgba($mainColor,0.7);
           transition: 0.1s;
+          border: none;
+          outline: none;
           .remove-icon
           {
             color: rgba(#fff,0.8);

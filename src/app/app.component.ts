@@ -37,7 +37,6 @@ export class AppComponent implements OnInit{
     notifactionsVar = false;
     sendRequest = false;
     // arries
-    userContainer: User = {};
     // Sweet alert
     Toast = Swal.mixin({
         toast: true,
@@ -51,23 +50,12 @@ export class AppComponent implements OnInit{
         }
     });
     constructor(public auth: AuthenticationService, public user: UserDetailsService, private friend: FreindsDetailsService, public socket: SocketService) {
-        console.log(this.socket.notificationSocketContainer);
     }
 
     ngOnInit(): void {
         document.addEventListener('visibilitychange', this.visibilityState, false);
-        this.getUserAfterLoggedIn();
-        console.log(this.auth.isLoggedIn());
-        this.socket.listen('connect').subscribe(() => {
-            console.log(this.socket.socket.id);
-        });
     }
 
-    getUserAfterLoggedIn(): void {
-        this.user.getUserAfterLogin().subscribe(res => {
-            this.userContainer = res.user;
-        });
-    }
     acceptThisUser(requestId, fromUserId): void {
         this.sendRequest = true;
         const acceptReq: Accept = {
@@ -77,7 +65,7 @@ export class AppComponent implements OnInit{
 
         this.friend.acceptFriendRequest(acceptReq).subscribe(res => {
             this.alertSuccess('Request Accepted');
-            this.getUserAfterLoggedIn();
+            this.socket.getUserAfterLoggedIn();
             this.sendRequest = false;
         }, err => {this.sendRequest = false; this.alertDanger('Something went wrong'); });
     }
@@ -85,7 +73,7 @@ export class AppComponent implements OnInit{
         this.sendRequest = true;
         this.friend.rejectFriendRequest(requestId, fromUserId).subscribe(res => {
             this.alertSuccess('Request Rejected');
-            this.getUserAfterLoggedIn();
+            this.socket.getUserAfterLoggedIn();
             this.sendRequest = false;
         }, err => {this.sendRequest = false; this.alertDanger('Something went wrong'); });
     }
@@ -112,7 +100,10 @@ export class AppComponent implements OnInit{
     }
 
     deleteThisNotification(id, index): void {
-        this.userContainer.notifications.splice(index, 1);
+        // this.socket.userContainer.notifications.splice(index, 1);
+        const notificationCopy = [...this.socket.userContainer.notifications];
+        const filterdNotifications = notificationCopy.filter(filtered => filtered._id !== id);
+        this.socket.userContainer.notifications = filterdNotifications;
         this.user.deleteNotification(id).subscribe(res => {
             // this.getUserAfterLoggedIn();
             console.log(res);
@@ -141,4 +132,5 @@ export class AppComponent implements OnInit{
             console.log('hidden');
         }
     }
+
 }

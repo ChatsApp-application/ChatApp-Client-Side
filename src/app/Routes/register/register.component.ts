@@ -3,6 +3,9 @@ import {animate, group, style, transition, trigger} from '@angular/animations';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import validate = WebAssembly.validate;
 import {AuthenticationService} from '../../Services/authentication.service';
+import {SignUp} from '../../models/model';
+import Swal from 'sweetalert2';
+import {Router} from '@angular/router';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -37,13 +40,66 @@ export class RegisterComponent implements OnInit {
     gender: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)]),
   });
-
-  constructor(public auth: AuthenticationService) { }
+  // interfaces
+  signUpData: SignUp = {
+    age: null,
+    email: '',
+    firstName: '',
+    lastName: '',
+    gender: '',
+    password: '',
+    country: '',
+  };
+  // Sweet alert
+  Toast = Swal.mixin({
+    toast: true,
+    position: 'top-left',
+    showConfirmButton: false,
+    timer: 2500,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+      toast.addEventListener('mouseenter', Swal.stopTimer);
+      toast.addEventListener('mouseleave', Swal.resumeTimer);
+    }
+  });
+  constructor(public auth: AuthenticationService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   RegisterUser(): void {
+    this.sendRequest = true;
+    this.signUpData.age = this.registerForm.controls.age.value;
+    this.signUpData.email = this.registerForm.controls.email.value;
+    this.signUpData.firstName = this.registerForm.controls.firstName.value;
+    this.signUpData.lastName = this.registerForm.controls.lastName.value;
+    this.signUpData.gender = this.registerForm.controls.gender.value;
+    this.signUpData.password = this.registerForm.controls.password.value;
+    this.signUpData.country = this.registerForm.controls.country.value;
 
+    this.auth.registerAuth(this.signUpData).subscribe(res => {
+      this.sendRequest = false;
+      this.alertSuccess(`${res.message}`);
+      this.registerForm.reset();
+      setTimeout(() => {
+        if (localStorage.getItem('chatsapp-token') === null) {
+          this.router.navigate(['/login']);
+        }
+      }, 2500);
+    }, err => {this.sendRequest = false; this.alertDanger(`${err.error.error}`); });
+  }
+
+  alertSuccess(message: string): void {
+    this.Toast.fire({
+      icon: 'success',
+      title: message
+    });
+  }
+
+  alertDanger(message: string): void {
+    this.Toast.fire({
+      icon: 'error',
+      title: message
+    });
   }
 }

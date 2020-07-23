@@ -268,23 +268,7 @@
   justify-content: center;
 }
 
-.card-caption
-{
-  background-color: $listBgColor;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  .card-name
-  {
-    color: rgba(#fff,0.8);
-    text-align: center;
-  }
-  .card-data
-  {
-    color: $semiGray;
-  }
-}
+
 .uk-card
 {
   &:hover
@@ -295,6 +279,48 @@
 #slider-part
 {
   transform: translateY(-20%);
+  swiper
+  {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    .swiper-slide
+    {
+      div
+      {
+        text-align: center;
+        img
+        {
+          height: 100px;
+          width: 100px;
+          border-radius: 10px;
+        }
+      }
+      .card-caption
+      {
+        background-color: $listBgColor;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        .card-name
+        {
+          color: rgba(#fff,0.8);
+          text-align: center;
+        }
+        .card-data
+        {
+          color: $semiGray;
+        }
+      }
+      &:hover
+      {
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 .uk-divider-icon
@@ -335,3 +361,19 @@
   outline: none;
   border-radius: 7px;
 }
+
+
+#edit-profile
+{
+  .uk-modal-dialog
+  {
+    background-color: $listBgColor !important;
+    .uk-modal-title
+    {
+      font-size: 20px !important;
+      color: rgba(#fff,0.8);
+    }
+  }
+}
+
+

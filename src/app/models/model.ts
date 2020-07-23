@@ -23,6 +23,7 @@ export interface SignUp {
     gender?: string;
     email?: string;
     password?: string;
+    country?: string;
 }
 
 
@@ -122,6 +123,7 @@ export interface People {
     gender?: string;
     sent?: boolean;
     mutualFriends?: MutualFriends[];
+    img?: Img;
 }
 
 // *************** VISITED PROFILE PART ***************** //
