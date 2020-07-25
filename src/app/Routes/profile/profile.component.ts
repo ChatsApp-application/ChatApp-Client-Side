@@ -30,46 +30,11 @@ import {SwiperOptions} from 'swiper';
         ])]
 })
 export class ProfileComponent implements OnInit, OnDestroy {
-    // variables
-    userId;
-    sendRequest = false;
-    listenToInformingSub: Subscription;
-    // array
-    profileContainer: VisitedProfile = {};
-    // Sweet alert
-    Toast = Swal.mixin({
-        toast: true,
-        position: 'top-left',
-        showConfirmButton: false,
-        timer: 2500,
-        timerProgressBar: true,
-        onOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer);
-            toast.addEventListener('mouseleave', Swal.resumeTimer);
-        }
-    });
-    // interfaces
-    userData: VisitedProfile = {
-        age: null,
-        gender: '',
-        firstName: '',
-        lastName: '',
-        bio: '',
-        country: ''
-    };
     // swiper
     config: SwiperOptions = {
-        pagination: { el: '.swiper-pagination', clickable: true },
         slidesPerView: 5,
-        navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-        },
         spaceBetween: 10,
-        scrollbar: {
-            el: '.swiper-scrollbar',
-            hide: true
-        },
+        loop: false,
         breakpoints: {
             1200: {
                 slidesPerView: 5,
@@ -96,6 +61,33 @@ export class ProfileComponent implements OnInit, OnDestroy {
                 slidesPerGroup: 1
             }
         }
+    };
+    // variables
+    userId;
+    sendRequest = false;
+    listenToInformingSub: Subscription;
+    // array
+    profileContainer: VisitedProfile = {};
+    // Sweet alert
+    Toast = Swal.mixin({
+        toast: true,
+        position: 'top-left',
+        showConfirmButton: false,
+        timer: 2500,
+        timerProgressBar: true,
+        onOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer);
+            toast.addEventListener('mouseleave', Swal.resumeTimer);
+        }
+    });
+    // interfaces
+    userData: VisitedProfile = {
+        age: null,
+        gender: '',
+        firstName: '',
+        lastName: '',
+        bio: '',
+        country: ''
     };
     constructor(private activated: ActivatedRoute, private profile: ProfileService, private friend: FreindsDetailsService, public socket: SocketService) {
         this.activated.params.subscribe(res => {

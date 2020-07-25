@@ -46,7 +46,6 @@ export class FindPeopleComponent implements OnInit, OnDestroy {
   searchedText;
   toggleArraies = false;
   listenToInformingSub: Subscription;
-  sendRequest = false;
   // array
   peopleContainer: People[] = [];
   filterdPeople: People[] = [];
@@ -67,12 +66,12 @@ export class FindPeopleComponent implements OnInit, OnDestroy {
     this.listenToInformingSub.unsubscribe();
   }
 
-  sendFriendReq(id): void {
-    this.sendRequest = true;
+  sendFriendReq(id, i): void {
+    this.peopleContainer[i].sendRequest = true;
     this.people.sendFriendReq(id).subscribe(res => {
-      this.sendRequest = false;
       console.log(res);
       this.getAllPeople();
+      this.peopleContainer[i].sendRequest = false;
     });
   }
 
@@ -114,6 +113,7 @@ export class FindPeopleComponent implements OnInit, OnDestroy {
     this.peopleSub = this.people.findPeople().subscribe(res => {
       this.people.hideLoader();
       this.peopleContainer = res.people;
+      this.peopleContainer.forEach(person => person.sendRequest = false );
       console.log(this.peopleContainer);
     });
   }

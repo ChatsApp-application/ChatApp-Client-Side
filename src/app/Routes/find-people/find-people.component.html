@@ -9,7 +9,7 @@
         </div>
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12 col-md-6 friend-col mb-2" *ngFor="let pple of toggleArraies === false ? peopleContainer : filterdPeople;trackBy: socket.trackByFn" @scaleUp>
+                <div class="col-12 col-md-6 friend-col mb-2" *ngFor="let pple of toggleArraies === false ? peopleContainer : filterdPeople;trackBy: socket.trackByFn;let i = index" @scaleUp>
                     <div class="friend-details">
                         <div class="friend-left">
                             <img *ngIf="!pple?.img?.url" class="friend-img" src="assets/user.png" alt="friend-image">
@@ -23,9 +23,9 @@
                             <a class="visit-profile text-decoration-none" [routerLink]="['/profile', pple._id]">
                                 <i class="fas fa-eye visit"></i>
                             </a>
-                            <button class="un-friend" [disabled]="sendRequest" *ngIf="pple.sent === false" (click)="sendFriendReq(pple._id)">
-                                <i *ngIf="!sendRequest" class="fas fa-user-plus remove-icon"></i>
-                                <i *ngIf="sendRequest" class="fa fa-spinner fa-spin text-light" aria-hidden="true"></i>
+                            <button class="un-friend" [disabled]="pple.sendRequest" *ngIf="pple.sent === false" (click)="sendFriendReq(pple._id, i)">
+                                <i *ngIf="!pple?.sendRequest" class="fas fa-user-plus remove-icon"></i>
+                                <i *ngIf="pple?.sendRequest" class="fa fa-spinner fa-spin text-light" aria-hidden="true"></i>
                             </button>
                             <div class="sent-request" *ngIf="pple.sent === true">
                                 <span>Sent</span>

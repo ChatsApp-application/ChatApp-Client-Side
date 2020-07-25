@@ -3,6 +3,7 @@ import * as io from 'socket.io-client';
 import {Observable} from 'rxjs';
 import {User} from '../../models/model';
 import {UserDetailsService} from '../user/user-details.service';
+import {AuthenticationService} from '../authentication.service';
 
 @Injectable({
     providedIn: 'root'
@@ -14,9 +15,11 @@ export class SocketService {
     // arraies
     userContainer: User = {};
 
-    constructor(private user: UserDetailsService) {
+    constructor(private user: UserDetailsService, private auth: AuthenticationService) {
         this.socket = io(this.url);
-        this.getUserAfterLoggedIn();
+        if (this.auth.isLoggedIn()) {
+            this.getUserAfterLoggedIn();
+        }
         this.listenToFriendRequests();
         this.listenToRejectionNotification();
     }
@@ -36,7 +39,8 @@ export class SocketService {
     trackByFn(index, item) {
         return index; // or item.id
     }
-        listenToFriendRequests(): void {
+
+    listenToFriendRequests(): void {
         this.listen('friendRequest').subscribe(res => {
             console.log(res);
             if (this.userContainer._id === res['to']) {

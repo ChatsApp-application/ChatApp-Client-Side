@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate, Router} from '@angular/router';
 import { Observable } from 'rxjs';
 import {AuthenticationService} from '../authentication.service';
 
@@ -7,10 +7,14 @@ import {AuthenticationService} from '../authentication.service';
   providedIn: 'root'
 })
 export class ValidGuard implements CanActivate {
-  constructor(private auth: AuthenticationService) {}
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.auth.isLoggedIn();
+  constructor(private auth: AuthenticationService, private router: Router) {}
+
+  canActivate(): boolean {
+    if (this.auth.isLoggedIn()) {
+      return true;
+    } else {
+      this.router.navigate(['/login']);
+      return false;
+    }
   }
 }

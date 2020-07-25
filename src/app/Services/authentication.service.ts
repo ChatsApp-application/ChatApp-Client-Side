@@ -26,10 +26,7 @@ export class AuthenticationService {
   }
 
    isLoggedIn() {
-    if (localStorage.getItem('chatsapp-token')) {
-      return true;
-    }
-    return false;
+    return !!localStorage.getItem('chatsapp-token');
   }
 
   logOut(): void {

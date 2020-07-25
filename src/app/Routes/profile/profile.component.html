@@ -49,10 +49,10 @@
                 <i class="fa fa-exclamation-triangle mx-2" aria-hidden="true"></i>
                 <span style="font-size: 14px">{{profileContainer?.relation === 'isOwner' ? 'You dont' : 'This person doesnt'}} have any friends <a *ngIf="profileContainer.relation === 'isOwner'" routerLink="/people" class="text-decoration-none">Find some</a></span>
             </div>
-            <swiper [config]="config">
+            <swiper [config]="config" *ngIf="profileContainer?.userFriends?.length > 0">
                 <div class="swiper-wrapper p-2">
                     <!--      slide -->
-                    <div class="swiper-slide" *ngFor="let friend of profileContainer?.userFriends;trackBy: socket.trackByFn" [routerLink]="['/profile', friend._id]">
+                    <div class="swiper-slide" *ngFor="let friend of profileContainer?.userFriends;trackBy: socket?.trackByFn" [routerLink]="['/profile', friend._id]">
                         <div>
                             <img *ngIf="friend?.img?.url" [src]="friend?.img?.url" alt="friend-img">
                             <img *ngIf="!friend?.img?.url" src="assets/user.png" alt="friend-img">
@@ -64,12 +64,6 @@
                     </div>
 
                 </div>
-                <div class="swiper-scrollbar"></div>
-                <!-- Add Pagination -->
-                <!--    <div class="swiper-pagination"></div>-->
-                <!-- Add Arrows -->
-                <div class="swiper-button-next slide-control"></div>
-                <div class="swiper-button-prev slide-control"></div>
             </swiper>
         </div>
         <!--Preloader part-->

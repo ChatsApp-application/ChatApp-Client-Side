@@ -124,6 +124,7 @@ export interface People {
     sent?: boolean;
     mutualFriends?: MutualFriends[];
     img?: Img;
+    sendRequest?: boolean;
 }
 
 // *************** VISITED PROFILE PART ***************** //

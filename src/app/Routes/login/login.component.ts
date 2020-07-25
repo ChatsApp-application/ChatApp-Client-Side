@@ -5,6 +5,7 @@ import {Login} from '../../models/model';
 import Swal from 'sweetalert2';
 import {AuthenticationService} from '../../Services/authentication.service';
 import {Router} from '@angular/router';
+import {SocketService} from '../../Services/socket-io/socket.service';
 
 @Component({
   selector: 'app-login',
@@ -52,7 +53,7 @@ export class LoginComponent implements OnInit {
       toast.addEventListener('mouseleave', Swal.resumeTimer);
     }
   });
-  constructor(private login: AuthenticationService, private router: Router) { }
+  constructor(private login: AuthenticationService, private router: Router, private socket: SocketService) { }
 
   ngOnInit(): void {
   }
