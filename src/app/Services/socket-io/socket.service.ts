@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as io from 'socket.io-client';
 import {Observable} from 'rxjs';
-import {User} from '../../models/model';
+import {MyChats, User, UserChats} from '../../models/model';
 import {UserDetailsService} from '../user/user-details.service';
 import {AuthenticationService} from '../authentication.service';
 
@@ -12,9 +12,10 @@ export class SocketService {
     // variables
     socket: any;
     readonly url: string = 'https://chats--app.herokuapp.com/';
+    token = localStorage.getItem('chatsapp-token');
     // arraies
     userContainer: User = {};
-
+    allChatListContainer: MyChats = {};
     constructor(private user: UserDetailsService, private auth: AuthenticationService) {
         this.socket = io(this.url);
         if (this.auth.isLoggedIn()) {
@@ -22,6 +23,7 @@ export class SocketService {
         }
         this.listenToFriendRequests();
         this.listenToRejectionNotification();
+        this.listenToMyChats();
     }
 
     listen(eventName: string) {
@@ -56,6 +58,14 @@ export class SocketService {
             if (this.userContainer._id === res['to']) {
                 this.userContainer.notifications.unshift(res['notification']);
             }
+        });
+    }
+
+
+    listenToMyChats(): void {
+        this.listen('userChats').subscribe(res => {
+            this.allChatListContainer = res;
+            console.log(res);
         });
     }
 

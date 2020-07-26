@@ -23,13 +23,17 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
+            "allowedCommonJsDependencies": [
+              "socket.io-client",
+              "socket.io-parser",
+              "debug"
+            ],
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
-              "./node_modules/swiper/swiper.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
               "node_modules/uikit/dist/css/uikit.min.css",
               "./node_modules/sweetalert2/dist/sweetalert2.min.css",
@@ -40,8 +44,7 @@
               "node_modules/popper.js/dist/umd/popper.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "./node_modules/sweetalert2/dist/sweetalert2.all.min.js",
-              "./node_modules/particlesjs/dist/particles.min.js",
-              "node_modules/uikit/dist/js/uikit.min.js"
+              "node_modules/uikit/dist/js/uikit.min.js",
             ]
           },
           "configurations": {

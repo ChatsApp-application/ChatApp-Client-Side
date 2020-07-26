@@ -159,3 +159,40 @@ export interface Img {
     url?: string;
     publicId?: string;
 }
+
+
+// *************** MY CHATS LIST PART ***************** //
+
+export interface MyChats {
+    userChats?: UserChats[];
+    userId?: string;
+}
+
+export interface UserChats {
+    _id?: string;
+    chatHistory?: ChatHistory[];
+    lastMessageDate?: string;
+    firstUser?: User;
+    secondUser?: User;
+}
+
+export interface ChatHistory {
+    _id?: string;
+    date?: string;
+    from?: string;
+    message?: string;
+    seen?: boolean;
+}
+
+export interface User {
+    _id?: string;
+    age?: number;
+    bio?: string;
+    country?: string;
+    email?: string;
+    firstName?: string;
+    gender?: string;
+    img?: Img;
+    joinedAt?: string;
+    lastName?: string;
+}

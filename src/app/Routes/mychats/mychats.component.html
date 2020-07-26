@@ -7,166 +7,28 @@
             </form>
         </div>
         <div class="chat-contacts">
-            <a class="friends text-decoration-none" [routerLink]="['/mychats', 5]">
+            <a class="friends text-decoration-none" *ngFor="let list of socket.allChatListContainer.userChats;trackBy:socket.trackByFn;let i = index" [routerLink]="['/mychats', 5]" @scaleUp>
             <div class="friends-imgs">
-                <img class="img" src="assets/myprofile.jpg" alt="friends-images">
+                <img *ngIf="socket.allChatListContainer.userId === list.firstUser._id"  class="img" [src]="list.secondUser.img ? list.secondUser.img.url : 'assets/user.png'" alt="friends-images">
+                <img *ngIf="socket.allChatListContainer.userId === list.secondUser._id"  class="img" [src]="list.firstUser.img ? list.firstUser.img.url : 'assets/user.png'" alt="friends-images">
             </div>
             <div class="friends-chat">
                 <div class="friend-name">
-                    <span class="f-name">Ahmed Muhammed</span>
-                    <span class="f-time">3:45 AM</span>
+                    <span class="f-name" *ngIf="socket.allChatListContainer.userId === list.firstUser._id">{{list.secondUser.firstName | titlecase}} {{list.secondUser.lastName | titlecase}}</span>
+                    <span class="f-name" *ngIf="socket.allChatListContainer.userId === list.secondUser._id">{{list.firstUser.firstName | titlecase}} {{list.firstUser.lastName | titlecase}}</span>
+                    <span class="f-time">{{list.lastMessageDate | date:'shortTime'}}</span>
                 </div>
                 <div class="friend-message">
                     <div class="m-caption">
                         <i class="fas fa-check-double mark-icon"></i>
-                        <span class="m-text">Hello, i hope you are doing well!</span>
+                        <span class="m-text">{{list.chatHistory[0].message}}</span>
                     </div>
                     <div class="new-message">
-                        <span class="message-alert">2</span>
+                        <span class="message-alert">{{list.chatHistory.length}}</span>
                     </div>
                 </div>
             </div>
         </a>
-            <a class="friends text-decoration-none" [routerLink]="['/mychats', 5]">
-                <div class="friends-imgs">
-                    <img class="img" src="assets/myprofile.jpg" alt="friends-images">
-                </div>
-                <div class="friends-chat">
-                    <div class="friend-name">
-                        <span class="f-name">Ahmed Muhammed</span>
-                        <span class="f-time">3:45 AM</span>
-                    </div>
-                    <div class="friend-message">
-                        <div class="m-caption">
-                            <i class="fas fa-check-double mark-icon"></i>
-                            <span class="m-text">Hello, i hope you are doing well!</span>
-                        </div>
-                        <div class="new-message">
-                            <span class="message-alert">2</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a class="friends text-decoration-none" [routerLink]="['/mychats', 5]">
-                <div class="friends-imgs">
-                    <img class="img" src="assets/myprofile.jpg" alt="friends-images">
-                </div>
-                <div class="friends-chat">
-                    <div class="friend-name">
-                        <span class="f-name">Ahmed Muhammed</span>
-                        <span class="f-time">3:45 AM</span>
-                    </div>
-                    <div class="friend-message">
-                        <div class="m-caption">
-                            <i class="fas fa-check-double mark-icon"></i>
-                            <span class="m-text">Hello, i hope you are doing well!</span>
-                        </div>
-                        <div class="new-message">
-                            <span class="message-alert">2</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a class="friends text-decoration-none" [routerLink]="['/mychats', 5]">
-                <div class="friends-imgs">
-                    <img class="img" src="assets/myprofile.jpg" alt="friends-images">
-                </div>
-                <div class="friends-chat">
-                    <div class="friend-name">
-                        <span class="f-name">Ahmed Muhammed</span>
-                        <span class="f-time">3:45 AM</span>
-                    </div>
-                    <div class="friend-message">
-                        <div class="m-caption">
-                            <i class="fas fa-check-double mark-icon"></i>
-                            <span class="m-text">Hello, i hope you are doing well!</span>
-                        </div>
-                        <div class="new-message">
-                            <span class="message-alert">2</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a class="friends text-decoration-none" [routerLink]="['/mychats', 5]">
-                <div class="friends-imgs">
-                    <img class="img" src="assets/myprofile.jpg" alt="friends-images">
-                </div>
-                <div class="friends-chat">
-                    <div class="friend-name">
-                        <span class="f-name">Ahmed Muhammed</span>
-                        <span class="f-time">3:45 AM</span>
-                    </div>
-                    <div class="friend-message">
-                        <div class="m-caption">
-                            <i class="fas fa-check-double mark-icon"></i>
-                            <span class="m-text">Hello, i hope you are doing well!</span>
-                        </div>
-                        <div class="new-message">
-                            <span class="message-alert">2</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a class="friends text-decoration-none" [routerLink]="['/mychats', 5]">
-            <div class="friends-imgs">
-                <img class="img" src="assets/myprofile.jpg" alt="friends-images">
-            </div>
-            <div class="friends-chat">
-                <div class="friend-name">
-                    <span class="f-name">Ahmed Muhammed</span>
-                    <span class="f-time">3:45 AM</span>
-                </div>
-                <div class="friend-message">
-                    <div class="m-caption">
-                        <i class="fas fa-check-double mark-icon"></i>
-                        <span class="m-text">Hello, i hope you are doing well!</span>
-                    </div>
-                    <div class="new-message">
-                        <span class="message-alert">2</span>
-                    </div>
-                </div>
-            </div>
-        </a>
-            <a class="friends text-decoration-none" [routerLink]="['/mychats', 5]">
-                <div class="friends-imgs">
-                    <img class="img" src="assets/myprofile.jpg" alt="friends-images">
-                </div>
-                <div class="friends-chat">
-                    <div class="friend-name">
-                        <span class="f-name">Ahmed Muhammed</span>
-                        <span class="f-time">3:45 AM</span>
-                    </div>
-                    <div class="friend-message">
-                        <div class="m-caption">
-                            <i class="fas fa-check-double mark-icon"></i>
-                            <span class="m-text">Hello, i hope you are doing well!</span>
-                        </div>
-                        <div class="new-message">
-                            <span class="message-alert">2</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a class="friends text-decoration-none" [routerLink]="['/mychats', 5]">
-                <div class="friends-imgs">
-                    <img class="img" src="assets/myprofile.jpg" alt="friends-images">
-                </div>
-                <div class="friends-chat">
-                    <div class="friend-name">
-                        <span class="f-name">Ahmed Muhammed</span>
-                        <span class="f-time">3:45 AM</span>
-                    </div>
-                    <div class="friend-message">
-                        <div class="m-caption">
-                            <i class="fas fa-check-double mark-icon"></i>
-                            <span class="m-text">Hello, i hope you are doing well!</span>
-                        </div>
-                        <div class="new-message">
-                            <span class="message-alert">2</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
         </div>
     </div>
 </section>

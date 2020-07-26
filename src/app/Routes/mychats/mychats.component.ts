@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {animate, group, style, transition, trigger} from '@angular/animations';
+import {SocketService} from '../../Services/socket-io/socket.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-mychats',
@@ -19,14 +21,36 @@ import {animate, group, style, transition, trigger} from '@angular/animations';
           }))
         ])
       ])
-    ])
+    ]),
+      trigger('scaleUp', [
+          transition('void => *', [
+              style({
+                  opacity: 0,
+                  transform: 'translateY(-50%)'
+              }), group([
+                  animate(250, style({
+                      opacity: 1
+                  })), animate(250, style({
+                      transform: 'translateY(0)'
+                  }))
+              ])
+          ])
+      ])
   ]
 })
 export class MychatsComponent implements OnInit {
-
-  constructor() { }
+  // variables
+  emitChatsSub: Subscription;
+  constructor(public socket: SocketService) {
+    this.emitMyChats();
+  }
 
   ngOnInit(): void {
   }
 
+  emitMyChats(): void {
+    this.socket.emit('onChats', {
+      userToken: this.socket.token
+    });
+  }
 }

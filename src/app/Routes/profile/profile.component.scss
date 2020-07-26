@@ -301,10 +301,6 @@
       .card-caption
       {
         background-color: $listBgColor;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
         .card-name
         {
           color: rgba(#fff,0.8);
@@ -350,6 +346,11 @@
   border: none;
   outline: none;
   border-radius: 7px;
+  text-decoration: none;
+  &:hover
+  {
+    color: rgba($mainColorDisabled,1);
+  }
 }
 
 .view-profile-btn

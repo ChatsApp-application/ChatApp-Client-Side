@@ -22,7 +22,7 @@ import { FindPeopleComponent } from './Routes/find-people/find-people.component'
 import { ProfileComponent } from './Routes/profile/profile.component';
 import {ProfileService} from './Services/profile/profile.service';
 import {SocketService} from './Services/socket-io/socket.service';
-import {NgxUsefulSwiperModule} from 'ngx-useful-swiper';
+// import {NgxUsefulSwiperModule} from 'ngx-useful-swiper';
 
 @NgModule({
   declarations: [
@@ -38,12 +38,12 @@ import {NgxUsefulSwiperModule} from 'ngx-useful-swiper';
   ],
     imports: [
         BrowserModule,
+        // NgxUsefulSwiperModule,
         AppRoutingModule,
         FormsModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        NgxUsefulSwiperModule
     ],
   providers: [AuthenticationService, ValidGuard, InvalidGuard, UserDetailsService, FreindsDetailsService, ProfileService, SocketService, { provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]

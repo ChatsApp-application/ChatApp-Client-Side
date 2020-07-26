@@ -1,10 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import {ChatDetails} from '../../models/model';
+import {animate, group, style, transition, trigger} from '@angular/animations';
 declare const $: any;
 @Component({
   selector: 'app-chat-details',
   templateUrl: './chat-details.component.html',
-  styleUrls: ['./chat-details.component.scss']
+  styleUrls: ['./chat-details.component.scss'],
+  animations: [
+    trigger('scaleIn', [
+      transition('void => *', [
+        style({
+          opacity: 0,
+          transform: 'translateX(-50%)'
+        }), group([
+          animate(250, style({
+            opacity: 1
+          })), animate(250, style({
+            transform: 'translateX(0)'
+          }))
+        ])
+      ])
+    ])]
 })
 export class ChatDetailsComponent implements OnInit {
   currentUserId = 4;
