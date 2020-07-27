@@ -7,7 +7,7 @@
             </form>
         </div>
         <div class="chat-contacts">
-            <a class="friends text-decoration-none" *ngFor="let list of socket.allChatListContainer.userChats;trackBy:socket.trackByFn;let i = index" [routerLink]="['/mychats', 5]" @scaleUp>
+            <a class="friends text-decoration-none" *ngFor="let list of socket.allChatListContainer.userChats;trackBy:socket.trackByFn;let i = index" [routerLink]="['/mychats', list._id]" @scaleUp>
             <div class="friends-imgs">
                 <img *ngIf="socket.allChatListContainer.userId === list.firstUser._id"  class="img" [src]="list.secondUser.img ? list.secondUser.img.url : 'assets/user.png'" alt="friends-images">
                 <img *ngIf="socket.allChatListContainer.userId === list.secondUser._id"  class="img" [src]="list.firstUser.img ? list.firstUser.img.url : 'assets/user.png'" alt="friends-images">
@@ -20,11 +20,11 @@
                 </div>
                 <div class="friend-message">
                     <div class="m-caption">
-                        <i class="fas fa-check-double mark-icon"></i>
-                        <span class="m-text">{{list.chatHistory[0].message}}</span>
+                        <i *ngIf="socket.allChatListContainer.userId === list.lastMessage.from" class="fas fa-check-double mark-icon"></i>
+                        <span class="m-text">{{list.lastMessage.message}}</span>
                     </div>
-                    <div class="new-message">
-                        <span class="message-alert">{{list.chatHistory.length}}</span>
+                    <div class="new-message" *ngIf="socket.allChatListContainer.userId !== list.lastMessage.from">
+                        <span *ngIf="list.unreadMessages > 0" class="message-alert">{{list.unreadMessages}}</span>
                     </div>
                 </div>
             </div>
@@ -32,3 +32,5 @@
         </div>
     </div>
 </section>
+
+

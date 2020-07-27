@@ -63,7 +63,7 @@ export interface FromUser {
     gender?: string;
     email?: string;
     bio?: string;
-    online?: string;
+    online?: boolean;
     img?: Img;
 }
 
@@ -168,12 +168,24 @@ export interface MyChats {
     userId?: string;
 }
 
-export interface UserChats {
+export interface ChatDetails {
+    chatRoom?: ChatRoom;
+    to?: string;
+}
+export interface ChatRoom {
     _id?: string;
     chatHistory?: ChatHistory[];
-    lastMessageDate?: string;
     firstUser?: User;
     secondUser?: User;
+}
+
+export interface UserChats {
+    _id?: string;
+    firstUser?: User;
+    lastMessage?: ChatHistory;
+    lastMessageDate?: string;
+    secondUser?: User;
+    unreadMessages?: number;
 }
 
 export interface ChatHistory {
@@ -182,6 +194,7 @@ export interface ChatHistory {
     from?: string;
     message?: string;
     seen?: boolean;
+    fromUser?: FromUser;
 }
 
 export interface User {

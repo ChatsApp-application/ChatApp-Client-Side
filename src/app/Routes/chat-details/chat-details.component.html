@@ -4,11 +4,13 @@
         <div class="upper-box">
             <div class="box-left">
                 <div class="user-img">
-                    <img class="" src="assets/myprofile.jpg" alt="user-img">
+                    <img *ngIf="socket?.userContainer?._id === socket?.chatRoomContainer?.chatRoom?.firstUser?._id" class="" [src]="socket?.chatRoomContainer?.chatRoom?.secondUser?.img !== null ? socket?.chatRoomContainer?.chatRoom?.secondUser?.img?.url : 'assets/user.png'" alt="user-img">
+                    <img *ngIf="socket?.userContainer?._id === socket?.chatRoomContainer?.chatRoom?.secondUser?._id" class="" [src]="socket?.chatRoomContainer?.chatRoom?.firstUser?.img !== null ? socket?.chatRoomContainer?.chatRoom?.firstUser?.img?.url : 'assets/user.png'" alt="user-img">
                 </div>
                 <div class="user-name-online">
                     <div class="u-name">
-                        <span class="u-n">Ziad El shafey</span>
+                        <span class="u-n" *ngIf="socket?.userContainer?._id === socket?.chatRoomContainer?.chatRoom?.firstUser?._id">{{socket?.chatRoomContainer?.chatRoom?.secondUser?.firstName | titlecase}} {{socket?.chatRoomContainer?.chatRoom?.secondUser?.lastName | titlecase}}</span>
+                        <span class="u-n" *ngIf="socket?.userContainer?._id === socket?.chatRoomContainer?.chatRoom?.secondUser?._id">{{socket?.chatRoomContainer?.chatRoom?.firstUser?.firstName | titlecase}} {{socket?.chatRoomContainer?.chatRoom?.firstUser?.lastName | titlecase}}</span>
                         <span class="active"></span>
                     </div>
                     <div class="u-status"><span class="user-status">typing...</span></div>
@@ -21,29 +23,19 @@
             </div>
         </div>
         <div class="middle-box">
-<!--            <div class="user-friend">-->
-<!--                <div class="current-details">-->
-<!--                    <span class="name-of-user">Jhon Doe </span>-->
-<!--                    <span class="date-of-message">Jul 11, 2020</span>-->
-<!--                </div>-->
-<!--                <div class="current-message">-->
-<!--                    <span class="message-text">Hi, i hope you are doing well, shall we hangout today?</span>-->
-<!--                    <div class="current-time">1:45 AM</div>-->
-<!--                </div>-->
-<!--            </div>-->
-            <div *ngFor="let user of chatDetailsContainer" [ngClass]="user.id === currentUserId ? 'current-user' : 'user-friend'">
+            <div *ngFor="let message of socket?.chatRoomContainer?.chatRoom?.chatHistory" [ngClass]="socket?.userContainer?._id === message?.fromUser?._id ? 'current-user' : 'user-friend'">
                 <div class="current-details">
-                    <span class="name-of-user">{{user.from}} </span>
-                    <span class="date-of-message">{{user.fullDate | date}}</span>
+                    <span class="name-of-user">{{message?.fromUser?.firstName}} {{message?.fromUser?.lastName}} </span>
+                    <span class="date-of-message">{{message?.date | date}}</span>
                 </div>
                 <div class="current-message">
-                    <span class="message-text">{{user.message}}</span>
-                    <div class="current-time"><span><i class="fas fa-check check-icon"></i></span>{{user.fullDate | date:"shortTime"}}</div>
+                    <span class="message-text">{{message?.message}}</span>
+                    <div class="current-time"><span><i class="fas fa-check check-icon"></i></span>{{message.date| date:"shortTime"}}</div>
                 </div>
             </div>
         </div>
         <div class="lower-box">
-            <form class="chat-sender" (ngSubmit)="sendMessage()">
+            <form class="chat-sender" (ngSubmit)="emitMessage()">
                 <label for="upload-file" class="uk-margin-remove">
                     <div class="upload-file">
                         <i class="fas fa-camera u-icon"></i>
@@ -51,7 +43,7 @@
                 </label>
                 <input type="file" id="upload-file" style="display: none">
                 <div class="chat-input">
-                    <input type="text" [(ngModel)]="currentMessage.message" name="currentMessage" class="chat-form-control" placeholder="Type a message">
+                    <input type="text" [(ngModel)]="currentMessage" autocomplete="off" name="currentMessage" class="chat-form-control" placeholder="Type a message">
                     <button class="send-icon">
                         <i class="far fa-paper-plane"></i>
                     </button>

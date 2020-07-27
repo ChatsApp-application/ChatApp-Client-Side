@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import * as io from 'socket.io-client';
 import {Observable} from 'rxjs';
-import {MyChats, User, UserChats} from '../../models/model';
+import {ChatDetails, ChatRoom, MyChats, User, UserChats} from '../../models/model';
 import {UserDetailsService} from '../user/user-details.service';
 import {AuthenticationService} from '../authentication.service';
-
+declare const $: any;
 @Injectable({
     providedIn: 'root'
 })
@@ -16,6 +16,8 @@ export class SocketService {
     // arraies
     userContainer: User = {};
     allChatListContainer: MyChats = {};
+    chatRoomContainer: ChatDetails = {};
+
     constructor(private user: UserDetailsService, private auth: AuthenticationService) {
         this.socket = io(this.url);
         if (this.auth.isLoggedIn()) {
@@ -24,6 +26,8 @@ export class SocketService {
         this.listenToFriendRequests();
         this.listenToRejectionNotification();
         this.listenToMyChats();
+        this.listenToChatDetails();
+        this.listenToMessages();
     }
 
     listen(eventName: string) {
@@ -61,18 +65,40 @@ export class SocketService {
         });
     }
 
-
     listenToMyChats(): void {
         this.listen('userChats').subscribe(res => {
-            this.allChatListContainer = res;
-            console.log(res);
+            if (this.userContainer._id === res['userId']) {
+                this.allChatListContainer = res;
+                console.log(res);
+            }
         });
     }
 
+    listenToChatDetails(): void {
+        this.listen('chatRoomIsJoined').subscribe(res => {
+            if (this.userContainer._id === res['to']) {
+                this.chatRoomContainer = res;
+                console.log(this.chatRoomContainer);
+            }
+        });
+    }
+
+    listenToMessages(): void {
+        this.listen('privateMessageBack').subscribe(res => {
+            this.chatRoomContainer.chatRoom.chatHistory.push(res);
+            this.getDown();
+            console.log(res);
+        });
+    }
     // *************** data of user after login ***************** //
     getUserAfterLoggedIn(): void {
         this.user.getUserAfterLogin().subscribe(res => {
             this.userContainer = res.user;
         });
+    }
+
+    getDown(): void {
+        const scrollDiv = $('.middle-box');
+        scrollDiv.animate({scrollTop: scrollDiv.prop('scrollHeight')}, 400);
     }
 }

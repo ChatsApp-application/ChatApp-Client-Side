@@ -25,9 +25,11 @@
           padding: 0.7rem 2rem 0.7rem 0.7rem;
           border-bottom: 2px solid $semiGray;
           transition: 0.2s;
+          outline: none;
           &:focus
           {
             border-color: $mainColor;
+            outline: none;
           }
         }
         .search-icon

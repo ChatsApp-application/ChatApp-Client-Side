@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {ChatDetails} from '../../models/model';
 import {animate, group, style, transition, trigger} from '@angular/animations';
+import {ActivatedRoute} from '@angular/router';
+import {SocketService} from '../../Services/socket-io/socket.service';
 declare const $: any;
 @Component({
   selector: 'app-chat-details',
@@ -23,54 +25,49 @@ declare const $: any;
     ])]
 })
 export class ChatDetailsComponent implements OnInit {
-  currentUserId = 4;
+  currentRoomId;
   chatDetailsContainer: ChatDetails[] = [];
 
-  currentMessage: ChatDetails = {
-    id: null,
-    from: '',
-    fullDate: null,
-    message: '',
-    seen: null
-  };
+  currentMessage = '';
 
-  constructor() {
+  constructor(private activateRouter: ActivatedRoute, public socket: SocketService) {
+    this.activateRouter.params.subscribe(res => {
+      this.currentRoomId = res.id;
+      this.emitToGetChat();
+      console.log(this.currentRoomId);
+    });
   }
 
   ngOnInit(): void {
-
   }
 
-  sendMessage(): void {
-    if (this.currentMessage.message.trim() === '') {
+  emitMessage(): void {
+    if (this.currentMessage.trim() === '') {
       return;
     } else {
-      this.currentMessage.id = 4;
-      this.currentMessage.fullDate = new Date();
-      this.currentMessage.from = 'Mustafa Mahmoud';
-      this.currentMessage.seen = true;
-      this.chatDetailsContainer.push({...this.currentMessage});
+      this.socket.emit('privateMessage', {
+        messageData: {
+          firstName: this.socket.userContainer.firstName,
+          lastName: this.socket.userContainer.lastName,
+          message: this.currentMessage,
+          to: this.socket.userContainer._id === this.socket.chatRoomContainer.chatRoom.firstUser._id ? this.socket.chatRoomContainer.chatRoom.secondUser._id : this.socket.chatRoomContainer.chatRoom.firstUser._id
+        }, userToken: this.socket.token
+      });
+      this.socket.getDown();
       this.clearMessageBox();
-      this.getDown();
-      setTimeout(() => {
-        this.currentMessage.id = 6;
-        this.currentMessage.fullDate = new Date();
-        this.currentMessage.from = 'Muhammed Mahmoud';
-        this.currentMessage.message = 'ezyak';
-        this.currentMessage.seen = false;
-        this.chatDetailsContainer.push({...this.currentMessage});
-        this.clearMessageBox();
-        this.getDown();
-      }, 1500);
     }
   }
 
-  getDown(): void {
-    const scrollDiv = $('.middle-box');
-    scrollDiv.animate({scrollTop: scrollDiv.prop('scrollHeight')}, 400);
-  }
+
 
   clearMessageBox(): void {
-    this.currentMessage.message = '';
+    this.currentMessage = '';
+  }
+
+  emitToGetChat(): void {
+    this.socket.emit('joinRoom', {
+      chatRoomId: this.currentRoomId,
+      userToken: this.socket.token
+    });
   }
 }
