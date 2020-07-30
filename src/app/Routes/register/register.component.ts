@@ -6,6 +6,7 @@ import {AuthenticationService} from '../../Services/authentication.service';
 import {SignUp} from '../../models/model';
 import Swal from 'sweetalert2';
 import {Router} from '@angular/router';
+import {Countries} from '../../models/countries';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -30,6 +31,7 @@ import {Router} from '@angular/router';
 export class RegisterComponent implements OnInit {
   // variables
   sendRequest = false;
+  registerCountries = JSON.parse(this.country.countriesString);
   // form group
   registerForm = new FormGroup({
     firstName: new FormControl('', [Validators.required, Validators.pattern('[a-zA-z ]*'), Validators.minLength(3)]),
@@ -50,6 +52,11 @@ export class RegisterComponent implements OnInit {
     password: '',
     country: '',
   };
+  // arraies
+  genderArray = [
+    {name: 'Male'},
+    {name: 'Female'},
+  ];
   // Sweet alert
   Toast = Swal.mixin({
     toast: true,
@@ -62,9 +69,10 @@ export class RegisterComponent implements OnInit {
       toast.addEventListener('mouseleave', Swal.resumeTimer);
     }
   });
-  constructor(public auth: AuthenticationService, private router: Router) { }
+  constructor(public auth: AuthenticationService, private router: Router, public country: Countries) { }
 
   ngOnInit(): void {
+
   }
 
   RegisterUser(): void {

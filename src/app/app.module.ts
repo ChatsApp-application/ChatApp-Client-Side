@@ -24,7 +24,8 @@ import {ProfileService} from './Services/profile/profile.service';
 import {SocketService} from './Services/socket-io/socket.service';
 import { GroupsComponent } from './Routes/groups/groups.component';
 import {GroupsService} from './Services/groups/groups.service';
-// import {NgxUsefulSwiperModule} from 'ngx-useful-swiper';
+import {Countries} from './models/countries';
+import {NgxUsefulSwiperModule} from 'ngx-useful-swiper';
 
 @NgModule({
   declarations: [
@@ -41,14 +42,14 @@ import {GroupsService} from './Services/groups/groups.service';
   ],
     imports: [
         BrowserModule,
-        // NgxUsefulSwiperModule,
+        NgxUsefulSwiperModule,
         AppRoutingModule,
         FormsModule,
         BrowserAnimationsModule,
         ReactiveFormsModule,
         HttpClientModule,
     ],
-  providers: [AuthenticationService, ValidGuard, InvalidGuard, UserDetailsService, FreindsDetailsService, ProfileService, SocketService, GroupsService, { provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [AuthenticationService, ValidGuard, InvalidGuard, UserDetailsService, FreindsDetailsService, ProfileService, SocketService, GroupsService, Countries,  { provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

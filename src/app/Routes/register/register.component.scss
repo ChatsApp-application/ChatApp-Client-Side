@@ -45,3 +45,15 @@
     font-size: 15px;
   }
 }
+
+#custom-select, #gender-select
+{
+  outline: none;
+  width: 100%;
+  background-color: $bgColor;
+  border: none;
+  padding: 0.5rem 1rem;
+  height: 46px;
+  color: $semiGray;
+}
+

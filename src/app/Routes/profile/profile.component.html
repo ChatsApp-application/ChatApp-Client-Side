@@ -42,30 +42,30 @@
             </div>
         </div>
         <!-- slider part -->
-<!--        <div id="slider-part">-->
-<!--            <hr class="uk-divider-icon">-->
-<!--            <div><span class="text-light font-weight-bold">Friends</span></div>-->
-<!--            <div class="alert alert-warning" *ngIf="profileContainer?.userFriends?.length === 0">-->
-<!--                <i class="fa fa-exclamation-triangle mx-2" aria-hidden="true"></i>-->
-<!--                <span style="font-size: 14px">{{profileContainer?.relation === 'isOwner' ? 'You dont' : 'This person doesnt'}} have any friends <a *ngIf="profileContainer.relation === 'isOwner'" routerLink="/people" class="text-decoration-none">Find some</a></span>-->
-<!--            </div>-->
-<!--            <swiper [config]="config" *ngIf="profileContainer?.userFriends?.length > 0">-->
-<!--                <div class="swiper-wrapper p-2">-->
-<!--                    &lt;!&ndash;      slide &ndash;&gt;-->
-<!--                    <div class="swiper-slide" *ngFor="let friend of profileContainer?.userFriends;trackBy: socket?.trackByFn" [routerLink]="['/profile', friend._id]">-->
-<!--                        <div>-->
-<!--                            <img *ngIf="friend?.img?.url" [src]="friend?.img?.url" alt="friend-img">-->
-<!--                            <img *ngIf="!friend?.img?.url" src="assets/user.png" alt="friend-img">-->
-<!--                        </div>-->
-<!--                        <div class="card-caption">-->
-<!--                            <div class="card-name">{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</div>-->
-<!--                            <div class="card-data">{{friend.country}}, {{friend.gender}}</div>-->
-<!--                        </div>-->
-<!--                    </div>-->
+        <div id="slider-part">
+            <hr class="uk-divider-icon">
+            <div><span class="text-light font-weight-bold">Friends</span></div>
+            <div class="alert alert-warning" *ngIf="profileContainer?.userFriends?.length === 0">
+                <i class="fa fa-exclamation-triangle mx-2" aria-hidden="true"></i>
+                <span style="font-size: 14px">{{profileContainer?.relation === 'isOwner' ? 'You dont' : 'This person doesnt'}} have any friends <a *ngIf="profileContainer.relation === 'isOwner'" routerLink="/people" class="text-decoration-none">Find some</a></span>
+            </div>
+            <swiper [config]="config" *ngIf="profileContainer?.userFriends?.length > 0">
+                <div class="swiper-wrapper p-2">
+                    <!--      slide -->
+                    <div class="swiper-slide" *ngFor="let friend of profileContainer?.userFriends;trackBy: socket?.trackByFn" [routerLink]="['/profile', friend._id]">
+                        <div>
+                            <img *ngIf="friend?.img?.url" [src]="friend?.img?.url" alt="friend-img">
+                            <img *ngIf="!friend?.img?.url" src="assets/user.png" alt="friend-img">
+                        </div>
+                        <div class="card-caption">
+                            <div class="card-name">{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</div>
+                            <div class="card-data">{{friend.country}}, {{friend.gender}}</div>
+                        </div>
+                    </div>
 
-<!--                </div>-->
-<!--            </swiper>-->
-<!--        </div>-->
+                </div>
+            </swiper>
+        </div>
         <!--Preloader part-->
         <div class="preloader">
             <div class="loading-part">

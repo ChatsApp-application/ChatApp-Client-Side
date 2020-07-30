@@ -9,7 +9,7 @@ import {SocketService} from '../../Services/socket-io/socket.service';
 import Uikit from 'uikit';
 import {Subscription} from 'rxjs';
 import {SwiperOptions} from 'swiper';
-declare const $:any;
+declare const $: any;
 @Component({
     selector: 'app-profile',
     templateUrl: './profile.component.html',
@@ -32,37 +32,37 @@ declare const $:any;
 })
 export class ProfileComponent implements OnInit, OnDestroy {
     // swiper
-    // config: SwiperOptions = {
-    //     slidesPerView: 5,
-    //     spaceBetween: 10,
-    //     loop: false,
-    //     breakpoints: {
-    //         1200: {
-    //             slidesPerView: 5,
-    //             slidesPerGroup: 5
-    //         },
-    //         992: {
-    //             slidesPerView: 4,
-    //             slidesPerGroup: 4
-    //         },
-    //         768: {
-    //             slidesPerView: 3,
-    //             slidesPerGroup: 3
-    //         },
-    //         600: {
-    //             slidesPerView: 2.5,
-    //             slidesPerGroup: 2.5
-    //         },
-    //         450: {
-    //             slidesPerView: 2,
-    //             slidesPerGroup: 2
-    //         },
-    //         320: {
-    //             slidesPerView: 1,
-    //             slidesPerGroup: 1
-    //         }
-    //     }
-    // };
+    config: SwiperOptions = {
+        slidesPerView: 5,
+        spaceBetween: 10,
+        loop: false,
+        breakpoints: {
+            1200: {
+                slidesPerView: 5,
+                slidesPerGroup: 5
+            },
+            992: {
+                slidesPerView: 4,
+                slidesPerGroup: 4
+            },
+            768: {
+                slidesPerView: 3,
+                slidesPerGroup: 3
+            },
+            600: {
+                slidesPerView: 2.5,
+                slidesPerGroup: 2.5
+            },
+            450: {
+                slidesPerView: 2,
+                slidesPerGroup: 2
+            },
+            320: {
+                slidesPerView: 1,
+                slidesPerGroup: 1
+            }
+        }
+    };
     // variables
     userId;
     sendRequest = false;

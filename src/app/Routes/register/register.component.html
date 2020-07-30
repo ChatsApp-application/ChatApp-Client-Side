@@ -72,8 +72,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="chatsapp-input">
-                                            <input type="text" formControlName="country"
-                                                   class="login-form-control uk-box-shadow-small" placeholder="Country">
+<!--                                            <input type="text" formControlName="country" class="login-form-control uk-box-shadow-small" placeholder="Country">-->
+                                            <select name="counrySelect" formControlName="country" id="custom-select" class="uk-box-shadow-small custom-select">
+                                                <option selected disabled>Select Country</option>
+                                                <option [value]="counry.name" *ngFor="let counry of registerCountries">{{counry.name}}</option>
+                                            </select>
                                             <i class="fa fa-globe-africa login-icon" aria-hidden="true"></i>
                                             <i class="fa fa-globe-africa login-icon-danger" aria-hidden="true"
                                                *ngIf="registerForm.controls.country.touched && registerForm.controls.country.invalid"></i>
@@ -108,8 +111,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <div class="chatsapp-input">
-                                            <input type="text" formControlName="gender"
-                                                   class="login-form-control uk-box-shadow-small" placeholder="Gender">
+<!--                                            <input type="text" formControlName="gender" class="login-form-control uk-box-shadow-small" placeholder="Gender">-->
+                                            <select name="genderSelect" formControlName="gender" id="gender-select" class="uk-box-shadow-small custom-select">
+                                                <option [value]="gender.name" *ngFor="let gender of genderArray">{{gender.name}}</option>
+                                            </select>
                                             <i class="fa fa-venus-mars login-icon" aria-hidden="true"></i>
                                             <i class="fa fa-venus-mars login-icon-danger" aria-hidden="true"
                                                *ngIf="registerForm.controls.gender.touched && registerForm.controls.gender.invalid"></i>
@@ -158,3 +163,4 @@
         </div>
     </div>
 </section>
+
