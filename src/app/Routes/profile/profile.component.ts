@@ -119,7 +119,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.friend.showLoader();
         this.profile.getData(this.userId).subscribe(res => {
             this.profileContainer = res.user;
-            console.log(this.profileContainer);
+            console.log(res);
             this.friend.hideLoader();
         });
     }

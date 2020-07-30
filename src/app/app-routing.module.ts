@@ -10,6 +10,7 @@ import {InvalidGuard} from './Services/Gaurd/invalid.guard';
 import {NotfoundComponent} from './Routes/notfound/notfound.component';
 import {FindPeopleComponent} from './Routes/find-people/find-people.component';
 import {ProfileComponent} from './Routes/profile/profile.component';
+import {GroupsComponent} from './Routes/groups/groups.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'mychats/:id', component: ChatDetailsComponent, canActivate: [ValidGuard]},
   {path: 'people', component: FindPeopleComponent, canActivate: [ValidGuard]},
+  {path: 'groups', component: GroupsComponent, canActivate: [ValidGuard]},
   {path: 'profile/:id', component: ProfileComponent, canActivate: [ValidGuard]},
   {path: 'friends', component: UserFriendsComponent, canActivate: [ValidGuard]},
   {path: 'login', component: LoginComponent, canActivate: [InvalidGuard]},

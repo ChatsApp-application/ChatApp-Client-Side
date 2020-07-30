@@ -79,7 +79,7 @@
     .middle-box
     {
       height: 60vh;
-      overflow-y: auto;
+      overflow-y: scroll;
       background-color: $navBgColor;
       border-radius: 7px;
       padding: 1rem;

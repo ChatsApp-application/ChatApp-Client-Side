@@ -79,6 +79,9 @@ export class SocketService {
             if (this.userContainer._id === res['to']) {
                 this.chatRoomContainer = res;
                 console.log(this.chatRoomContainer);
+                setTimeout(() => {
+                    this.getDownWhenEnter();
+                }, 200);
             }
         });
     }
@@ -100,5 +103,17 @@ export class SocketService {
     getDown(): void {
         const scrollDiv = $('.middle-box');
         scrollDiv.animate({scrollTop: scrollDiv.prop('scrollHeight')}, 400);
+    }
+
+    getDownWhenEnter(): void {
+        const scrollDiv = $('.middle-box');
+        scrollDiv.animate({scrollTop: scrollDiv.prop('scrollHeight')}, 0);
+    }
+    showLoader(): void {
+        $('.preloader').fadeIn();
+    }
+
+    hideLoader(): void {
+        $('.preloader').fadeOut();
     }
 }

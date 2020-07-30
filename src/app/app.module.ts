@@ -22,6 +22,8 @@ import { FindPeopleComponent } from './Routes/find-people/find-people.component'
 import { ProfileComponent } from './Routes/profile/profile.component';
 import {ProfileService} from './Services/profile/profile.service';
 import {SocketService} from './Services/socket-io/socket.service';
+import { GroupsComponent } from './Routes/groups/groups.component';
+import {GroupsService} from './Services/groups/groups.service';
 // import {NgxUsefulSwiperModule} from 'ngx-useful-swiper';
 
 @NgModule({
@@ -34,7 +36,8 @@ import {SocketService} from './Services/socket-io/socket.service';
     RegisterComponent,
     NotfoundComponent,
     FindPeopleComponent,
-    ProfileComponent
+    ProfileComponent,
+    GroupsComponent
   ],
     imports: [
         BrowserModule,
@@ -45,7 +48,7 @@ import {SocketService} from './Services/socket-io/socket.service';
         ReactiveFormsModule,
         HttpClientModule,
     ],
-  providers: [AuthenticationService, ValidGuard, InvalidGuard, UserDetailsService, FreindsDetailsService, ProfileService, SocketService, { provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [AuthenticationService, ValidGuard, InvalidGuard, UserDetailsService, FreindsDetailsService, ProfileService, SocketService, GroupsService, { provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -141,6 +141,7 @@ export interface VisitedProfile {
     img?: Img;
     userFriends?: ProfileFriends[];
     relation?: string;
+    sharedChatRoom?: string;
 }
 
 export interface ProfileFriends {
@@ -208,4 +209,16 @@ export interface User {
     img?: Img;
     joinedAt?: string;
     lastName?: string;
+}
+
+
+// *************** GROUPS PART ***************** //
+
+export interface AllGroups {
+    _id?: string;
+    name?: string;
+    admin?: string;
+    chatHistory?: string;
+    createdAt?: string;
+    img?: Img;
 }
