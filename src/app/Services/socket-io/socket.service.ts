@@ -4,13 +4,18 @@ import {Observable} from 'rxjs';
 import {ChatDetails, ChatRoom, MyChats, User, UserChats} from '../../models/model';
 import {UserDetailsService} from '../user/user-details.service';
 import {AuthenticationService} from '../authentication.service';
+
 declare const $: any;
+
 @Injectable({
     providedIn: 'root'
 })
 export class SocketService {
     // variables
     socket: any;
+    emptyFriendsAlert = false;
+    emptyNotificationsAlert = false;
+    emptyChatsAlert = false;
     readonly url: string = 'https://chats--app.herokuapp.com/';
     token = localStorage.getItem('chatsapp-token');
     // arraies
@@ -69,6 +74,11 @@ export class SocketService {
         this.listen('userChats').subscribe(res => {
             if (this.userContainer._id === res['userId']) {
                 this.allChatListContainer = res;
+                if (this.allChatListContainer.userChats.length === 0) {
+                    this.emptyChatsAlert = true;
+                } else {
+                    this.emptyChatsAlert = false;
+                }
                 console.log(res);
             }
         });
@@ -93,10 +103,21 @@ export class SocketService {
             console.log(res);
         });
     }
+
     // *************** data of user after login ***************** //
     getUserAfterLoggedIn(): void {
         this.user.getUserAfterLogin().subscribe(res => {
             this.userContainer = res.user;
+            if (this.userContainer.friendRequests.length === 0) {
+                this.emptyFriendsAlert = false;
+            } else {
+                this.emptyFriendsAlert = true;
+            }
+            if (this.userContainer.notifications.length === 0) {
+                this.emptyNotificationsAlert = false;
+            } else {
+                this.emptyNotificationsAlert = true;
+            }
         });
     }
 
@@ -109,6 +130,7 @@ export class SocketService {
         const scrollDiv = $('.middle-box');
         scrollDiv.animate({scrollTop: scrollDiv.prop('scrollHeight')}, 0);
     }
+
     showLoader(): void {
         $('.preloader').fadeIn();
     }

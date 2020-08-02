@@ -10,12 +10,15 @@
                         </div>
                     </div>
                     <a class="user-img-div" [routerLink]="['/profile',socket.userContainer._id]">
-                        <img *ngIf="socket?.userContainer?.img?.url" class="user-img" [src]="socket?.userContainer?.img?.url" alt="user-profile-image">
-                        <img *ngIf="!socket?.userContainer?.img?.url" class="user-img" src="assets/user.png" alt="user-profile-image">
+                        <img *ngIf="socket?.userContainer?.img?.url" class="user-img"
+                             [src]="socket?.userContainer?.img?.url" alt="user-profile-image">
+                        <img *ngIf="!socket?.userContainer?.img?.url" class="user-img" src="assets/user.png"
+                             alt="user-profile-image">
                     </a>
                     <div class="online-part">
-                        <div class="user-name mx-2">{{socket?.userContainer?.firstName | titlecase}}<span class="user-acitve"></span></div>
-                        <div class="status mx-2">{{socket?.userContainer?.country}}</div>
+                        <div class="user-name mx-2">{{socket?.userContainer?.firstName | titlecase}}<span
+                                class="user-acitve"></span></div>
+                        <div class="status mx-2">{{socket?.userContainer?.country | titlecase}}</div>
                     </div>
                 </div>
                 <div class="nav-middle">
@@ -23,11 +26,6 @@
                         <i class="fas fa-comments nav-icon"></i>
                         <span class="link-name">Chats</span>
                     </a>
-<!--                    <a class="chat-nav-link text-decoration-none" routerLink="/profile" routerLinkActive="link-active">-->
-<!--                        <i class="fas fa-male nav-icon" *ngIf="userContainer.gender === 'male'"></i>-->
-<!--                        <i class="fas fa-female nav-icon" *ngIf="userContainer.gender === 'female'"></i>-->
-<!--                        <span class="link-name">Profile</span>-->
-<!--                    </a>-->
                     <a class="chat-nav-link text-decoration-none" routerLink="/groups" routerLinkActive="link-active">
                         <i class="fas fa-layer-group nav-icon"></i>
                         <span class="link-name">Groups</span>
@@ -45,33 +43,43 @@
                 <div class="nav-right">
                     <a class="chat-nav-link" id="friendRequest">
                         <i class="fa fa-user-circle nav-icon" aria-hidden="true"></i>
-                        <span class="notification-number bade badge-danger" *ngIf="socket?.userContainer?.friendRequests?.length !== 0">{{socket?.userContainer?.friendRequests?.length}}</span>
+                        <span class="notification-number bade badge-danger"
+                              *ngIf="socket?.emptyFriendsAlert">{{socket?.userContainer?.friendRequests?.length}}</span>
                     </a>
                     <div uk-dropdown="mode: click">
                         <div class="friend-request-list">
                             <div class="request-header sticky-top">
                                 <h4><b>Friend Request</b></h4>
                             </div>
-                            <div class="friend-div" *ngFor="let request of socket?.userContainer?.friendRequests;trackBy: socket.trackByFn">
+                            <div class="friend-div"
+                                 *ngFor="let request of socket?.userContainer?.friendRequests;trackBy: socket.trackByFn">
                                 <div class="request-left">
-                                    <img *ngIf="!request?.fromUser?.img?.url" src="assets/user.png" alt="friend-request-img">
-                                    <img *ngIf="request?.fromUser?.img?.url" [src]="request?.fromUser?.img?.url" alt="friend-request-img">
+                                    <img *ngIf="!request?.fromUser?.img?.url" src="assets/user.png"
+                                         alt="friend-request-img">
+                                    <img *ngIf="request?.fromUser?.img?.url" [src]="request?.fromUser?.img?.url"
+                                         alt="friend-request-img">
                                     <div class="body-left">
-                                        <div class="request-name"><span>{{request.fromUser.firstName | titlecase}} {{request.fromUser.lastName | titlecase}}</span><span class="user-acitve"></span></div>
-                                        <div class="request-country">{{request.fromUser.country}}, {{request.fromUser.gender | titlecase}}</div>
-                                        <div class="request-time"><span>{{request.date | date:'shortTime'}}</span>  <span class="mx-2">{{request.date | date:'shortDate'}}</span></div>
+                                        <div class="request-name">
+                                            <span>{{request.fromUser.firstName | titlecase}} {{request.fromUser.lastName | titlecase}}</span><span
+                                                class="user-acitve"></span></div>
+                                        <div class="request-country">{{request.fromUser.country}}
+                                            , {{request.fromUser.gender | titlecase}}</div>
+                                        <div class="request-time"><span>{{request.date | date:'shortTime'}}</span> <span
+                                                class="mx-2">{{request.date | date:'shortDate'}}</span></div>
                                     </div>
                                     <div class="body-right"></div>
                                 </div>
                                 <div class="request-right">
                                     <div>
-                                        <button class="accecpt" [disabled]="sendRequest" (click)="acceptThisUser(request._id,request.from)">
+                                        <button class="accecpt" [disabled]="sendRequest"
+                                                (click)="acceptThisUser(request._id,request.from)">
                                             <i class="fas fa-handshake"></i>
                                             Yes
                                         </button>
                                     </div>
                                     <div>
-                                        <button class="decline" [disabled]="sendRequest" (click)="rejectThisUser(request._id, request.from)">
+                                        <button class="decline" [disabled]="sendRequest"
+                                                (click)="rejectThisUser(request._id, request.from)">
                                             <i class="fas fa-handshake-slash"></i>
                                             No
                                         </button>
@@ -82,21 +90,28 @@
                     </div>
                     <a class="chat-nav-link">
                         <i class="far fa-bell nav-icon"></i>
-                        <span *ngIf="socket?.userContainer?.notifications?.length > 0" class="notification-number bade badge-danger">{{socket?.userContainer?.notifications?.length}}</span>
+                        <span *ngIf="socket?.emptyNotificationsAlert"
+                              class="notification-number bade badge-danger">{{socket?.userContainer?.notifications?.length}}</span>
                     </a>
                     <div uk-dropdown="mode: click">
                         <div class="notification-list">
                             <div class="request-header sticky-top">
                                 <h4><b>Notifications</b></h4>
                             </div>
-                            <div class="friend-div" *ngFor="let request of socket?.userContainer?.notifications;trackBy: socket.trackByFn; let i = index">
+                            <div class="friend-div"
+                                 *ngFor="let request of socket?.userContainer?.notifications;trackBy: socket.trackByFn; let i = index">
                                 <div class="request-left">
-                                    <img *ngIf="!request?.fromUser?.img?.url" src="assets/user.png" alt="friend-request-img">
-                                    <img *ngIf="request.fromUser?.img?.url" [src]="request?.fromUser?.img?.url" alt="friend-request-img">
+                                    <img *ngIf="!request?.fromUser?.img?.url" src="assets/user.png"
+                                         alt="friend-request-img">
+                                    <img *ngIf="request.fromUser?.img?.url" [src]="request?.fromUser?.img?.url"
+                                         alt="friend-request-img">
                                     <div class="body-left">
-                                        <div class="request-name"><span>{{request?.fromUser?.firstName | titlecase}} {{request?.fromUser?.lastName | titlecase}}</span></div>
+                                        <div class="request-name">
+                                            <span>{{request?.fromUser?.firstName | titlecase}} {{request?.fromUser?.lastName | titlecase}}</span>
+                                        </div>
                                         <div class="request-country">{{request.message}}</div>
-                                        <div class="request-time"><span>{{request.data | date:'shortTime'}} </span>  <span class="mx-2">{{request.data | date:'shortDate'}} </span></div>
+                                        <div class="request-time"><span>{{request.data | date:'shortTime'}} </span>
+                                            <span class="mx-2">{{request.data | date:'shortDate'}} </span></div>
                                     </div>
                                 </div>
                                 <div class="request-right">
@@ -152,8 +167,10 @@
             <hr>
             <div class="sidebar-user-details">
                 <a class="user-left" [routerLink]="['/profile',socket.userContainer._id]" (click)="closeMe()">
-                    <img *ngIf="socket?.userContainer?.img?.url" class="user-img" [src]="socket?.userContainer?.img?.url" alt="user-profile-image">
-                    <img *ngIf="!socket?.userContainer?.img?.url" class="user-img" src="assets/user.png" alt="user-profile-image">
+                    <img *ngIf="socket?.userContainer?.img?.url" class="user-img"
+                         [src]="socket?.userContainer?.img?.url" alt="user-profile-image">
+                    <img *ngIf="!socket?.userContainer?.img?.url" class="user-img" src="assets/user.png"
+                         alt="user-profile-image">
                 </a>
                 <div class="user-right ml-2">
                     <div class="user-name"><span>{{socket.userContainer.firstName | titlecase}}</span></div>
@@ -161,25 +178,29 @@
                 </div>
             </div>
             <div class="sidebar-links">
-                <a class="chat-nav-link text-decoration-none" routerLink="/mychats" routerLinkActive="link-active" (click)="closeMe()">
+                <a class="chat-nav-link text-decoration-none" routerLink="/mychats" routerLinkActive="link-active"
+                   (click)="closeMe()">
                     <i class="fas fa-comments nav-icon"></i>
                     <span class="link-name">Chats</span>
                 </a>
-<!--                <a class="chat-nav-link text-decoration-none" routerLink="/profile" routerLinkActive="link-active">-->
-<!--                    <i class="fas fa-male nav-icon" *ngIf="userContainer.gender === 'male'"></i>-->
-<!--                    <i class="fas fa-female nav-icon" *ngIf="userContainer.gender === 'female'"></i>-->
-<!--                    <span class="link-name">Profile</span>-->
-<!--                </a>-->
-                <a class="chat-nav-link text-decoration-none" routerLink="/groups" routerLinkActive="link-active" (click)="closeMe()">
+                <!--                <a class="chat-nav-link text-decoration-none" routerLink="/profile" routerLinkActive="link-active">-->
+                <!--                    <i class="fas fa-male nav-icon" *ngIf="userContainer.gender === 'male'"></i>-->
+                <!--                    <i class="fas fa-female nav-icon" *ngIf="userContainer.gender === 'female'"></i>-->
+                <!--                    <span class="link-name">Profile</span>-->
+                <!--                </a>-->
+                <a class="chat-nav-link text-decoration-none" routerLink="/groups" routerLinkActive="link-active"
+                   (click)="closeMe()">
                     <i class="fas fa-layer-group nav-icon"></i>
                     <span class="link-name">Groups</span>
                 </a>
 
-                <a class="chat-nav-link text-decoration-none" routerLink="/friends" routerLinkActive="link-active" (click)="closeMe()">
+                <a class="chat-nav-link text-decoration-none" routerLink="/friends" routerLinkActive="link-active"
+                   (click)="closeMe()">
                     <i class="fas fa-user-friends nav-icon"></i>
                     <span class="link-name">Friends</span>
                 </a>
-                <a class="chat-nav-link text-decoration-none" routerLink="/people" routerLinkActive="link-active" (click)="closeMe()">
+                <a class="chat-nav-link text-decoration-none" routerLink="/people" routerLinkActive="link-active"
+                   (click)="closeMe()">
                     <i class="fas fa-users nav-icon"></i>
                     <span class="link-name">Find People</span>
                 </a>

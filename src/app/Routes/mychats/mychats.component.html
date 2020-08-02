@@ -2,12 +2,17 @@
     <div class="chat-list">
         <div class="chat-search">
             <form class="search-form">
-                <input type="text" class="chatsapp-form-control" placeholder="Search or start new chat">
+                <input [(ngModel)]="searchText" (keyup)="filterChats()" name="searchInChats" type="text" class="chatsapp-form-control" placeholder="Search or start new chat">
                 <i class="fa fa-search search-icon" aria-hidden="true"></i>
             </form>
         </div>
+        <div class="col-12 my-3" *ngIf="socket.emptyChatsAlert">
+            <div class="alert alert-warning">
+                <span><i class="fa fa-exclamation-circle mx-2" aria-hidden="true"></i><span>No chats at the moment</span></span>
+            </div>
+        </div>
         <div class="chat-contacts">
-            <a class="friends text-decoration-none" *ngFor="let list of socket.allChatListContainer.userChats;trackBy:socket.trackByFn;let i = index" [routerLink]="['/mychats', list._id]" @scaleUp>
+            <a class="friends text-decoration-none" *ngFor="let list of toggleArray ? filteredArray : socket.allChatListContainer.userChats;trackBy:socket.trackByFn;let i = index" [routerLink]="['/mychats', list._id]" @scaleUp>
             <div class="friends-imgs">
                 <img *ngIf="socket.allChatListContainer.userId === list.firstUser._id"  class="img" [src]="list.secondUser.img ? list.secondUser.img.url : 'assets/user.png'" alt="friends-images">
                 <img *ngIf="socket.allChatListContainer.userId === list.secondUser._id"  class="img" [src]="list.firstUser.img ? list.firstUser.img.url : 'assets/user.png'" alt="friends-images">

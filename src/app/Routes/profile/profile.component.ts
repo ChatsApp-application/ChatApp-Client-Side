@@ -36,6 +36,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
         slidesPerView: 5,
         spaceBetween: 10,
         loop: false,
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+        },
         breakpoints: {
             1200: {
                 slidesPerView: 5,

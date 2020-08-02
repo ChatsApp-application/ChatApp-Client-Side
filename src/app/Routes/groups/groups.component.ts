@@ -46,6 +46,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
     sendRequest = false;
     allGroupsSub: Subscription;
     groupName;
+    emptyAlert = false;
     // arraies
     allGroupsContainer: AllGroups[] = [];
     // sweet alert
@@ -88,6 +89,11 @@ export class GroupsComponent implements OnInit, OnDestroy {
         this.socket.showLoader();
         this.allGroupsSub = this.groupService.getAllGroups().subscribe(res => {
             this.allGroupsContainer = res.userGroups;
+            if (res.userGroups.length === 0) {
+                this.emptyAlert = true;
+            } else {
+                this.emptyAlert = false;
+            }
             this.socket.hideLoader();
             console.log(res);
         });

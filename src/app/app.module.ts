@@ -26,6 +26,7 @@ import { GroupsComponent } from './Routes/groups/groups.component';
 import {GroupsService} from './Services/groups/groups.service';
 import {Countries} from './models/countries';
 import {NgxUsefulSwiperModule} from 'ngx-useful-swiper';
+import { GroupDetailsComponent } from './Routes/group-details/group-details.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import {NgxUsefulSwiperModule} from 'ngx-useful-swiper';
     NotfoundComponent,
     FindPeopleComponent,
     ProfileComponent,
-    GroupsComponent
+    GroupsComponent,
+    GroupDetailsComponent
   ],
     imports: [
         BrowserModule,

@@ -48,6 +48,7 @@ export class UserFriendsComponent implements OnInit, OnDestroy {
     friendsSub: Subscription;
     searchedText;
     toggleArraies = false;
+    emptyAlert = false;
     // arries
     friendsContainer: Friends[] = [];
     filteredFriends: Friends[] = [];
@@ -83,6 +84,11 @@ export class UserFriendsComponent implements OnInit, OnDestroy {
         this.friendsSub = this.friends.getUserFriends().subscribe(res => {
             this.friends.hideLoader();
             this.friendsContainer = res.friends;
+            if (res.friends === 0 ) {
+                this.emptyAlert = true;
+            } else {
+                this.emptyAlert = false;
+            }
             console.log(res);
         });
     }
@@ -142,17 +148,4 @@ export class UserFriendsComponent implements OnInit, OnDestroy {
         });
     }
 
-    alertSuccess(message: string): void {
-        this.Toast.fire({
-            icon: 'success',
-            title: message
-        });
-    }
-
-    alertDanger(message: string): void {
-        this.Toast.fire({
-            icon: 'error',
-            title: message
-        });
-    }
 }

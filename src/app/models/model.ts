@@ -222,3 +222,12 @@ export interface AllGroups {
     createdAt?: string;
     img?: Img;
 }
+
+export interface GroupFriends {
+    _id?: string;
+    firstName?: string;
+    lastName?: string;
+    online?: boolean;
+    img?: Img;
+}
+

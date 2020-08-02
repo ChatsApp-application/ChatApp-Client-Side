@@ -1,0 +1,103 @@
+
+<section class="content" @scaleIn>
+    <div class="chat-box">
+        <div class="upper-box">
+            <div class="box-left">
+                <div class="user-img">
+                    <img src="assets/user.png" alt="user-img">
+                </div>
+                <div class="user-name-online">
+                    <div class="u-name">
+                        <span class="u-n">Group Name</span>
+                        <span class="active"></span>
+                    </div>
+                    <div class="u-status"><span class="user-status mr-1">5</span><span class="text-light">Active Members</span></div>
+                </div>
+            </div>
+            <div class="box-right">
+                <div class="user-info">
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+                <div uk-dropdown="mode: click" id="dropdown">
+                    <div class="dropdown-dots">
+                        <div class="dots-content" href="#add-member-modal" uk-toggle (click)="closeDots()"><span>Add Members</span></div>
+                        <div class="dots-content"><span>Group Members</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="middle-box">
+            <div class="current-user">
+                <div class="current-details">
+                    <span class="name-of-user">Muhammed Mahmoud</span>
+                    <span class="date-of-message">3/3/2001</span>
+                </div>
+                <div class="current-message">
+                    <span class="message-text">Hi</span>
+                    <div class="current-time"><span><i class="fas fa-check check-icon"></i></span>2:40 AM</div>
+                </div>
+            </div>
+        </div>
+        <div class="lower-box">
+            <form class="chat-sender">
+                <label for="upload-file" class="uk-margin-remove">
+                    <div class="upload-file">
+                        <i class="fas fa-camera u-icon"></i>
+                    </div>
+                </label>
+                <input type="file" id="upload-file" style="display: none">
+                <div class="chat-input">
+                    <input type="text" autocomplete="off" name="currentMessage" class="chat-form-control" placeholder="Type a message">
+                    <button class="send-icon">
+                        <i class="far fa-paper-plane"></i>
+                    </button>
+                </div>
+                <div class="voice-recorder">
+                    <i class="fas fa-microphone text-white"></i>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<div id="add-member-modal" uk-modal>
+    <div class="uk-modal-dialog">
+        <div class="uk-modal-body" uk-overflow-auto>
+            <div class="chat-search">
+                <form class="search-form" (ngSubmit)="addMembersToGroup()">
+                    <div class="upper-part mb-2">
+                        <input [(ngModel)]="searchText" (keyup)="filterFriends()" name="searchInGroup" type="text" class="chatsapp-form-control" placeholder="Search to add new member">
+                        <i class="fa fa-plus search-icon" aria-hidden="true"></i>
+                    </div>
+                    <div class="selected-memebers my-2">
+                        <span class="selected-friend" *ngFor="let selected of selectedContainer;trackBy:trackByFn;let i = index" @scaleIn>
+                            <img [src]="selected?.img === null ? 'assets/user.png' : selected?.img?.url" alt="selected-friend-img">
+                            <span class="memeber-name">{{selected?.firstName | titlecase}}</span>
+                            <span class="cancel-member" (click)="returnMember(selected, i)"><i class="fas fa-times cancel-member-icon"></i></span>
+                        </span>
+                    </div>
+                    <div class="friends-to-add" *ngFor="let friend of toggleArray ? filteredContainer : groupFriendsContainer;let i = index;trackBy:trackByFn" (click)="selectThisMemeber(friend, i)" @scaleUp>
+                        <div class="add-left">
+                            <img [src]="friend?.img === null ? 'assets/user.png' : friend?.img?.url" class="friend-img" alt="member-img">
+                            <span class="member-name-modal">{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</span>
+                        </div>
+                        <div class="add-right">
+                            <i class="fa fa-plus text-light" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="my-2" *ngIf="groupFriendsContainer.length === 0">
+                        <div class="alert alert-warning">
+                            <i class="fa fa-exclamation-circle mr-2" aria-hidden="true"><span class="mx-2">No more friends to add</span></i>
+                        </div>
+                    </div>
+                    <div class="my-2 text-right">
+                        <button class="uk-button uk-button-primary" [disabled]="selectedContainer.length === 0 || sendRequest">
+                            {{sendRequest? 'Loading' : 'ADD'}}
+                            <i *ngIf="sendRequest" class="fa fa-spinner mx-2 fa-spin text-light" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

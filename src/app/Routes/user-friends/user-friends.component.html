@@ -7,7 +7,7 @@
                 <i class="fa fa-search search-icon" aria-hidden="true"></i>
             </form>
         </div>
-        <div *ngIf="friendsContainer.length === 0">
+        <div *ngIf="emptyAlert">
             <div class="alert alert-warning">
                 <i class="fa fa-exclamation-triangle mx-2" aria-hidden="true"></i>
                 <span>You dont have any friends <a [routerLink]="['/people']">Find Some</a></span>
@@ -64,9 +64,9 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12" *ngIf="mutualFriends.length === 0">
-                        <div class="alert uk-alert-warning">
+                        <div class="alert alert-warning">
                             <i class="fa fa-exclamation-circle mx-2" aria-hidden="true"></i>
-                            <span>No mutual friends founded!</span>
+                            <span>No mutual friends for this user</span>
                         </div>
                     </div>
                     <div class="col-12 friend-col mb-2" *ngFor="let mutual of mutualFriends;trackBy: socket.trackByFn">

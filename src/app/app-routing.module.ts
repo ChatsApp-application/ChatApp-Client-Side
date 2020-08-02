@@ -11,6 +11,7 @@ import {NotfoundComponent} from './Routes/notfound/notfound.component';
 import {FindPeopleComponent} from './Routes/find-people/find-people.component';
 import {ProfileComponent} from './Routes/profile/profile.component';
 import {GroupsComponent} from './Routes/groups/groups.component';
+import {GroupDetailsComponent} from './Routes/group-details/group-details.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'mychats/:id', component: ChatDetailsComponent, canActivate: [ValidGuard]},
   {path: 'people', component: FindPeopleComponent, canActivate: [ValidGuard]},
   {path: 'groups', component: GroupsComponent, canActivate: [ValidGuard]},
+  {path: 'groups/:id', component: GroupDetailsComponent, canActivate: [ValidGuard]},
   {path: 'profile/:id', component: ProfileComponent, canActivate: [ValidGuard]},
   {path: 'friends', component: UserFriendsComponent, canActivate: [ValidGuard]},
   {path: 'login', component: LoginComponent, canActivate: [InvalidGuard]},
