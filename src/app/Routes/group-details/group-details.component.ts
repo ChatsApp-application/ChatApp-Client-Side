@@ -79,7 +79,7 @@ export class GroupDetailsComponent implements OnInit {
       this.toggleArray = false;
     } else {
       this.toggleArray = true;
-      this.filteredContainer = this.groupFriendsContainer.filter(data => `${data.firstName} ${data.lastName}`.toLowerCase().includes(this.searchText));
+      this.filteredContainer = this.groupFriendsContainer.filter(data => `${data.firstName.toLowerCase()} ${data.lastName.toLowerCase()}`.includes(this.searchText.toLowerCase()));
     }
   }
 
@@ -95,13 +95,13 @@ export class GroupDetailsComponent implements OnInit {
     this.sendRequest = true;
     this.groupsService.addMember({groupId: this.groupID, usersSet: membersToAdd}).subscribe(res => {
       this.sendRequest = false;
-      this.closeModal();
       this.alertSuccess('Members added successfully');
       console.log(res);
       this.selectedContainer = [];
       this.searchText = '';
       this.toggleArray = false;
       this.getFriendList();
+      this.closeModal();
     }, err => {this.sendRequest = false; this.alertDanger(`${err.error.error}`); });
   }
 
