@@ -4,6 +4,7 @@ import {Observable} from 'rxjs';
 import {ChatDetails, ChatRoom, GroupData, GroupMembers, MyChats, User, UserChats} from '../../models/model';
 import {UserDetailsService} from '../user/user-details.service';
 import {AuthenticationService} from '../authentication.service';
+import {ActivatedRoute, Router} from '@angular/router';
 
 declare const $: any;
 
@@ -23,18 +24,13 @@ export class SocketService {
     allChatListContainer: MyChats = {};
     chatRoomContainer: ChatDetails = {};
     groupData: GroupData = {};
-    constructor(private user: UserDetailsService, private auth: AuthenticationService) {
+
+    constructor(private user: UserDetailsService, private auth: AuthenticationService, private router: Router) {
         this.socket = io(this.url);
         if (this.auth.isLoggedIn()) {
             this.getUserAfterLoggedIn();
         }
-        this.listenToFriendRequests();
-        this.listenToRejectionNotification();
-        this.listenToMyChats();
-        this.listenToChatDetails();
-        this.listenToMessages();
-        this.listenToJoiningGroup();
-        this.listenToGroupMessage();
+        this.listeners();
     }
 
     listen(eventName: string) {
@@ -53,6 +49,8 @@ export class SocketService {
         return index; // or item.id
     }
 
+    // *************** NOTIFICATIONS AND FRIEND REQUESTS PART ***************** //
+
     listenToFriendRequests(): void {
         this.listen('friendRequest').subscribe(res => {
             console.log(res);
@@ -60,6 +58,7 @@ export class SocketService {
                 console.log('reached');
                 this.userContainer.friendRequests.push(res['friendRequest']);
                 console.log('friendRequests', this.userContainer.friendRequests);
+                this.emptyFriendsAlert = true;
             }
         });
     }
@@ -68,9 +67,12 @@ export class SocketService {
         this.listen('informingNotification').subscribe(res => {
             if (this.userContainer._id === res['to']) {
                 this.userContainer.notifications.unshift(res['notification']);
+                this.emptyNotificationsAlert = true;
             }
         });
     }
+
+    // *************** PRIVATE CHAT PART  ***************** //
 
     listenToMyChats(): void {
         this.listen('userChats').subscribe(res => {
@@ -106,10 +108,16 @@ export class SocketService {
         });
     }
 
+    // *************** GROUP PART ***************** //
+
     listenToJoiningGroup(): void {
         this.listen('atGroupRoom').subscribe(res => {
             if (this.userContainer._id === res['to']) {
                 this.groupData = res;
+                localStorage.setItem('g-id', res['group']['_id']);
+                setTimeout(() => {
+                    this.getDownWhenEnter();
+                }, 200);
                 console.log(this.groupData);
             }
         });
@@ -119,9 +127,38 @@ export class SocketService {
         this.listen('groupMessage').subscribe(res => {
             console.log(res);
             this.groupData.group.chatHistory.push(res);
+            this.getDown();
         });
     }
+
+    listenToKickedMembers(): void {
+        this.listen('kickedFromGroup').subscribe(res => {
+            console.log(res);
+            this.groupData.group.groupMembers.forEach((member, index) => {
+                if (localStorage.getItem('g-id') === res['groupId']) {
+                    if (member._id === res['kickedUser'] && this.userContainer._id !== res['kickedUser']) {
+                        this.groupData.group.groupMembers.splice(index, 1);
+                    }
+                    if (res['kickedUser'] === this.userContainer._id) {
+                        this.router.navigate(['/groups']);
+                    }
+                }
+            });
+        });
+    }
+
+    listenToAddUser(): void {
+        this.listen('usersAddedToGroup').subscribe(res => {
+            if (this.groupData?.group?._id === res['group']) {
+                res['addedUsers'].forEach(member => {
+                   this.groupData.group.groupMembers.push(member);
+                });
+            }
+        });
+    }
+
     // *************** data of user after login ***************** //
+
     getUserAfterLoggedIn(): void {
         this.user.getUserAfterLogin().subscribe(res => {
             this.userContainer = res.user;
@@ -154,5 +191,17 @@ export class SocketService {
 
     hideLoader(): void {
         $('.preloader').fadeOut();
+    }
+
+    listeners(): void {
+        this.listenToFriendRequests();
+        this.listenToRejectionNotification();
+        this.listenToMyChats();
+        this.listenToChatDetails();
+        this.listenToMessages();
+        this.listenToJoiningGroup();
+        this.listenToGroupMessage();
+        this.listenToKickedMembers();
+        this.listenToAddUser();
     }
 }

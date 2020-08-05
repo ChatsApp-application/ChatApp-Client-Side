@@ -6,6 +6,7 @@ import {animate, group, style, transition, trigger} from '@angular/animations';
 import {SocketService} from '../../Services/socket-io/socket.service';
 import Swal from 'sweetalert2';
 import Uikit from 'uikit';
+import {Router} from '@angular/router';
 
 @Component({
     selector: 'app-groups',
@@ -46,6 +47,9 @@ export class GroupsComponent implements OnInit, OnDestroy {
     // variable
     sendRequest = false;
     allGroupsSub: Subscription;
+    addedSub: Subscription;
+    kickSub: Subscription;
+    deleteSub: Subscription;
     groupName;
     emptyAlert = false;
     // arraies
@@ -63,15 +67,21 @@ export class GroupsComponent implements OnInit, OnDestroy {
         }
     });
 
-    constructor(private groupService: GroupsService, public socket: SocketService) {
+    constructor(private groupService: GroupsService, public socket: SocketService, private router: Router) {
     }
 
     ngOnInit(): void {
         this.getGroups();
+        this.listenToAddUser();
+        this.listenToKickedMembers();
+        this.listenToDeletedGroup();
     }
 
     ngOnDestroy(): void {
         this.allGroupsSub.unsubscribe();
+        this.addedSub.unsubscribe();
+        this.kickSub.unsubscribe();
+        this.deleteSub.unsubscribe();
     }
 
     addGroup(form): void {
@@ -149,6 +159,33 @@ export class GroupsComponent implements OnInit, OnDestroy {
         });
     }
 
+    listenToAddUser(): void {
+        this.addedSub = this.socket.listen('usersAddedToGroup').subscribe(res => {
+            res['addedUsers'].forEach(member => {
+                if (this.socket.userContainer._id === member._id) {
+                    this.getGroups();
+                }
+            });
+        });
+    }
+
+    listenToKickedMembers(): void {
+        this.kickSub = this.socket.listen('kickedFromGroup').subscribe(res => {
+            if (res['kickedUser'] === this.socket.userContainer._id) {
+                this.getGroups();
+                console.log('kicked?')
+            }
+        });
+    }
+
+    listenToDeletedGroup(): void {
+        this.deleteSub = this.socket.listen('groupIsDeleted').subscribe(res => {
+            console.log(res);
+            if (this.socket.groupData.group._id === res['groupId']) {
+                this.getGroups();
+            }
+        });
+    }
 
     alertSuccess(message: string): void {
         this.Toast.fire({

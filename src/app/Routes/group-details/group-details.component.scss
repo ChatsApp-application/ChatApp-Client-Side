@@ -214,6 +214,8 @@
 
   .dots-content
   {
+    display: block;
+    text-decoration: none;
     transition: 0.1s;
     padding: 0.7rem 1.3rem;
     span

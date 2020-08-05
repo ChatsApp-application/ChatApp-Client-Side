@@ -1,11 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import Uikit from 'uikit';
 import {animate, group, style, transition, trigger} from '@angular/animations';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {GroupsService} from '../../Services/groups/groups.service';
 import {GroupFriends} from '../../models/model';
 import Swal from 'sweetalert2';
 import {SocketService} from '../../Services/socket-io/socket.service';
+import {Subscription} from 'rxjs';
 
 declare const $: any;
 
@@ -43,13 +44,15 @@ declare const $: any;
             ])
         ])]
 })
-export class GroupDetailsComponent implements OnInit {
+export class GroupDetailsComponent implements OnInit, OnDestroy {
     // variables
     groupID;
     searchText = '';
     sendRequest = false;
     toggleArray = false;
     messageText = '';
+    leaveSub: Subscription;
+    deleteSub: Subscription;
     // arraies
     groupFriendsContainer: GroupFriends[] = [];
     selectedContainer: GroupFriends[] = [];
@@ -67,15 +70,24 @@ export class GroupDetailsComponent implements OnInit {
         }
     });
 
-    constructor(private groupsService: GroupsService, private activated: ActivatedRoute, public socket: SocketService) {
+    constructor(private groupsService: GroupsService, private activated: ActivatedRoute, public socket: SocketService, private router: Router) {
         this.activated.params.subscribe(res => {
             this.groupID = res.id;
             this.emitToJoinGroup();
-            this.getFriendList();
         });
+        if (this.socket?.groupData?.group?.admin === this.socket?.userContainer?._id && this.groupID !== undefined) {
+            this.getFriendList();
+        }
     }
 
     ngOnInit(): void {
+        this.listenToLeaveGroup();
+        this.listenToDeletedGroup();
+    }
+
+    ngOnDestroy(): void {
+        this.deleteSub.unsubscribe();
+        this.leaveSub.unsubscribe();
     }
 
     // ************ SOCKET SPECIFICATIONS ************ //
@@ -129,8 +141,6 @@ export class GroupDetailsComponent implements OnInit {
             this.selectedContainer = [];
             this.searchText = '';
             this.toggleArray = false;
-            this.getFriendList();
-            this.emitToJoinGroup();
             this.closeModal();
         }, err => {
             this.sendRequest = false;
@@ -161,10 +171,10 @@ export class GroupDetailsComponent implements OnInit {
         this.groupFriendsContainer.push({...member});
     }
 
-    kickMembber(id, userName): void {
+    kickMembber(member): void {
         Swal.fire({
             title: 'Are you sure?',
-            text: `Would you like to kick ${userName}?`,
+            text: `Would you like to kick ${member.firstName}?`,
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -172,9 +182,8 @@ export class GroupDetailsComponent implements OnInit {
             confirmButtonText: 'Yes, kick!'
         }).then((result) => {
             if (result.value) {
-                this.groupsService.kickMemberFromGroup({groupId: this.groupID, userToKickId: id}).subscribe(res => {
-                    this.emitToJoinGroup();
-                    this.getFriendList();
+                this.groupsService.kickMemberFromGroup({groupId: this.groupID, userToKickId: member._id}).subscribe(res => {
+                    this.groupFriendsContainer.push({...member});
                     Swal.fire(
                         'Deleted!',
                         `${res.message}`,
@@ -190,6 +199,29 @@ export class GroupDetailsComponent implements OnInit {
             }
         });
 
+    }
+
+    listenToLeaveGroup(): void {
+        this.leaveSub = this.socket.listen('leaveGroup').subscribe(res => {
+            if (this.socket.groupData.group._id === res['groupId']) {
+                this.socket.groupData.group.groupMembers.forEach((member, index) => {
+                    if (member._id === res['userId']) {
+                        this.groupFriendsContainer.push(member);
+                        this.socket.groupData.group.groupMembers.splice(index, 1);
+                    }
+                });
+            }
+            console.log(res);
+        });
+    }
+
+    listenToDeletedGroup(): void {
+        this.deleteSub = this.socket.listen('groupIsDeleted').subscribe(res => {
+            console.log(res);
+            if (this.socket.groupData.group._id === res['groupId']) {
+                this.router.navigate(['/groups']);
+            }
+        });
     }
 
     // ************ COMPONENT TOOLS ************ //

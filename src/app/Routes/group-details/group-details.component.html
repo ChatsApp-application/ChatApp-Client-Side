@@ -20,10 +20,10 @@
                 </div>
                 <div uk-dropdown="mode: click" id="dropdown">
                     <div class="dropdown-dots">
-                        <div class="dots-content" href="#add-member-modal" uk-toggle (click)="closeDots()"><span>Add Members</span>
-                        </div>
-                        <div class="dots-content" href="#group-members-modal" uk-toggle (click)="closeDots()"><span>Group Members</span>
-                        </div>
+                        <a *ngIf="socket?.groupData?.group?.admin === socket?.userContainer?._id" class="dots-content" href="#add-member-modal" uk-toggle (click)="closeDots()"><span>Add Members</span>
+                        </a>
+                        <a class="dots-content" href="#group-members-modal" uk-toggle (click)="closeDots()"><span>Group Members</span>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -133,7 +133,8 @@
                         </div>
                         <div class="add-right">
                             <i class="fa fa-trash text-light kick-user-icon"
-                               (click)="kickMembber(member._id, member.firstName)" aria-hidden="true"></i>
+                               *ngIf="socket?.groupData?.group?.admin === socket?.userContainer?._id"
+                               (click)="kickMembber(member)" aria-hidden="true"></i>
                         </div>
                     </div>
                     <div class="my-2" *ngIf="socket?.groupData?.group?.groupMembers?.length === 0">

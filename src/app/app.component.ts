@@ -108,6 +108,9 @@ export class AppComponent implements OnInit{
             // this.getUserAfterLoggedIn();
             console.log(res);
         });
+        if (this.socket.userContainer.notifications.length === 0) {
+            this.socket.emptyNotificationsAlert = false;
+        }
     }
 
     alertSuccess(message: string): void {
