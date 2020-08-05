@@ -13,16 +13,19 @@
                 </div>
                 <div class="col-12 col-md-6 mb-2 group-col" *ngFor="let group of allGroupsContainer;trackBy:socket.trackByFn" @scaleUp>
                     <div class="group-model">
-                        <div class="model-top">
-                            <img src="assets/group.png" class="group-img" alt="group-img">
+                        <div class="model-top" [routerLink]="['/groups', group._id]">
+                            <img src="assets/group.png"  class="group-img" alt="group-img">
                             <div class="group-name"><span class="g-n">{{group.name}}</span><span class="group-messages">1</span></div>
                         </div>
                         <div class="model-bottom mt-2">
                             <a class="open-chat text-decoration-none" [routerLink]="['/groups', group._id]">
                                 <i class="fas fa-comment visit"></i>
                             </a>
-                            <div class="remove-group">
+                            <div class="remove-group" *ngIf="socket.userContainer._id !== group.admin" (click)="leaveGroup(group._id, group.name)">
                                 <i class="fas fa-sign-out-alt remove-icon"></i>
+                            </div>
+                            <div class="remove-group" *ngIf="socket.userContainer._id === group.admin" (click)="deleteGroup(group._id, group.name)">
+                                <i class="fa fa-trash remove-icon" aria-hidden="true"></i>
                             </div>
                         </div>
                     </div>

@@ -30,6 +30,32 @@ export class GroupsService {
         });
     }
 
+    // ************** DELETE A GROUP ************** //
+    deleteGroup(id): Observable<any> {
+        return this.http.delete(`${environment.apiWithUrl}/groups/deleteGroup/${id}`, {
+            headers: {
+                Authorization: `Bearer ${this.token}`
+            }
+        });
+    }
+
+    // ************** LEAVE A GROUP ************** //
+    leaveGroup(id): Observable<any> {
+        return this.http.patch(`${environment.apiWithUrl}/groups/leaveGroup/${id}`, {}, {
+            headers: {
+                Authorization: `Bearer ${this.token}`
+            }
+        });
+    }
+
+    // ************** KICK MEMBER FROM A GROUP ************** //
+    kickMemberFromGroup(data): Observable<any> {
+        return this.http.patch(`${environment.apiWithUrl}/groups/kickMember`, data, {
+            headers: {
+                Authorization: `Bearer ${this.token}`
+            }
+        });
+    }
     // ************** GET FRIEND LIST FOR A GROUP ************** //
     getFriendListForGroup(adminID): Observable<any> {
         return this.http.get(`${environment.apiWithUrl}/groups/friendsForGroup/${adminID}`, {

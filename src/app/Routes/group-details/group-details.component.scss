@@ -377,7 +377,89 @@
   }
 }
 
-.selected
-{
-  background-color: rgba(black,0.1);
+#group-members-modal {
+  .uk-modal-dialog {
+    background-color: $listBgColor !important;
+
+    .uk-modal-header {
+      background-color: $listBgColor !important;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.7rem;
+
+      .uk-modal-title {
+        font-size: 17px;
+        font-weight: bold;
+      }
+    }
+
+    .uk-modal-body {
+      padding: 1rem;
+      .group-members
+      {
+        h6
+        {
+          font-size: 16px;
+          color: rgba(#fff,0.8);
+          font-weight: bold;
+        }
+      }
+      .chat-search
+      {
+        .search-form
+        {
+          .friends-to-add
+          {
+            padding: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(#fff,0.1);
+            transition: 0.1s;
+            .add-left
+            {
+              display: flex;
+              align-items: center;
+              .friend-img
+              {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 60px;
+                width: 60px;
+                border-radius: 50%;
+                margin-right: 0.5rem;
+              }
+              .member-name-modal
+              {
+                color: $semiGray;
+              }
+            }
+            .add-right
+            {
+              .kick-user-icon
+              {
+                &:hover
+                {
+                  color: #ee395b !important;
+                  cursor: pointer;
+                }
+              }
+            }
+            &:hover
+            {
+              background-color: rgba(black,0.1);
+            }
+          }
+        }
+
+      }
+    }
+
+    .uk-modal-footer
+    {
+      background-color: $listBgColor !important;
+    }
+  }
 }

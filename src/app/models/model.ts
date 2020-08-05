@@ -173,6 +173,7 @@ export interface ChatDetails {
     chatRoom?: ChatRoom;
     to?: string;
 }
+
 export interface ChatRoom {
     _id?: string;
     chatHistory?: ChatHistory[];
@@ -231,3 +232,31 @@ export interface GroupFriends {
     img?: Img;
 }
 
+export interface GroupData {
+    group?: Group;
+    to?: string;
+}
+
+export interface Group {
+    _id?: string;
+    admin?: string;
+    img?: Img;
+    name?: string;
+    chatHistory?: GroupHistory[];
+    groupMembers?: GroupMembers[];
+}
+
+export interface GroupHistory {
+    _id?: string;
+    data?: string;
+    from?: string;
+    message?: string;
+    fromUser?: FromUser;
+}
+export interface GroupMembers {
+    _id?: string;
+    firstName?: string;
+    img?: Img;
+    lastName?: string;
+    online?: boolean;
+}

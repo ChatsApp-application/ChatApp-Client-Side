@@ -61,7 +61,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12" *ngIf="mutualPeople.length === 0">
-                        <div class="alert uk-alert-warning">
+                        <div class="alert alert-warning">
                             <i class="fa fa-exclamation-circle mx-2" aria-hidden="true"></i>
                             <span>No mutual friends founded</span>
                         </div>
@@ -77,7 +77,7 @@
                                 </div>
                             </div>
                             <div class="friend-right">
-                                <a class="visit-profile text-decoration-none" [routerLink]="['/profile', mutual._id]">
+                                <a class="visit-profile text-decoration-none" [routerLink]="['/profile', mutual._id]" (click)="closeMe()">
                                     <i class="fas fa-eye visit"></i>
                                 </a>
 <!--                                <div class="un-friend">-->

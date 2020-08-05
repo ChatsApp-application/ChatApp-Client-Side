@@ -4,7 +4,7 @@ import {MutualFriends, People} from '../../models/model';
 import {Subscription} from 'rxjs';
 import {FreindsDetailsService} from '../../Services/friends/freinds-details.service';
 import {SocketService} from '../../Services/socket-io/socket.service';
-
+import Uikit from 'uikit';
 @Component({
   selector: 'app-find-people',
   templateUrl: './find-people.component.html',
@@ -126,5 +126,9 @@ export class FindPeopleComponent implements OnInit, OnDestroy {
       this.filterdPeople = this.peopleContainer.filter((filtered) => `${filtered.firstName.toLowerCase()} ${filtered.lastName.toLowerCase()}`.includes(this.searchedText.toLowerCase()));
       console.log(this.filterdPeople);
     }
+  }
+
+  closeMe(): void {
+    Uikit.modal('#modal-overflow').hide();
   }
 }

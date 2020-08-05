@@ -6,6 +6,7 @@ import {animate, group, style, transition, trigger} from '@angular/animations';
 import {SocketService} from '../../Services/socket-io/socket.service';
 import Swal from 'sweetalert2';
 import Uikit from 'uikit';
+
 @Component({
     selector: 'app-groups',
     templateUrl: './groups.component.html',
@@ -14,13 +15,13 @@ import Uikit from 'uikit';
         trigger('scaleIn', [
             transition('void => *', [
                 style({
-                    opacity : 0,
-                    transform : 'translateX(-50%)'
+                    opacity: 0,
+                    transform: 'translateX(-50%)'
                 }), group([
                     animate(250, style({
-                        opacity : 1
+                        opacity: 1
                     })), animate(250, style({
-                        transform : 'translateX(0)'
+                        transform: 'translateX(0)'
                     }))
                 ])
             ])
@@ -61,6 +62,7 @@ export class GroupsComponent implements OnInit, OnDestroy {
             toast.addEventListener('mouseleave', Swal.resumeTimer);
         }
     });
+
     constructor(private groupService: GroupsService, public socket: SocketService) {
     }
 
@@ -85,6 +87,54 @@ export class GroupsComponent implements OnInit, OnDestroy {
             this.alertDanger('Something went wrong');
         });
     }
+
+    deleteGroup(id, groupName): void {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Would you like to delete ${groupName} !`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.value) {
+                this.groupService.deleteGroup(id).subscribe(res => {
+                    this.getGroups();
+                    Swal.fire(
+                        'Deleted!',
+                        `${groupName} has been deleted.`,
+                        'success'
+                    );
+                });
+            }
+        });
+
+    }
+
+    leaveGroup(id, groupName): void {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: `Would you like to leave ${groupName} ?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, leave it!'
+        }).then((result) => {
+            if (result.value) {
+                this.groupService.leaveGroup(id).subscribe(res => {
+                    this.getGroups();
+                    Swal.fire(
+                        'Deleted!',
+                        `${res.message}`,
+                        'success'
+                    );
+                });
+            }
+        });
+    }
+
     getGroups(): void {
         this.socket.showLoader();
         this.allGroupsSub = this.groupService.getAllGroups().subscribe(res => {

@@ -118,7 +118,7 @@ export class UserFriendsComponent implements OnInit, OnDestroy {
     }
 
     passMutualData(data): void {
-        this.mutualFriends = data;
+        this.mutualFriends = [...data];
     }
 
     searchInFriends(): void {

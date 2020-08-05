@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as io from 'socket.io-client';
 import {Observable} from 'rxjs';
-import {ChatDetails, ChatRoom, MyChats, User, UserChats} from '../../models/model';
+import {ChatDetails, ChatRoom, GroupData, GroupMembers, MyChats, User, UserChats} from '../../models/model';
 import {UserDetailsService} from '../user/user-details.service';
 import {AuthenticationService} from '../authentication.service';
 
@@ -22,7 +22,7 @@ export class SocketService {
     userContainer: User = {};
     allChatListContainer: MyChats = {};
     chatRoomContainer: ChatDetails = {};
-
+    groupData: GroupData = {};
     constructor(private user: UserDetailsService, private auth: AuthenticationService) {
         this.socket = io(this.url);
         if (this.auth.isLoggedIn()) {
@@ -33,6 +33,8 @@ export class SocketService {
         this.listenToMyChats();
         this.listenToChatDetails();
         this.listenToMessages();
+        this.listenToJoiningGroup();
+        this.listenToGroupMessage();
     }
 
     listen(eventName: string) {
@@ -104,6 +106,21 @@ export class SocketService {
         });
     }
 
+    listenToJoiningGroup(): void {
+        this.listen('atGroupRoom').subscribe(res => {
+            if (this.userContainer._id === res['to']) {
+                this.groupData = res;
+                console.log(this.groupData);
+            }
+        });
+    }
+
+    listenToGroupMessage(): void {
+        this.listen('groupMessage').subscribe(res => {
+            console.log(res);
+            this.groupData.group.chatHistory.push(res);
+        });
+    }
     // *************** data of user after login ***************** //
     getUserAfterLoggedIn(): void {
         this.user.getUserAfterLogin().subscribe(res => {

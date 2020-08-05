@@ -22,7 +22,7 @@
                             <img *ngIf="friend?.img?.url" class="friend-img" [src]="friend?.img?.url" alt="friend-image">
                             <div class="friend-caption">
                                 <div class="caption-text"><span>{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</span> <span class="user-acitve"></span></div>
-                                <a class="matual-friends" href="#modal-overflow" uk-toggle (click)="passMutualData(friend?.matualFriends)"><span>{{friend?.matualFriends?.length === 0? 'No' : friend?.matualFriends?.length}} mutual {{friend?.matualFriends?.length === 1 ? 'friend' : 'friends'}}</span></a>
+                                <a class="matual-friends" href="#friends-modal" uk-toggle (click)="passMutualData(friend?.matualFriends)"><span>{{friend?.matualFriends?.length === 0? 'No' : friend?.matualFriends?.length}} mutual {{friend?.matualFriends?.length === 1 ? 'friend' : 'friends'}}</span></a>
                             </div>
                         </div>
                         <div class="friend-right">
@@ -54,7 +54,7 @@
 
 
 <!-- matual friends modal -->
-<div id="modal-overflow" uk-modal>
+<div id="friends-modal" uk-modal>
     <div class="uk-modal-dialog">
         <div class="uk-modal-header">
             <h2 class="uk-modal-title text-light">Mutual Friends</h2>
@@ -69,7 +69,7 @@
                             <span>No mutual friends for this user</span>
                         </div>
                     </div>
-                    <div class="col-12 friend-col mb-2" *ngFor="let mutual of mutualFriends;trackBy: socket.trackByFn">
+                    <div class="col-12 friend-col mb-2" *ngFor="let mutual of mutualFriends">
                         <div class="friend-details">
                             <div class="friend-left">
                                 <img *ngIf="!mutual?.img?.url" class="friend-img" src="assets/user.png" alt="friend-image">

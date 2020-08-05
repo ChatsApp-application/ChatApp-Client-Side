@@ -45,14 +45,6 @@ export class ChatDetailsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
-        // $('.middle-box').stop().animate({scrollTop: $('.middle-box')[0].scrollHeight}, 1000);
-        // console.log($('.middle-box')[0].scrollHeight);
-
-        // chatBox.animate({scrollTop: chatBox.prop('scrollHeight')}, 400);
-        // chatBox.mouseenter(() => {
-        //   this.socket.getDown();
-        // });
-        // this.moveDown();
     }
 
     ngOnDestroy(): void {
