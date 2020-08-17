@@ -23,7 +23,7 @@
                             <div class="friend-caption">
                                 <div class="caption-text"><span>{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</span> <span class="user-acitve"></span></div>
                                 <a class="matual-friends" href="#friends-modal" uk-toggle (click)="passMutualData(friend?.matualFriends)"><span>{{friend?.matualFriends?.length === 0? 'No' : friend?.matualFriends?.length}} mutual {{friend?.matualFriends?.length === 1 ? 'friend' : 'friends'}}</span></a>
-                            </div>
+                        </div>
                         </div>
                         <div class="friend-right">
                             <a class="visit-profile text-decoration-none" [routerLink]="['/profile',friend._id]">

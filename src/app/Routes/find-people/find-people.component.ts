@@ -75,8 +75,9 @@ export class FindPeopleComponent implements OnInit, OnDestroy {
     });
   }
 
-  getSelectedPeople(data): void {
-    this.mutualPeople = data;
+  getSelectedPeople(data: MutualFriends[]): void {
+    this.mutualPeople = [];
+    this.mutualPeople = [...data];
   }
 
   listenToFriendsChanges(): void {

@@ -75,14 +75,14 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
             this.groupID = res.id;
             this.emitToJoinGroup();
         });
-        if (this.socket?.groupData?.group?.admin === this.socket?.userContainer?._id && this.groupID !== undefined) {
-            this.getFriendList();
-        }
     }
 
     ngOnInit(): void {
         this.listenToLeaveGroup();
         this.listenToDeletedGroup();
+        if (this.socket?.groupData?.group?.admin === this.socket?.userContainer?._id && this.groupID !== undefined) {
+            this.getFriendList();
+        }
     }
 
     ngOnDestroy(): void {
@@ -221,6 +221,12 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
             if (this.socket.groupData.group._id === res['groupId']) {
                 this.router.navigate(['/groups']);
             }
+        });
+    }
+
+    emitChatLeave(): void {
+        this.socket.emit('leaveRoomOrGroup', {
+            roomId: this.groupID
         });
     }
 

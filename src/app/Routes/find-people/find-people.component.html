@@ -72,7 +72,7 @@
                                 <img *ngIf="!mutual?.img?.url" class="friend-img" src="assets/user.png" alt="friend-image">
                                 <img *ngIf="mutual?.img?.url" class="friend-img" [src]="mutual?.img?.url" alt="friend-image">
                                 <div class="friend-caption">
-                                    <div class="caption-text"><span>{{mutual.firstName | titlecase}} {{mutual.lastName | titlecase}}</span></div>
+                                    <div class="caption-text"><span>{{mutual?.firstName | titlecase}} {{mutual?.lastName | titlecase}}</span></div>
                                     <a class="matual-friends"><span>{{mutual?.friends?.length}}</span></a>
                                 </div>
                             </div>
