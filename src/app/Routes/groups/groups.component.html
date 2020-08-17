@@ -15,7 +15,8 @@
                     <div class="group-model">
                         <a class="model-top" [routerLink]="['/groups', group._id]">
                             <img src="assets/group.png"  class="group-img" alt="group-img">
-                            <div class="group-name"><span class="g-n">{{group.name}}</span><span class="group-messages">1</span></div>
+                            <div class="group-name"><span class="g-n">{{group.name}}</span></div>
+<!--                            <span class="group-messages">1</span>-->
                         </a>
                         <div class="model-bottom mt-2">
                             <a class="open-chat text-decoration-none" [routerLink]="['/groups', group._id]">

@@ -150,4 +150,7 @@ export class UserFriendsComponent implements OnInit, OnDestroy {
         });
     }
 
+    closeModal(): void {
+        $('#mutualFriends').modal('hide');
+    }
 }

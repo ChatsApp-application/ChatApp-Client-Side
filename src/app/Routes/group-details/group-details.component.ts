@@ -80,14 +80,17 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.listenToLeaveGroup();
         this.listenToDeletedGroup();
-        if (this.socket?.groupData?.group?.admin === this.socket?.userContainer?._id && this.groupID !== undefined) {
-            this.getFriendList();
-        }
+        setTimeout(() => {
+            if (this.socket?.groupData?.group?.admin === this.socket?.userContainer?._id && this.groupID !== undefined) {
+                this.getFriendList();
+            }
+        }, 20);
     }
 
     ngOnDestroy(): void {
         this.deleteSub.unsubscribe();
         this.leaveSub.unsubscribe();
+        this.emitChatLeave();
     }
 
     // ************ SOCKET SPECIFICATIONS ************ //
@@ -233,7 +236,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     // ************ COMPONENT TOOLS ************ //
 
     closeModal(): void {
-        Uikit.modal('#add-member-modal').hide();
+        $('#add-member-modal').modal('hide');
     }
 
     closeDots(): void {

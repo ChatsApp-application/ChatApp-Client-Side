@@ -424,123 +424,107 @@
   }
 }
 
-// modal for mutual friends
 
-#friends-modal
+// modal for mutual friends
+#mutualFriends
 {
-  .uk-modal-dialog
+
+  .modal-header
   {
     background-color: $listBgColor !important;
-    .uk-modal-header
+    border-radius: 0;
+  }
+  .modal-body
+  {
+    background-color: $listBgColor !important;
+    .friend-details
     {
-      background-color: $listBgColor !important;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       padding: 0.7rem;
-      .uk-modal-title
-      {
-        font-size: 17px;
-        font-weight: bold;
-      }
-    }
-    .uk-modal-body
-    {
-      padding: 1rem;
-      .friend-details
+      border: 1px solid rgba($semiGray,0.1);
+      border-radius: 7px;
+      transition: 0.1s;
+      .friend-left
       {
         display: flex;
         align-items: center;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        padding: 0.7rem;
-        border: 1px solid rgba($semiGray,0.1);
-        border-radius: 7px;
-        transition: 0.1s;
-        .friend-left
+        .friend-img
         {
           display: flex;
           align-items: center;
-          .friend-img
-          {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 70px;
-            height: 70px;
-            box-shadow: $shadow;
-            border-radius: 7px;
-            margin-right: 0.5rem;
-          }
-          .friend-caption
-          {
-            .caption-text
-            {
-              color: rgba(#fff,0.8);
-            }
-            .matual-friends
-            {
-              display: block;
-              color: $semiGray;
-            }
-          }
+          justify-content: center;
+          width: 70px;
+          height: 70px;
+          box-shadow: $shadow;
+          border-radius: 7px;
+          margin-right: 0.5rem;
         }
-        .friend-right
+        .friend-caption
         {
-          .visit-profile
+          .caption-text
           {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: rgba($semiGray,0.1);
-            margin-bottom: 0.5rem;
-            transition: 0.1s;
-            .visit
-            {
-              color: $semiGray;
-            }
-            &:hover
-            {
-              cursor: pointer;
-              background-color: rgba($semiGray,0.3);
-            }
+            color: rgba(#fff,0.8);
           }
-          .un-friend
+          .matual-friends
           {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: rgba($mainColor,0.7);
-            transition: 0.1s;
-            .remove-icon
-            {
-              color: rgba(#fff,0.8);
-            }
-            &:hover
-            {
-              cursor: pointer;
-              background-color: rgba($semiGray,0.3);
-            }
+            display: block;
+            color: $semiGray;
           }
-        }
-        &:hover
-        {
-          background-color: rgba(black,0.1);
         }
       }
-    }
-    .uk-modal-footer
-    {
-      background-color: $listBgColor !important;
+      .friend-right
+      {
+        .visit-profile
+        {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: rgba($semiGray,0.1);
+          margin-bottom: 0.5rem;
+          transition: 0.1s;
+          .visit
+          {
+            color: $semiGray;
+          }
+          &:hover
+          {
+            cursor: pointer;
+            background-color: rgba($semiGray,0.3);
+          }
+        }
+        .un-friend
+        {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          background-color: rgba($mainColor,0.7);
+          transition: 0.1s;
+          .remove-icon
+          {
+            color: rgba(#fff,0.8);
+          }
+          &:hover
+          {
+            cursor: pointer;
+            background-color: rgba($semiGray,0.3);
+          }
+        }
+      }
+      &:hover
+      {
+        background-color: rgba(black,0.1);
+      }
     }
   }
+
 }
-
-
 

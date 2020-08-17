@@ -20,9 +20,9 @@
                 </div>
                 <div uk-dropdown="mode: click" id="dropdown">
                     <div class="dropdown-dots">
-                        <a *ngIf="socket?.groupData?.group?.admin === socket?.userContainer?._id" class="dots-content" href="#add-member-modal" uk-toggle (click)="closeDots()"><span>Add Members</span>
+                        <a *ngIf="socket?.groupData?.group?.admin === socket?.userContainer?._id" class="dots-content" data-toggle="modal" data-target="#add-member-modal" (click)="closeDots()"><span>Add Members</span>
                         </a>
-                        <a class="dots-content" href="#group-members-modal" uk-toggle (click)="closeDots()"><span>Group Members</span>
+                        <a class="dots-content" data-toggle="modal" data-target="#group-members-modal" (click)="closeDots()"><span>Group Members</span>
                         </a>
                     </div>
                 </div>
@@ -63,17 +63,21 @@
     </div>
 </section>
 
-<div id="add-member-modal" uk-modal>
-    <div class="uk-modal-dialog">
-        <div class="uk-modal-body" uk-overflow-auto>
-            <div class="chat-search">
-                <form class="search-form" (ngSubmit)="addMembersToGroup()">
-                    <div class="upper-part mb-2">
-                        <input [(ngModel)]="searchText" (keyup)="filterFriends()" name="searchInGroup" type="text"
-                               class="chatsapp-form-control" placeholder="Search to add new member">
-                        <i class="fa fa-plus search-icon" aria-hidden="true"></i>
-                    </div>
-                    <div class="selected-memebers my-2">
+
+
+<!-- add group members Modal -->
+<div class="modal fade" id="add-member-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="chat-search">
+                    <form class="search-form" (ngSubmit)="addMembersToGroup()">
+                        <div class="upper-part mb-2">
+                            <input [(ngModel)]="searchText" (keyup)="filterFriends()" name="searchInGroup" type="text"
+                                   class="chatsapp-form-control" placeholder="Search to add new member">
+                            <i class="fa fa-plus search-icon" aria-hidden="true"></i>
+                        </div>
+                        <div class="selected-memebers my-2">
                         <span class="selected-friend"
                               *ngFor="let selected of selectedContainer;trackBy:trackByFn;let i = index" @scaleIn>
                             <img [src]="selected?.img === null ? 'assets/user.png' : selected?.img?.url"
@@ -82,64 +86,121 @@
                             <span class="cancel-member" (click)="returnMember(selected, i)"><i
                                     class="fas fa-times cancel-member-icon"></i></span>
                         </span>
-                    </div>
-                    <div class="friends-to-add"
-                         *ngFor="let friend of toggleArray ? filteredContainer : groupFriendsContainer;let i = index;trackBy:trackByFn"
-                         (click)="selectThisMemeber(friend, i)" @scaleUp>
-                        <div class="add-left">
-                            <img [src]="friend?.img === null ? 'assets/user.png' : friend?.img?.url" class="friend-img"
-                                 alt="member-img">
-                            <span class="member-name-modal">{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</span>
                         </div>
-                        <div class="add-right">
-                            <i class="fa fa-plus text-light" aria-hidden="true"></i>
+                        <div class="friends-to-add"
+                             *ngFor="let friend of toggleArray ? filteredContainer : groupFriendsContainer;let i = index;trackBy:trackByFn"
+                             (click)="selectThisMemeber(friend, i)" @scaleUp>
+                            <div class="add-left">
+                                <img [src]="friend?.img === null ? 'assets/user.png' : friend?.img?.url" class="friend-img"
+                                     alt="member-img">
+                                <span class="member-name-modal">{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</span>
+                            </div>
+                            <div class="add-right">
+                                <i class="fa fa-plus text-light" aria-hidden="true"></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="my-2" *ngIf="groupFriendsContainer.length === 0">
-                        <div class="alert alert-warning">
-                            <i class="fa fa-exclamation-circle mr-2" aria-hidden="true"><span class="mx-2">No more friends to add</span></i>
+                        <div class="my-2" *ngIf="groupFriendsContainer.length === 0">
+                            <div class="alert alert-warning">
+                                <i class="fa fa-exclamation-circle mr-2" aria-hidden="true"><span class="mx-2">No more friends to add</span></i>
+                            </div>
                         </div>
-                    </div>
-                    <div class="my-2 text-right">
-                        <button class="uk-button uk-button-primary"
-                                [disabled]="selectedContainer.length === 0 || sendRequest">
-                            {{sendRequest ? 'Loading' : 'ADD'}}
-                            <i *ngIf="sendRequest" class="fa fa-spinner mx-2 fa-spin text-light" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </form>
+                        <div class="my-2 text-right">
+                            <button class="uk-button uk-button-primary"
+                                    [disabled]="selectedContainer.length === 0 || sendRequest">
+                                {{sendRequest ? 'Loading' : 'ADD'}}
+                                <i *ngIf="sendRequest" class="fa fa-spinner mx-2 fa-spin text-light" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="group-members-modal" uk-modal>
-    <div class="uk-modal-dialog">
-        <div class="uk-modal-body" uk-overflow-auto>
-            <div class="group-members">
-                <h6>Group members</h6>
-            </div>
-            <div class="chat-search">
-                <div class="search-form">
-                    <div class="friends-to-add"
-                         *ngFor="let member of socket?.groupData?.group?.groupMembers;trackBy:socket.trackByFn">
-                        <div class="add-left">
-                            <img [src]="member.img === null ? 'assets/user.png' : member.img.url" class="friend-img"
-                                 alt="member-img">
-                            <div>
-                                <div class="member-name-modal">{{member.firstName | titlecase}} {{member.lastName | titlecase}}</div>
-                                <span class="text-light mt-2">{{socket?.groupData?.group?.admin === member?._id ? 'Admin' : 'Member'}}</span>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div id="group-members-modal" uk-modal>-->
+<!--    <div class="uk-modal-dialog">-->
+<!--        <div class="uk-modal-body" uk-overflow-auto>-->
+<!--            <div class="group-members">-->
+<!--                <h6>Group members</h6>-->
+<!--            </div>-->
+<!--            <div class="chat-search">-->
+<!--                <div class="search-form">-->
+<!--                    <div class="friends-to-add"-->
+<!--                         *ngFor="let member of socket?.groupData?.group?.groupMembers;trackBy:socket.trackByFn">-->
+<!--                        <div class="add-left">-->
+<!--                            <img [src]="member.img === null ? 'assets/user.png' : member.img.url" class="friend-img"-->
+<!--                                 alt="member-img">-->
+<!--                            <div>-->
+<!--                                <div class="member-name-modal">{{member.firstName | titlecase}} {{member.lastName | titlecase}}</div>-->
+<!--                                <span class="text-light mt-2">{{socket?.groupData?.group?.admin === member?._id ? 'Admin' : 'Member'}}</span>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="add-right">-->
+<!--                            <i class="fa fa-trash text-light kick-user-icon"-->
+<!--                               *ngIf="socket?.groupData?.group?.admin === socket?.userContainer?._id"-->
+<!--                               (click)="kickMembber(member)" aria-hidden="true"></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="my-2" *ngIf="socket?.groupData?.group?.groupMembers?.length === 0">-->
+<!--                        <div class="alert alert-warning">-->
+<!--                            <i class="fa fa-exclamation-circle mr-2" aria-hidden="true"><span class="mx-2">No more friends to add</span></i>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+
+
+
+
+
+<!-- group members modal -->
+<div class="modal fade" id="group-members-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="group-members">
+                    <h6>Group members</h6>
+                </div>
+                <div class="chat-search">
+                    <div class="search-form">
+                        <div class="friends-to-add"
+                             *ngFor="let member of socket?.groupData?.group?.groupMembers;trackBy:socket.trackByFn">
+                            <div class="add-left">
+                                <img [src]="member.img === null ? 'assets/user.png' : member.img.url" class="friend-img"
+                                     alt="member-img">
+                                <div>
+                                    <div class="member-name-modal">{{member.firstName | titlecase}} {{member.lastName | titlecase}}</div>
+                                    <span class="text-light mt-2">{{socket?.groupData?.group?.admin === member?._id ? 'Admin' : 'Member'}}</span>
+                                </div>
+                            </div>
+                            <div class="add-right">
+                                <i class="fa fa-trash text-light kick-user-icon"
+                                   *ngIf="socket?.groupData?.group?.admin === socket?.userContainer?._id"
+                                   (click)="kickMembber(member)" aria-hidden="true"></i>
                             </div>
                         </div>
-                        <div class="add-right">
-                            <i class="fa fa-trash text-light kick-user-icon"
-                               *ngIf="socket?.groupData?.group?.admin === socket?.userContainer?._id"
-                               (click)="kickMembber(member)" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    <div class="my-2" *ngIf="socket?.groupData?.group?.groupMembers?.length === 0">
-                        <div class="alert alert-warning">
-                            <i class="fa fa-exclamation-circle mr-2" aria-hidden="true"><span class="mx-2">No more friends to add</span></i>
+                        <div class="my-2" *ngIf="socket?.groupData?.group?.groupMembers?.length === 0">
+                            <div class="alert alert-warning">
+                                <i class="fa fa-exclamation-circle mr-2" aria-hidden="true"><span class="mx-2">No more friends to add</span></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -147,3 +208,21 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

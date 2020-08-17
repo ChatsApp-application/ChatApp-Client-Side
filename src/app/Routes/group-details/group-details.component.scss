@@ -231,237 +231,198 @@
 }
 
 
-#add-member-modal {
-  .uk-modal-dialog {
+#add-member-modal
+{
+  .modal-body
+  {
     background-color: $listBgColor !important;
-
-    .uk-modal-header {
-      background-color: $listBgColor !important;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.7rem;
-
-      .uk-modal-title {
-        font-size: 17px;
-        font-weight: bold;
-      }
-    }
-
-    .uk-modal-body {
-      padding: 1rem;
-      .chat-search
+    border-radius: 0;
+    .chat-search
+    {
+      .search-form
       {
-        .search-form
+        .upper-part
         {
-          .upper-part
+          position: relative;
+          .chatsapp-form-control
           {
-            position: relative;
-            .chatsapp-form-control
+            width: 100%;
+            border: none;
+            color: $semiGray;
+            background-color: transparent;
+            padding: 0.7rem 2rem 0.7rem 0.7rem;
+            border-bottom: 2px solid $semiGray;
+            transition: 0.2s;
+            outline: none;
+            &:focus
             {
-              width: 100%;
-              border: none;
-              color: $semiGray;
-              background-color: transparent;
-              padding: 0.7rem 2rem 0.7rem 0.7rem;
-              border-bottom: 2px solid $semiGray;
-              transition: 0.2s;
+              border-color: $mainColor;
               outline: none;
-              &:focus
-              {
-                border-color: $mainColor;
-                outline: none;
-              }
-            }
-            .search-icon
-            {
-              color: $semiGray;
-              position: absolute;
-              top: 30%;
-              right: 2%;
             }
           }
-          .selected-memebers
+          .search-icon
+          {
+            color: $semiGray;
+            position: absolute;
+            top: 30%;
+            right: 2%;
+          }
+        }
+        .selected-memebers
+        {
+          display: flex;
+          align-items: center;
+          flex-wrap: wrap;
+          .selected-friend
           {
             display: flex;
             align-items: center;
-            flex-wrap: wrap;
-            .selected-friend
+            background-color: rgba(black,0.1);
+            padding: 0.2rem;
+            border-radius: 10px;
+            margin: 0.3rem;
+            img
+            {
+              height: 25px;
+              width: 25px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 50%;
+            }
+            .memeber-name
+            {
+              color: rgba(#fff,0.7);
+              font-size: 14px;
+              margin: 0rem 0.5rem 0rem 0.2rem;
+            }
+            .cancel-member
             {
               display: flex;
               align-items: center;
-              background-color: rgba(black,0.1);
-              padding: 0.2rem;
-              border-radius: 10px;
-              margin: 0.3rem;
-              img
+              justify-content: center;
+              height: 15px;
+              width: 15px;
+              border-radius: 50%;
+              .cancel-member-icon
               {
-                height: 25px;
-                width: 25px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                border-radius: 50%;
+                font-size: 12px;
+                color: #fff;
               }
-              .memeber-name
+              &:hover
               {
-                color: rgba(#fff,0.7);
-                font-size: 14px;
-                margin: 0rem 0.5rem 0rem 0.2rem;
+                background-color: rgba(#fff,0.5);
+                cursor: pointer;
               }
-              .cancel-member
-              {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 15px;
-                width: 15px;
-                border-radius: 50%;
-                .cancel-member-icon
-                {
-                  font-size: 12px;
-                  color: #fff;
-                }
-                &:hover
-                {
-                  background-color: rgba(#fff,0.5);
-                  cursor: pointer;
-                }
-              }
-            }
-          }
-          .friends-to-add
-          {
-            padding: 0.7rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(#fff,0.1);
-            transition: 0.1s;
-            .add-left
-            {
-              display: flex;
-              align-items: center;
-              .friend-img
-              {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 60px;
-                width: 60px;
-                border-radius: 50%;
-                margin-right: 0.5rem;
-              }
-              .member-name-modal
-              {
-                color: $semiGray;
-              }
-            }
-            .add-right
-            {
-
-            }
-            &:hover
-            {
-              background-color: rgba(black,0.1);
-              cursor: pointer;
             }
           }
         }
+        .friends-to-add
+        {
+          padding: 0.7rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 1px solid rgba(#fff,0.1);
+          transition: 0.1s;
+          .add-left
+          {
+            display: flex;
+            align-items: center;
+            .friend-img
+            {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 60px;
+              width: 60px;
+              border-radius: 50%;
+              margin-right: 0.5rem;
+            }
+            .member-name-modal
+            {
+              color: $semiGray;
+            }
+          }
+          .add-right
+          {
 
+          }
+          &:hover
+          {
+            background-color: rgba(black,0.1);
+            cursor: pointer;
+          }
+        }
       }
-    }
 
-    .uk-modal-footer
-    {
-      background-color: $listBgColor !important;
     }
   }
 }
 
-#group-members-modal {
-  .uk-modal-dialog {
+#group-members-modal
+{
+  .modal-body
+  {
     background-color: $listBgColor !important;
-
-    .uk-modal-header {
-      background-color: $listBgColor !important;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0.7rem;
-
-      .uk-modal-title {
-        font-size: 17px;
+    .group-members
+    {
+      h6
+      {
+        font-size: 16px;
+        color: rgba(#fff,0.8);
         font-weight: bold;
       }
     }
-
-    .uk-modal-body {
-      padding: 1rem;
-      .group-members
+    .chat-search
+    {
+      .search-form
       {
-        h6
+        .friends-to-add
         {
-          font-size: 16px;
-          color: rgba(#fff,0.8);
-          font-weight: bold;
-        }
-      }
-      .chat-search
-      {
-        .search-form
-        {
-          .friends-to-add
+          padding: 0.7rem;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          border-bottom: 1px solid rgba(#fff,0.1);
+          transition: 0.1s;
+          .add-left
           {
-            padding: 0.7rem;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            border-bottom: 1px solid rgba(#fff,0.1);
-            transition: 0.1s;
-            .add-left
+            .friend-img
             {
               display: flex;
               align-items: center;
-              .friend-img
-              {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                height: 60px;
-                width: 60px;
-                border-radius: 50%;
-                margin-right: 0.5rem;
-              }
-              .member-name-modal
-              {
-                color: $semiGray;
-              }
+              justify-content: center;
+              height: 60px;
+              width: 60px;
+              border-radius: 50%;
+              margin-right: 0.5rem;
             }
-            .add-right
+            .member-name-modal
             {
-              .kick-user-icon
-              {
-                &:hover
-                {
-                  color: #ee395b !important;
-                  cursor: pointer;
-                }
-              }
-            }
-            &:hover
-            {
-              background-color: rgba(black,0.1);
+              color: $semiGray;
             }
           }
+          .add-right
+          {
+            .kick-user-icon
+            {
+              &:hover
+              {
+                color: #ee395b !important;
+                cursor: pointer;
+              }
+            }
+          }
+          &:hover
+          {
+            background-color: rgba(black,0.1);
+          }
         }
-
       }
-    }
 
-    .uk-modal-footer
-    {
-      background-color: $listBgColor !important;
     }
   }
 }
