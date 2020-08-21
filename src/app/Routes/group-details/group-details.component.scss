@@ -230,6 +230,11 @@
   }
 }
 
+.dropdown-menu.show
+{
+  background-color: rgba($mainColorDisabled, 1);
+}
+
 
 #add-member-modal
 {

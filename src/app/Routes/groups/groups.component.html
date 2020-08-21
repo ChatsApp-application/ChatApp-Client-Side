@@ -2,7 +2,9 @@
     <div class="group-box">
         <div class="box-header">
             <h4 class="friend-text">Groups</h4>
-            <button class="message-btn" href="#add-group" uk-toggle><i class="fa fa-plus mx-2" aria-hidden="true"></i></button>
+            <button class="message-btn" data-toggle="modal" data-target="#addGroupModal"><i class="fa fa-plus mx-2"
+                                                                                            aria-hidden="true"></i>
+            </button>
         </div>
         <div class="container-fluid">
             <div class="row">
@@ -11,21 +13,24 @@
                         <span><i class="fa fa-exclamation-circle mx-2" aria-hidden="true"></i> <span>No groups in the moment</span></span>
                     </div>
                 </div>
-                <div class="col-12 col-md-6 mb-2 group-col" *ngFor="let group of allGroupsContainer;trackBy:socket.trackByFn" @scaleUp>
+                <div class="col-12 col-md-6 mb-2 group-col"
+                     *ngFor="let group of allGroupsContainer;trackBy:socket.trackByFn" @scaleUp>
                     <div class="group-model">
                         <a class="model-top" [routerLink]="['/groups', group._id]">
-                            <img src="assets/group.png"  class="group-img" alt="group-img">
+                            <img src="assets/group.png" class="group-img" alt="group-img">
                             <div class="group-name"><span class="g-n">{{group.name}}</span></div>
-<!--                            <span class="group-messages">1</span>-->
+                            <!--                            <span class="group-messages">1</span>-->
                         </a>
                         <div class="model-bottom mt-2">
                             <a class="open-chat text-decoration-none" [routerLink]="['/groups', group._id]">
                                 <i class="fas fa-comment visit"></i>
                             </a>
-                            <div class="remove-group" *ngIf="socket.userContainer._id !== group.admin" (click)="leaveGroup(group._id, group.name)">
+                            <div class="remove-group" *ngIf="socket.userContainer._id !== group.admin"
+                                 (click)="leaveGroup(group._id, group.name)">
                                 <i class="fas fa-sign-out-alt remove-icon"></i>
                             </div>
-                            <div class="remove-group" *ngIf="socket.userContainer._id === group.admin" (click)="deleteGroup(group._id, group.name)">
+                            <div class="remove-group" *ngIf="socket.userContainer._id === group.admin"
+                                 (click)="deleteGroup(group._id, group.name)">
                                 <i class="fa fa-trash remove-icon" aria-hidden="true"></i>
                             </div>
                         </div>
@@ -48,27 +53,36 @@
 </section>
 
 
-
-
-<!-- user edit modal -->
-<div id="add-group" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body">
-        <h2 class="uk-modal-title">Add Group</h2>
-        <div>
-            <form (ngSubmit)="addGroup(addForm)" #addForm='ngForm'>
-                <div class="form-group">
-                    <div class="chatsapp-input">
-                        <input type="text" [(ngModel)]="groupName" class="login-form-control uk-box-shadow-small" placeholder="Group name" name="gn" required>
-                        <i class="fa fa-user-circle login-icon" aria-hidden="true"></i>
-                        <div class="flexable-div"></div>
+<!-- add group modal -->
+<div class="modal fade" id="addGroupModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-light" id="exampleModalLabel">Add Group</h5>
+                <button type="button" class="close text-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form (ngSubmit)="addGroup(addForm)" #addForm='ngForm'>
+                    <div class="form-group">
+                        <div class="chatsapp-input">
+                            <input type="text" [(ngModel)]="groupName" class="login-form-control uk-box-shadow-small"
+                                   placeholder="Group name" name="gn" required>
+                            <i class="fa fa-user-circle login-icon" aria-hidden="true"></i>
+                            <div class="flexable-div"></div>
+                        </div>
                     </div>
-                </div>
-                <p class="uk-text-right">
-                    <button class="uk-button uk-button-default uk-modal-close mx-2 text-light" type="button">Cancel</button>
-                    <button class="uk-button uk-button-primary text-light" [disabled]="sendRequest || addForm.status === 'INVALID'">{{sendRequest? 'SAVING..' : 'Save'}}
-                        <i *ngIf="sendRequest" class="fa fa-spinner fa-spin mx-2" aria-hidden="true"></i></button>
-                </p>
-            </form>
+                    <p class="uk-text-right">
+                        <button class="uk-button uk-button-default uk-modal-close mx-2 text-light" type="button" data-dismiss="modal">
+                            Cancel
+                        </button>
+                        <button class="uk-button uk-button-primary text-light"
+                                [disabled]="sendRequest || addForm.status === 'INVALID'">{{sendRequest ? 'SAVING..' : 'Save'}}
+                            <i *ngIf="sendRequest" class="fa fa-spinner fa-spin mx-2" aria-hidden="true"></i></button>
+                    </p>
+                </form>
+            </div>
         </div>
     </div>
 </div>

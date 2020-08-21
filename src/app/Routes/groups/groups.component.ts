@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import Uikit from 'uikit';
 import {Router} from '@angular/router';
 
+declare const $: any;
 @Component({
     selector: 'app-groups',
     templateUrl: './groups.component.html',
@@ -202,6 +203,6 @@ export class GroupsComponent implements OnInit, OnDestroy {
     }
 
     closeMe(): void {
-        Uikit.modal('#add-group').hide();
+        $('#addGroupModal').modal('hide');
     }
 }

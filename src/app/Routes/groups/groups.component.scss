@@ -277,15 +277,15 @@
 }
 
 
-#add-group
+#addGroupModal
 {
-  .uk-modal-dialog
+  .modal-header
   {
     background-color: $listBgColor !important;
-    .uk-modal-title
-    {
-      font-size: 20px !important;
-      color: rgba(#fff,0.8);
-    }
+    font-size: 20px !important;
+  }
+  .modal-body
+  {
+    background-color: $listBgColor !important;
   }
 }
