@@ -30,7 +30,7 @@
                 </div>
                 <div class="current-message">
                     <span class="message-text">{{message?.message}}</span>
-                    <div class="current-time"><span><i class="fas fa-check check-icon"></i></span>{{message.date| date:"shortTime"}}</div>
+                    <div class="current-time"><span *ngIf="socket.userContainer._id === message.fromUser._id"><i [ngClass]="message.seen ? ['fa-check-double', 'mark-icon'] : ['fa-check', 'check-icon']" class="fas"></i></span>{{message.date| date:"shortTime"}}</div>
                 </div>
             </div>
         </div>

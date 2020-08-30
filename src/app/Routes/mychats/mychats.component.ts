@@ -51,6 +51,7 @@ export class MychatsComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.listenToUnSeenMessages();
     }
 
     emitMyChats(): void {
@@ -66,5 +67,18 @@ export class MychatsComponent implements OnInit {
             this.toggleArray = true;
             this.filteredArray = this.socket.allChatListContainer.userChats.filter((filtered) => this.socket.userContainer._id === filtered.firstUser._id ? `${filtered.secondUser.firstName} ${filtered.secondUser.lastName}`.toLowerCase().includes(this.searchText) : `${filtered.firstUser.firstName} ${filtered.firstUser.lastName}`.toLowerCase().includes(this.searchText));
         }
+    }
+
+
+    listenToUnSeenMessages(): void {
+        this.socket.listen('setUnseenMessagesToTrue').subscribe(res => {
+            if (res['to'] === this.socket.userContainer._id) {
+                this.socket.allChatListContainer.userChats.forEach(chat => {
+                   if (chat._id === res['room']) {
+                       chat.lastMessage.seen = true;
+                   }
+                });
+            }
+        });
     }
 }

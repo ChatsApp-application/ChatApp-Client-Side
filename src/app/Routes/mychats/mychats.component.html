@@ -25,7 +25,7 @@
                 </div>
                 <div class="friend-message">
                     <div class="m-caption">
-                        <i *ngIf="socket.allChatListContainer.userId === list.lastMessage.from" class="fas fa-check-double mark-icon"></i>
+                        <i *ngIf="socket.allChatListContainer.userId === list.lastMessage.from" [ngClass]="list.lastMessage.seen ? ['fa-check-double', 'mark-icon'] : ['fa-check','text-muted']" class="fas mr-1"></i>
                         <span class="m-text">{{list.lastMessage.message}}</span>
                     </div>
                     <div class="new-message" *ngIf="socket.allChatListContainer.userId !== list.lastMessage.from">

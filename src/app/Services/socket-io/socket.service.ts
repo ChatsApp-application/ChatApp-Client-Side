@@ -25,7 +25,7 @@ export class SocketService {
     chatRoomContainer: ChatDetails = {};
     groupData: GroupData = {};
 
-    constructor(private user: UserDetailsService, private auth: AuthenticationService, private router: Router) {
+    constructor(private user: UserDetailsService, private auth: AuthenticationService, private router: Router, private activated: ActivatedRoute) {
         this.socket = io(this.url);
         if (this.auth.isLoggedIn()) {
             this.getUserAfterLoggedIn();
@@ -103,10 +103,26 @@ export class SocketService {
     listenToMessages(): void {
         this.listen('privateMessageBack').subscribe(res => {
             this.chatRoomContainer.chatRoom.chatHistory.push(res);
+            if (this.userContainer._id !== res['fromUser']['_id']) {
+                this.emit('messageIsSeen', {messageId: res['_id']});
+            }
             this.getDown();
             console.log(res);
         });
     }
+
+
+    listenToSeenMessage(): void {
+        this.listen('seen').subscribe(messageId => {
+            this.chatRoomContainer?.chatRoom?.chatHistory.forEach(message => {
+                if (message._id === messageId) {
+                    message.seen = true;
+                }
+            });
+        });
+    }
+
+
 
     // *************** GROUP PART ***************** //
 
@@ -151,7 +167,7 @@ export class SocketService {
         this.listen('usersAddedToGroup').subscribe(res => {
             if (this.groupData?.group?._id === res['group']) {
                 res['addedUsers'].forEach(member => {
-                   this.groupData.group.groupMembers.push(member);
+                    this.groupData.group.groupMembers.push(member);
                 });
             }
         });
@@ -203,5 +219,6 @@ export class SocketService {
         this.listenToGroupMessage();
         this.listenToKickedMembers();
         this.listenToAddUser();
+        this.listenToSeenMessage();
     }
 }

@@ -45,6 +45,7 @@ export class ChatDetailsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.listenToUnSeenMessages();
     }
 
     ngOnDestroy(): void {
@@ -82,6 +83,22 @@ export class ChatDetailsComponent implements OnInit, OnDestroy {
         this.socket.emit('joinRoom', {
             chatRoomId: this.currentRoomId,
             userToken: this.socket.token
+        });
+    }
+
+
+    listenToUnSeenMessages(): void {
+        this.socket.listen('setUnseenMessagesToTrue').subscribe(res => {
+            if (res['room'] === this.currentRoomId && res['to'] === this.socket.userContainer._id) {
+                res['messages'].forEach(message => {
+                    console.log(message);
+                    this.socket?.chatRoomContainer?.chatRoom?.chatHistory.forEach((messageObj) => {
+                        if (message === messageObj._id) {
+                            messageObj.seen = true;
+                        }
+                    });
+                });
+            }
         });
     }
 
