@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ChatDetails} from '../../models/model';
+import {ChatDetails, IsTyping} from '../../models/model';
 import {animate, group, style, transition, trigger} from '@angular/animations';
 import {ActivatedRoute} from '@angular/router';
 import {SocketService} from '../../Services/socket-io/socket.service';
@@ -29,10 +29,16 @@ declare const $: any;
 })
 export class ChatDetailsComponent implements OnInit, OnDestroy {
     currentRoomId;
+    typing = false;
     emitChatSub: Subscription;
     chatDetailsContainer: ChatDetails[] = [];
 
     currentMessage = '';
+    // interfaces
+    isTypingInterface: IsTyping = {
+        isTyping: false,
+        userId: ''
+    };
 
     constructor(private activateRouter: ActivatedRoute, public socket: SocketService) {
         this.activateRouter.params.subscribe(res => {
@@ -46,6 +52,7 @@ export class ChatDetailsComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.listenToUnSeenMessages();
+        this.isTypingListener();
     }
 
     ngOnDestroy(): void {
@@ -77,6 +84,7 @@ export class ChatDetailsComponent implements OnInit, OnDestroy {
 
     clearMessageBox(): void {
         this.currentMessage = '';
+        this.typingSocket();
     }
 
     emitToGetChat(): any {
@@ -99,6 +107,24 @@ export class ChatDetailsComponent implements OnInit, OnDestroy {
                     });
                 });
             }
+        });
+    }
+
+    typingSocket(): void {
+        if (this.currentMessage.trim() !== '') {
+            this.socket.emit('typing', {isTyping: true, userId: this.socket.userContainer._id, roomId: this.currentRoomId});
+            console.log({isTyping: true, userId: this.socket.userContainer._id, roomId: this.currentRoomId});
+        } else {
+            this.socket.emit('typing', {isTyping: false, userId: this.socket.userContainer._id, roomId: this.currentRoomId});
+        }
+    }
+
+    isTypingListener(): void {
+        this.socket.listen('isTyping').subscribe(res => {
+            if (this.socket.userContainer._id !== res['userId']) {
+                this.isTypingInterface = res;
+            }
+            console.log('is working');
         });
     }
 

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {animate, group, style, transition, trigger} from '@angular/animations';
 import {SocketService} from '../../Services/socket-io/socket.service';
 import {Subscription} from 'rxjs';
-import { UserChats } from '../../models/model';
+import {UserChats} from '../../models/model';
 
 @Component({
     selector: 'app-mychats',
@@ -46,12 +46,14 @@ export class MychatsComponent implements OnInit {
     emitChatsSub: Subscription;
     // arraies
     filteredArray: UserChats[] = [];
+
     constructor(public socket: SocketService) {
         this.emitMyChats();
     }
 
     ngOnInit(): void {
         this.listenToUnSeenMessages();
+        this.listenToNewMessages();
     }
 
     emitMyChats(): void {
@@ -62,21 +64,28 @@ export class MychatsComponent implements OnInit {
 
     filterChats(): void {
         if (this.searchText.trim() === '') {
-            this.toggleArray =  false;
+            this.toggleArray = false;
         } else {
             this.toggleArray = true;
             this.filteredArray = this.socket.allChatListContainer.userChats.filter((filtered) => this.socket.userContainer._id === filtered.firstUser._id ? `${filtered.secondUser.firstName} ${filtered.secondUser.lastName}`.toLowerCase().includes(this.searchText) : `${filtered.firstUser.firstName} ${filtered.firstUser.lastName}`.toLowerCase().includes(this.searchText));
         }
     }
 
+    listenToNewMessages(): void {
+        this.socket.listen('privateMessageBackFromOutside').subscribe(res => {
+            if (this.socket.userContainer._id === res) {
+                this.emitMyChats();
+            }
+        });
+    }
 
     listenToUnSeenMessages(): void {
         this.socket.listen('setUnseenMessagesToTrue').subscribe(res => {
             if (res['to'] === this.socket.userContainer._id) {
                 this.socket.allChatListContainer.userChats.forEach(chat => {
-                   if (chat._id === res['room']) {
-                       chat.lastMessage.seen = true;
-                   }
+                    if (chat._id === res['room']) {
+                        chat.lastMessage.seen = true;
+                    }
                 });
             }
         });

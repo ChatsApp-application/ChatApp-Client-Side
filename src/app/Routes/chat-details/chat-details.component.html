@@ -13,7 +13,7 @@
                         <span class="u-n" *ngIf="socket?.userContainer?._id === socket?.chatRoomContainer?.chatRoom?.secondUser?._id">{{socket?.chatRoomContainer?.chatRoom?.firstUser?.firstName | titlecase}} {{socket?.chatRoomContainer?.chatRoom?.firstUser?.lastName | titlecase}}</span>
                         <span class="active"></span>
                     </div>
-                    <div class="u-status"><span class="user-status">typing...</span></div>
+                    <div *ngIf="isTypingInterface.isTyping" class="u-status"><span class="user-status">typing...</span></div>
                 </div>
             </div>
             <div class="box-right">
@@ -43,7 +43,7 @@
                 </label>
                 <input type="file" id="upload-file" style="display: none">
                 <div class="chat-input">
-                    <input type="text" [(ngModel)]="currentMessage" autocomplete="off" name="currentMessage" class="chat-form-control" placeholder="Type a message">
+                    <input type="text" [(ngModel)]="currentMessage" autocomplete="off" (input)="typingSocket()" name="currentMessage" class="chat-form-control" placeholder="Type a message">
                     <button class="send-icon">
                         <i class="far fa-paper-plane"></i>
                     </button>

@@ -50,10 +50,11 @@ export class AppComponent implements OnInit{
         }
     });
     constructor(public auth: AuthenticationService, public user: UserDetailsService, private friend: FreindsDetailsService, public socket: SocketService) {
+        // document.addEventListener('visibilitychange', this.socket.checkOnlineOrOffline, false);
     }
 
     ngOnInit(): void {
-        document.addEventListener('visibilitychange', this.visibilityState, false);
+
     }
 
     acceptThisUser(requestId, fromUserId): void {
@@ -127,14 +128,7 @@ export class AppComponent implements OnInit{
         });
     }
 
-    visibilityState(): void {
-        if (document.visibilityState === 'visible') {
-            console.log('visible');
-        }
-        if (document.visibilityState === 'hidden') {
-            console.log('hidden');
-        }
-    }
+
 
 
 

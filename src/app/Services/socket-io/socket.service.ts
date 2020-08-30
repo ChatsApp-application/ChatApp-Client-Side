@@ -31,9 +31,10 @@ export class SocketService {
             this.getUserAfterLoggedIn();
         }
         this.listeners();
+        this.listenToNetworkState();
     }
 
-    listen(eventName: string) {
+    listen(eventName: string): any {
         return new Observable((subscriber) => {
             this.socket.on(eventName, (data) => {
                 subscriber.next(data);
@@ -47,6 +48,35 @@ export class SocketService {
 
     trackByFn(index, item) {
         return index; // or item.id
+    }
+
+    // *************** ONLINE AND OFFLINE PART ***************** //
+    listenToOnlineAndOffline(): void {
+        this.listen('changeActivityStatus').subscribe(res => {
+            console.log('visibility', res);
+        });
+    }
+
+    checkOnlineOrOffline(online): void {
+        if (online) {
+            console.log('You are online');
+            this.emit('changeActivityStatusFromClient', {userToken: this.token, online: true});
+        } else {
+            console.log('You are offline');
+            this.emit('changeActivityStatusFromClient', {userToken: this.token, online: false});
+        }
+    }
+
+    listenToNetworkState(): void {
+        window.addEventListener('load', () => {
+            this.checkOnlineOrOffline(navigator.onLine);
+        });
+        window.addEventListener('online', () => {
+            this.checkOnlineOrOffline(true);
+        });
+        window.addEventListener('offline', () => {
+            this.checkOnlineOrOffline(false);
+        });
     }
 
     // *************** NOTIFICATIONS AND FRIEND REQUESTS PART ***************** //
@@ -121,7 +151,6 @@ export class SocketService {
             });
         });
     }
-
 
 
     // *************** GROUP PART ***************** //
@@ -220,5 +249,6 @@ export class SocketService {
         this.listenToKickedMembers();
         this.listenToAddUser();
         this.listenToSeenMessage();
+        this.listenToOnlineAndOffline();
     }
 }

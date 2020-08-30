@@ -212,6 +212,11 @@ export interface User {
     lastName?: string;
 }
 
+export interface IsTyping {
+    isTyping?: boolean;
+    userId?: string;
+}
+
 
 // *************** GROUPS PART ***************** //
 
@@ -260,3 +265,5 @@ export interface GroupMembers {
     lastName?: string;
     online?: boolean;
 }
+
+
