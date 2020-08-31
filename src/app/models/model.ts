@@ -88,7 +88,7 @@ export interface Friends {
     country?: string;
     gender?: string;
     bio?: string;
-    online?: string;
+    online?: boolean;
     friends?: [];
     matualFriends?: MutualFriends[];
     img?: Img;
@@ -217,6 +217,10 @@ export interface IsTyping {
     userId?: string;
 }
 
+export interface IsOnline {
+    userId?: string;
+    online?: boolean;
+}
 
 // *************** GROUPS PART ***************** //
 

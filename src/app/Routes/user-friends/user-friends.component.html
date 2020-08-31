@@ -21,7 +21,7 @@
                             <img *ngIf="!friend?.img?.url" class="friend-img" src="assets/user.png" alt="friend-image" [routerLink]="['/profile',friend._id]">
                             <img *ngIf="friend?.img?.url" class="friend-img" [src]="friend?.img?.url" alt="friend-image">
                             <div class="friend-caption">
-                                <div class="caption-text"><span>{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</span> <span class="user-acitve"></span></div>
+                                <div class="caption-text"><span>{{friend.firstName | titlecase}} {{friend.lastName | titlecase}}</span> <span *ngIf="friend.online" class="user-acitve"></span></div>
                                 <a class="matual-friends" data-toggle="modal" data-target="#mutualFriends" (click)="passMutualData(friend?.matualFriends)"><span>{{friend?.matualFriends?.length === 0? 'No' : friend?.matualFriends?.length}} mutual {{friend?.matualFriends?.length === 1 ? 'friend' : 'friends'}}</span></a>
                         </div>
                         </div>

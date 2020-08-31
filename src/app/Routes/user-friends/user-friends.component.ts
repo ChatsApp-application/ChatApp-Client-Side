@@ -69,14 +69,31 @@ export class UserFriendsComponent implements OnInit, OnDestroy {
     constructor(private friends: FreindsDetailsService, public socket: SocketService) {
         this.listenToFriendsChanges();
         this.listenToUnFriendChanges();
+        this.listenToOnlineAndOffline();
     }
 
     ngOnInit(): void {
         this.getAllUserFriends();
+        this.checkNetworkState();
     }
 
     ngOnDestroy(): void {
         this.friendsSub.unsubscribe();
+    }
+
+    listenToOnlineAndOffline(): void {
+        this.socket.listen('changeActivityStatus').subscribe(res => {
+            for (const friend of this.friendsContainer) {
+                if (friend._id === res.userId) {
+                    friend.online = res.online;
+                }
+            }
+        });
+    }
+
+    checkNetworkState(): void {
+
+        console.log('network is checked');
     }
 
     getAllUserFriends(): void {
@@ -84,7 +101,7 @@ export class UserFriendsComponent implements OnInit, OnDestroy {
         this.friendsSub = this.friends.getUserFriends().subscribe(res => {
             this.friends.hideLoader();
             this.friendsContainer = res.friends;
-            if (res.friends === 0 ) {
+            if (res.friends.length === 0) {
                 this.emptyAlert = true;
             } else {
                 this.emptyAlert = false;
@@ -144,9 +161,9 @@ export class UserFriendsComponent implements OnInit, OnDestroy {
 
     listenToUnFriendChanges(): void {
         this.socket.listen('unFriend').subscribe(res => {
-           if (this.socket.userContainer._id === res['friendId']) {
-               this.getAllUserFriends();
-           }
+            if (this.socket.userContainer._id === res['friendId']) {
+                this.getAllUserFriends();
+            }
         });
     }
 

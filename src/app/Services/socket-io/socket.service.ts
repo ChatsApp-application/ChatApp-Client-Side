@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import * as io from 'socket.io-client';
 import {Observable} from 'rxjs';
-import {ChatDetails, ChatRoom, GroupData, GroupMembers, MyChats, User, UserChats} from '../../models/model';
+import {ChatDetails, ChatRoom, GroupData, GroupMembers, IsOnline, MyChats, User, UserChats} from '../../models/model';
 import {UserDetailsService} from '../user/user-details.service';
 import {AuthenticationService} from '../authentication.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -24,6 +24,7 @@ export class SocketService {
     allChatListContainer: MyChats = {};
     chatRoomContainer: ChatDetails = {};
     groupData: GroupData = {};
+    // isOnline: IsOnline[] = [];
 
     constructor(private user: UserDetailsService, private auth: AuthenticationService, private router: Router, private activated: ActivatedRoute) {
         this.socket = io(this.url);
@@ -51,11 +52,7 @@ export class SocketService {
     }
 
     // *************** ONLINE AND OFFLINE PART ***************** //
-    listenToOnlineAndOffline(): void {
-        this.listen('changeActivityStatus').subscribe(res => {
-            console.log('visibility', res);
-        });
-    }
+
 
     checkOnlineOrOffline(online): void {
         if (online) {
@@ -249,6 +246,5 @@ export class SocketService {
         this.listenToKickedMembers();
         this.listenToAddUser();
         this.listenToSeenMessage();
-        this.listenToOnlineAndOffline();
     }
 }
