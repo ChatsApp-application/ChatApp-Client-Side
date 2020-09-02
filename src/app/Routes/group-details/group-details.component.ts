@@ -7,6 +7,7 @@ import {GroupFriends} from '../../models/model';
 import Swal from 'sweetalert2';
 import {SocketService} from '../../Services/socket-io/socket.service';
 import {Subscription} from 'rxjs';
+import {filter, map, shareReplay, take, takeUntil, takeWhile} from 'rxjs/operators';
 
 declare const $: any;
 
@@ -53,6 +54,7 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     messageText = '';
     leaveSub: Subscription;
     deleteSub: Subscription;
+    httpCounter = 0;
     // arraies
     groupFriendsContainer: GroupFriends[] = [];
     selectedContainer: GroupFriends[] = [];
@@ -80,11 +82,6 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     ngOnInit(): void {
         this.listenToLeaveGroup();
         this.listenToDeletedGroup();
-        setTimeout(() => {
-            if (this.socket?.groupData?.group?.admin === this.socket?.userContainer?._id && this.groupID !== undefined) {
-                this.getFriendList();
-            }
-        }, 20);
     }
 
     ngOnDestroy(): void {
@@ -128,12 +125,21 @@ export class GroupDetailsComponent implements OnInit, OnDestroy {
     }
 
     getFriendList(): void {
-        this.groupsService.getFriendListForGroup(this.groupID).subscribe(res => {
-            this.groupFriendsContainer = res.friendsToAdd;
+        this.groupsService.getFriendListForGroup(this.groupID).pipe(shareReplay()).subscribe(res => {
+            this.groupFriendsContainer = res['friendsToAdd'];
             console.log(this.groupFriendsContainer);
         });
     }
 
+    friendList(): void {
+        if (this.httpCounter < 1) {
+            if (this.socket?.groupData?.group?.admin === this.socket?.userContainer?._id && this.groupID !== undefined) {
+                this.getFriendList();
+                this.httpCounter++;
+            }
+        }
+
+    }
     addMembersToGroup(): void {
         const membersToAdd = this.selectedContainer.map(data => data._id);
         this.sendRequest = true;

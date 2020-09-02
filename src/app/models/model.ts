@@ -38,7 +38,7 @@ export interface User {
     country?: string;
     gender?: string;
     bio?: string;
-    online?: string;
+    online?: boolean;
     friendRequests?: FriendRequests[];
     notifications?: Notifications[];
     img?: Img;

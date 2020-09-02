@@ -133,7 +133,7 @@
         </div>
         <div class="logout-list" @scaleIn *ngIf="logoutToggleVar">
             <a class="list-div" routerLink="/register">Register</a>
-            <a class="list-div" (click)="auth.logOut()">Log Out</a>
+            <a class="list-div" (click)="socket.goOffline();auth.logOut()">Log Out</a>
         </div>
     </nav>
 

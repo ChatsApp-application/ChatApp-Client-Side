@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment.prod';
+import {SocketService} from './socket-io/socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -30,6 +31,7 @@ export class AuthenticationService {
   }
 
   logOut(): void {
+
     localStorage.removeItem('chatsapp-token');
     this.router.navigateByUrl('/login');
     // emit event  >> socket.emit('userLogout', {userId: userId})

@@ -18,16 +18,8 @@
                 <div class="user-info" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fas fa-ellipsis-v"></i>
                 </div>
-<!--                <div uk-dropdown="mode: click" id="dropdown">-->
-<!--                    <div class="dropdown-dots">-->
-<!--                        <a *ngIf="socket?.groupData?.group?.admin === socket?.userContainer?._id" class="dots-content" data-toggle="modal" data-target="#add-member-modal" (click)="closeDots()"><span>Add Members</span>-->
-<!--                        </a>-->
-<!--                        <a class="dots-content" data-toggle="modal" data-target="#group-members-modal" (click)="closeDots()"><span>Group Members</span>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <div class="dropdown-menu dropdown-dots" aria-labelledby="dropdownMenuButton">
-                    <a *ngIf="socket?.groupData?.group?.admin === socket?.userContainer?._id" class="dots-content" data-toggle="modal" data-target="#add-member-modal"><span>Add Members</span>
+                    <a *ngIf="socket?.groupData?.group?.admin === socket?.userContainer?._id" (click)="friendList()" class="dots-content" data-toggle="modal" data-target="#add-member-modal"><span>Add Members</span>
                     </a>
                     <a class="dots-content" data-toggle="modal" data-target="#group-members-modal"><span>Group Members</span>
                     </a>

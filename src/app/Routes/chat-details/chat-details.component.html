@@ -11,7 +11,7 @@
                     <div class="u-name">
                         <span class="u-n" *ngIf="socket?.userContainer?._id === socket?.chatRoomContainer?.chatRoom?.firstUser?._id">{{socket?.chatRoomContainer?.chatRoom?.secondUser?.firstName | titlecase}} {{socket?.chatRoomContainer?.chatRoom?.secondUser?.lastName | titlecase}}</span>
                         <span class="u-n" *ngIf="socket?.userContainer?._id === socket?.chatRoomContainer?.chatRoom?.secondUser?._id">{{socket?.chatRoomContainer?.chatRoom?.firstUser?.firstName | titlecase}} {{socket?.chatRoomContainer?.chatRoom?.firstUser?.lastName | titlecase}}</span>
-                        <span class="active"></span>
+                        <span *ngIf="socket.isOnline" class="active"></span>
                     </div>
                     <div *ngIf="isTypingInterface.isTyping" class="u-status"><span class="user-status">typing...</span></div>
                 </div>
