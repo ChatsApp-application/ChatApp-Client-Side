@@ -1,27 +1,34 @@
-# Chatsapp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.1.
+# ChatsApp
 
-## Development server
+chatsApp is a realtime social media application that combines whatsApp features with facebook friend system, i built this app`s backend and Muhammed Mahmoud built its frontend(team work)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## FEATURES:
+  - signin/signup
+  - edit your profile data/image
+  - find people
+  - find mutual friends between you and people or even other friends
+  - send friend requests
+  - receive friendRequests (you can accept or decline them)
+  - search for anything(groups/chats/friends/people)
+  - view people profiles
+  - see who viewd your profile
+  - see your friends
+  - start private chatting room with your friend(s)
+  - typing and seen features are exactly like whatsApp
+  - the most recent chats will go to be at the top of them (like whatsApp) (realtime is supported for this feature as well)
+  - create groups and add multiple members at a time, kick members
+  - every scenario happens in this app is realtime supported
+  - (we are working on realtime ofline/online and send record features)
+  - and more...
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Tools
 
-## Build
+**Backend**: NodeJs, expressJs, mongoDB(i chose NATIVE DRIVER because native driver performance is better than ODMS), Socket.io, Agenda.js, Cloudinary, Multer, express-validator, jwt.*
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+*backend is built by [Mustafa Mahmoud](https://www.linkedin.com/in/mustafa-mahmoud-a80a221b4/)*
 
-## Running unit tests
+**Frontend**: Angular10, Rxjs, socket.io-client, sweetalert2, swiper, uikit, bootstrap
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+*frontend is built by [Muhammed Mahmoud](https://www.linkedin.com/in/muhammad-mahmoud-741b39194/)*
